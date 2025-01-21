@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  projectcnpmdjango:
+    image: projectcnpmdjango
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 9000:9000
