@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'E_Manage',
     'home',
+    'Dentist',
 ]
 
 MIDDLEWARE = [
@@ -79,13 +80,13 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "tempdb",
+        "NAME": "testdb",
         "USER": "sa",
-        "PASSWORD": "yourStrong(!)Password",
+        "PASSWORD": "Fuutarou58",
         "HOST": "127.0.0.1",
         "PORT": "1433",
         "OPTIONS": {
-            'driver': 'ODBC Driver 18 for SQL Server',
+            'driver': 'ODBC Driver 17 for SQL Server',
             'extra_params': 'TrustServerCertificate=yes;',
         },
     },
