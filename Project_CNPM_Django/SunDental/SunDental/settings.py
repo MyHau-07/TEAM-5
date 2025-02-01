@@ -78,16 +78,12 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # settings.py
 DATABASES = {
     "default": {
-        "ENGINE": "mssql",
-        "NAME": "tempdb",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "DjangoDB",
         "USER": "sa",
         "PASSWORD": "yourStrong(!)Password",
         "HOST": "127.0.0.1",
         "PORT": "1433",
-        "OPTIONS": {
-            'driver': 'ODBC Driver 18 for SQL Server',
-            'extra_params': 'TrustServerCertificate=yes;',
-        },
     },
 }
 
@@ -140,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
