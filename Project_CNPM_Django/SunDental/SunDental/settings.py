@@ -77,32 +77,32 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # settings.py
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "mssql",
-#         "NAME": "testdb",
-#         "USER": "sa",
-#         "PASSWORD": "Anhhuy1711@",
-#         "HOST": "127.0.0.1",
-#         "PORT": "1433",
-#         "OPTIONS": {
-#             'driver': 'ODBC Driver 17 for SQL Server',
-#             'Trusted_Connection':'yes ',
-#         },
-#     },
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "testdb",
+        "USER": "sa",
+        "PASSWORD": "Fuutarou58",
+        "HOST": "127.0.0.1",
+        "PORT": "1433",
+        "OPTIONS": {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'Trusted_Connection':'yes ',
+        },
+    },
+}
 
 # Setting mysql 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DjangoDB',
-        'USER': 'root',
-        'PASSWORD': 'Anhhuy1711@',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'DjangoDB',
+#         'USER': 'root',
+#         'PASSWORD': 'Anhhuy1711@',
+#         'HOST':'localhost',
+#         'PORT':'3306',
+#     }
+# }
 
 
 
