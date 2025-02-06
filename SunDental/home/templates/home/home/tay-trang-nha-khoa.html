@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Chấm Công</title>
+  
+  <!-- FontAwesome & Kendo UI CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2023.1.314/styles/kendo.default-v2.min.css"/>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;    
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #797CFF;
+      margin-bottom: 20px;
+    }
+    .calendar-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .calendar-label {
+      font-size: 18px;
+      font-weight: bold;
+      color: #797CFF;
+    }
+    .current-date {
+      font-size: 16px;
+      color: #333;
+    }
+    .calendar-icon {
+      font-size: 36px;
+      cursor: pointer;
+      color: #797CFF;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+    .fl-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .fl-table th, .fl-table td {
+      border: 1px solid #797CFF;
+      padding: 8px;
+      text-align: center;
+      height: 60px;
+      color: #797CFF;
+    }
+    .fl-table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .nav-buttons button {
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #797CFF;
+      background-color: #fff;
+      color: #797CFF;
+      border-radius: 5px;
+    }
+    .nav-buttons button:hover {
+      background-color: #797CFF;
+      color: #fff;
+    }
+    #datepicker {
+      display: none;
+    }
+    .k-calendar-container {
+      z-index: 9999 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>BẢNG CHẤM CÔNG</h2>
+    
+    <div class="calendar-container">
+      <div class="calendar-label">Lịch:</div>
+      <div class="current-date" id="currentDateDisplay"></div>
+      <i class="fa fa-calendar calendar-icon" id="openCalendar"></i>
+      <input id="datepicker">
+    </div>
+    
+    <div class="nav-buttons">
+      <button id="prevMonth">Trở lại</button>
+      <button id="currentMonth">Hiện tại</button>
+      <button id="nextMonth">Tiếp theo</button>
+    </div>
+    
+    <div class="table-container">
+      <table class="fl-table">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script>
+    let today = new Date();
+    
+    async function fetchEmployeeData() {
+      return [
+        { id: "", name: "", dob: "", position: "" },
+      ];
+    }
+
+    async function updateTable(date) {
+      let thead = document.getElementById("tableHead");
+      let tbody = document.getElementById("tableBody");
+      thead.innerHTML = "";
+      tbody.innerHTML = "";
+
+      let headerRow = document.createElement("tr");
+      headerRow.innerHTML = `
+        <th>Họ và tên</th>
+        <th>ID</th>
+        <th>Ngày tháng năm sinh</th>
+        <th>Chức vụ</th>
+      `;
+      
+      let daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+      for (let i = 1; i <= daysInMonth; i++) {
+        let day = new Date(date.getFullYear(), date.getMonth(), i);
+        let th = document.createElement("th");
+        th.textContent = `${i} (${["CN", "T2", "T3", "T4", "T5", "T6", "T7"][day.getDay()]})`;
+        headerRow.appendChild(th);
+      }
+      headerRow.innerHTML += `<th>Tổng ngày công</th>`;
+      thead.appendChild(headerRow);
+
+      let employees = await fetchEmployeeData();
+      employees.forEach((emp) => {
+        let row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${emp.name}</td>
+          <td>${emp.id}</td>
+          <td>${emp.dob}</td>
+          <td>${emp.position}</td>
+        `;
+        for (let i = 1; i <= daysInMonth; i++) {
+          let td = document.createElement("td");
+          td.textContent = "";
+          row.appendChild(td);
+        }
+        row.innerHTML += `<td>0</td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateDateDisplay(date) {
+      document.getElementById("currentDateDisplay").textContent = 
+          date.toLocaleDateString("vi-VN", { year: 'numeric', month: 'long' });
+    }
+
+    document.getElementById("prevMonth").addEventListener("click", function() {
+      today.setMonth(today.getMonth() - 1);
+      updateTable(today);
+      updateDateDisplay(today);
+    });
+
+    document.getElementById("currentMonth").addEventListener("click", function() {
+      today = new Date();
+      updateTable(today);
+      updateDateDisplay(today);
+    });
+
+    document.getElementById("nextMonth").addEventListener("click", function() {
+      today.setMonth(today.getMonth() + 1);
+      updateTable(today);
+      updateDateDisplay(today);
+    });
+
+    updateTable(today);
+    updateDateDisplay(today);
+  </script>
+</body>
+</html>

@@ -8,6 +8,9 @@ from kienthuc.models import Kienthuc
 def home (request):
     return render(request, 'home/home/giohang.html')
 
+    return render(request, 'home/home/tay-trang-nha-khoa.html')
+
+
 def register(request):
     return render(request, 'home/includes/auth-register-basic.html')   
 
@@ -22,6 +25,7 @@ def Trangkienthuc(request):
   }
   return HttpResponse(template.render(context, request))
 
+
 def giohang(request):
   mygiohang = giohang.objects.get(id=1)
   template = loader.get_template('home/home/user.html')
@@ -33,6 +37,53 @@ def giohang(request):
 
 
 
+def giohang(request):
+    if request.method == "POST":
+        pass
+        
+    template = loader.get_template("home/home/giohang.html")
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
 
+def taytrangnhakhoa(request):
+    if request.method == "POST":
+        pass
+        
+    template = loader.get_template("home/home/tay-trang-nha-khoa.html")
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
 
+def lichlam(request):
+    if request.method == "POST":
+        pass
+        
+    template = loader.get_template("home/home/lichlam.html")
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
+
+def chamcong(request):
+    if request.method == "POST":
+        pass
+        
+    template = loader.get_template("home/home/cham-cong.html")
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
+
+def nghiphep(request):
+    if request.method == "POST":
+        pass
+        
+    template = loader.get_template("home/home/nghi-phep.html")
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
 

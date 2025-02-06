@@ -1,3 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Chấm Công</title>
+  
+  <!-- FontAwesome & Kendo UI CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2023.1.314/styles/kendo.default-v2.min.css"/>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h2 {
+      text-align: center;
+      color: #797CFF;
+      margin-bottom: 20px;
+    }
+    
+    .calendar-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .calendar-label {
+      font-size: 18px;
+      font-weight: bold;
+      color: #797CFF;
+    }
+    
+    .current-date {
+      font-size: 16px;
+      color: #333;
+    }
+    
+    .calendar-icon {
+      font-size: 36px;
+      cursor: pointer;
+      color: #797CFF;
+    }
+    
+    #calendarPopup {
+      display: none;
+      position: absolute;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #797CFF;
+      padding: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 15px;
+      border: 2px solid #797CFF;
+      border-radius: 8px;
+      background-color: white;
+      color: #797CFF;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    
+    .btn-action:hover {
+      background-color: #5a5eff;
+      color: white;
+    }
+    
+    .btn-action i {
+      margin-right: 5px;
+    }
+    
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    .fl-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .fl-table th, .fl-table td {
+      border: 1px solid #797CFF;
+      padding: 8px;
+      text-align: center;
+      height: 60px;
+      color: #797CFF;
+    }
+    
+    .fl-table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    
+    .fl-table td {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>BẢNG CHẤM CÔNG</h2>
+    
+    <div class="calendar-container">
+      <div class="calendar-label">Lịch:</div>
+      <div class="current-date" id="currentDateDisplay"></div>
+      <i class="fa fa-calendar calendar-icon" id="openCalendar"></i>
+    </div>
+    
+    <div id="calendarPopup">
+      <div id="kendoCalendar"></div>
+    </div>
+    
+    <div class="actions">
+      <div class="btn-action" id="btn_HienTai">
+        <i class="fa fa-calendar-day"></i> Hiện tại
+      </div>
+      <div class="btn-action" id="btn_TroVe">
+        <i class="fa fa-arrow-left"></i> Trở về
+      </div>
+      <div class="btn-action" id="btn_Tiep">
+        Tiếp <i class="fa fa-arrow-right"></i>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <table class="fl-table">
+        <thead>
+          <tr>
+            <th style="font-weight: bold; color: #797CFF;">STT</th>
+            <th style="font-weight: bold; color: #797CFF;">Họ và tên</th>
+            <th style="font-weight: bold; color: #797CFF;">ID</th>
+            <th style="font-weight: bold; color: #797CFF;">Ngày tháng năm sinh</th>
+            <th style="font-weight: bold; color: #797CFF;">Chức vụ</th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Thứ 2<br><span class="day-date">thứ 2</span></th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Thứ 3<br><span class="day-date"></span></th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Thứ 4<br><span class="day-date"></span></th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Thứ 5<br><span class="day-date"></span></th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Thứ 6<br><span class="day-date"></span></th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Thứ 7<br><span class="day-date"></span></th>
+            <th class="week-day" style="font-weight: bold; color: #797CFF;">Chủ nhật<br><span class="day-date"></span></th>
+            <th style="font-weight: bold; color: #797CFF;">Tổng ngày công</th>
+          </tr>
+        </thead>
+        {% comment %} tên người châm công lương {% endcomment %}
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td id="mon-sang"></td>
+            <td id="tue-sang"></td>
+            <td id="wed-sang"></td>
+            <td id="thu-sang"></td>
+            <td id="fri-sang"></td>
+            <td id="sat-sang"></td>
+            <td id="sun-sang"></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Thư viện jQuery & Kendo UI JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      // Hàm định dạng ngày dd/MM/yyyy
+      function formatDate(date) {
+        let d = date.getDate();
+        let m = date.getMonth() + 1; // Tháng tính từ 0
+        let y = date.getFullYear();
+        if(d < 10) d = "0" + d;
+        if(m < 10) m = "0" + m;
+        return d + "/" + m + "/" + y;
+      }
+      
+      // Cập nhật các ngày trong tuần
+      function updateWeekDays(date) {
+        const day = date.getDay(); // 0 (Chủ Nhật) đến 6 (Thứ 7)
+        const monday = new Date(date);
+        monday.setDate(date.getDate() - (day === 0 ? 6 : day - 1)); // Điều chỉnh về Thứ 2
+
+        $('.week-day .day-date').each(function(index) {
+          const currentDate = new Date(monday);
+          currentDate.setDate(monday.getDate() + index);
+          $(this).text(formatDate(currentDate));
+        });
+      }
+
+      // Khởi tạo ngày hiện tại
+      let today = new Date();
+      $("#currentDateDisplay").text(formatDate(today));
+      updateWeekDays(today); // Cập nhật ngày cho tuần hiện tại
+      
+      // Khởi tạo Kendo Calendar trong popup
+      $("#kendoCalendar").kendoCalendar({
+        value: today,
+        change: function() {
+          var selectedDate = this.value();
+          $("#currentDateDisplay").text(formatDate(selectedDate));
+          today = selectedDate;
+          updateWeekDays(today); // Cập nhật ngày cho tuần mới
+          $("#calendarPopup").hide();
+        }
+      });
+      
+      // Toggle hiển thị popup khi bấm vào icon lịch
+      $("#openCalendar").click(function(e) {
+        e.stopPropagation();
+        var popup = $("#calendarPopup");
+        if(popup.is(":visible")) {
+          popup.hide();
+        } else {
+          var offset = $(this).offset();
+          popup.css({ top: offset.top + $(this).outerHeight() + 10, left: offset.left });
+          popup.show();
+        }
+      });
+      
+      // Ẩn popup nếu click ra ngoài vùng icon và popup
+      $(document).click(function(event) {
+        if (!$(event.target).closest("#calendarPopup, #openCalendar").length) {
+          $("#calendarPopup").hide();
+        }
+      });
+      
+      // Xử lý các nút điều hướng
+      $("#btn_HienTai").click(function() {
+        today = new Date();
+        $("#currentDateDisplay").text(formatDate(today));
+        $("#kendoCalendar").data("kendoCalendar").value(today);
+        updateWeekDays(today); // Cập nhật ngày cho tuần hiện tại
+      });
+      
+      $("#btn_TroVe").click(function() {
+        today.setDate(today.getDate() - 7);
+        $("#currentDateDisplay").text(formatDate(today));
+        $("#kendoCalendar").data("kendoCalendar").value(today);
+        updateWeekDays(today); // Cập nhật ngày cho tuần mới
+      });
+      
+      $("#btn_Tiep").click(function() {
+        today.setDate(today.getDate() + 7);
+        $("#currentDateDisplay").text(formatDate(today));
+        $("#kendoCalendar").data("kendoCalendar").value(today);
+        updateWeekDays(today); // Cập nhật ngày cho tuần mới
+      });
+    });
+  </script>
+  
+</body>
+</html>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
