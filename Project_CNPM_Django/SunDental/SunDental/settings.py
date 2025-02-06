@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import os
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +40,12 @@ INSTALLED_APPS = [
     'E_Manage',
     'home',
     'Dentist',
+    'user',
+    'sukien',
+    'kienthuc',
+    'uudai',
+    'booking',
+    'news',
     "django.contrib.postgres",
 ]
 
@@ -80,31 +84,17 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # settings.py
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "mssql",
-#         "NAME": "testdb",
-#         "USER": "sa",
-#         "PASSWORD": "Anhhuy1711@",
-#         "HOST": "127.0.0.1",
-#         "PORT": "1433",
-#         "OPTIONS": {
-#             'driver': 'ODBC Driver 17 for SQL Server',
-#             'Trusted_Connection':'yes ',
-#         },
-#     },
-# }
-
-# Setting mysql 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DjangoDB',
-        'USER': 'root',
-        'PASSWORD': 'Anhhuy1711@',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "db11",
+        "USER": "sa",
+        "PASSWORD": "LeThanh@123",
+        "HOST": "localhost",
+        "PORT": "1433",
+        "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+        },
+    },
 }
 
 
@@ -154,9 +144,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
