@@ -20,3 +20,10 @@ class CommentForm (models.Model):
     message = models.TextField()
     def __str__(self):
         return f"{self.name}"
+    
+class Dentist(models.Model):
+    FullName = models.CharField(max_length=50)
+    Specialization = models.CharField(max_length=255)
+    License_number = models.CharField(max_length=50)
+    Birthday = models.DateField()
+    Gender = models.BooleanField()

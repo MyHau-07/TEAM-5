@@ -21,14 +21,9 @@ from django.conf import settings
 
 urlpatterns = [
     path('', include('home.urls')),
-    path('', include('Dentist.urls')),
     path('admin/', admin.site.urls),
-    path('', include('user.urls')),
-    path('', include('sukien.urls')),
-    path('', include('kienthuc.urls')),
-    path('', include('uudai.urls')),
-    path('', include('booking.urls')),
-    path('', include('news.urls')),
+    path('', include('E_Manage.urls')),
+
 ]
 
 

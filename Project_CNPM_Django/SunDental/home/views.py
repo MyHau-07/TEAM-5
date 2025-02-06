@@ -9,10 +9,10 @@ def home (request):
 
 def register(request):
     return render(request, 'home/includes/auth-register-basic.html')    
-
-
+ 
 def contact(request):
-    return render(request, 'home/includes/contact.html')   
+    return render(request, 'home/includes/contact.html')
+
 
 
 def search(request):

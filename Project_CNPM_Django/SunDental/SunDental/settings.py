@@ -39,13 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'E_Manage',
     'home',
-    'Dentist',
-    'user',
-    'sukien',
-    'kienthuc',
-    'uudai',
-    'booking',
-    'news',
     "django.contrib.postgres",
 ]
 
