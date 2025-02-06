@@ -1,0 +1,384 @@
+{% extends "..//master.html" %}
+{% load static %}
+
+{% block menu-inner %} 
+{% include "../includes/left_menu.html" %}
+{% endblock %}
+
+{% block navbar %} 
+{% include "../includes/Navbar.html" %}
+{% endblock %}
+
+
+{% block content %}
+
+<!--THIET KE-->
+
+<style>
+/* Màu nền nhẹ nhàng, chuyên nghiệp */
+.custom-bg {
+    background-color: #E3F2FD; /* Xanh dương nhạt */
+}
+
+/* Tiêu đề card - Kiểu chữ thanh lịch, chuyên nghiệp */
+.card-title {
+    font-weight: 600;  /* Đậm vừa phải */
+    font-size: 26px;  /* Tăng kích thước một chút */
+    text-align: center; 
+    font-family: 'Poppins', sans-serif; /* Font chữ hiện đại */
+    color: #0D47A1; /* Xanh dương đậm làm điểm nhấn */
+}
+
+/* Nội dung card - Dễ đọc, thoải mái */
+.card-text {
+    font-size: 18px;  /* Cỡ chữ vừa phải */
+    text-align: center;  
+    font-family: 'Roboto', sans-serif; /* Font chữ chuyên nghiệp */
+    color: #333; /* Màu chữ tối hơn để dễ đọc */
+}
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex
+;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-.5* var(--bs-gutter-x));
+    margin-left: calc(-.5* var(--bs-gutter-x));
+}
+.best-deal .tabs-content ul.nav-tabs {
+    border-bottom: none !important;
+    margin-bottom: 80px;
+    align-items: end;
+    justify-content: end;
+    margin-top: -130px;
+}
+.best-deal .info-table {
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+    padding: 35px 30px;
+}
+.best-deal .tabs-content .nav-tabs .nav-link.active {
+    background-color: #f35525 !important;
+    color: #fff;
+}
+.best-deal .tabs-content .nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #1e1e1e !important;
+    border-radius: 5px;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    padding: 0px 25px;
+    color: #fff;
+}
+.best-deal .info-table ul li {
+    display: block;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 17px;
+    color: #1e1e1e;
+    font-weight: 400;
+}
+.best-deal .tab-content img {
+    padding: 0px 45px;
+}
+img {
+    width: 100%;
+    overflow: hidden;
+}
+
+.best-deal .info-table ul li span {
+    font-size: 15px;
+    color: #1e1e1e;
+    font-weight: 700;
+    float: right;
+    display: inline-block;
+}
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.section-heading {
+    margin: 30px 0 30px; /* Căn lề trên 30px, dưới 50px */
+}
+.text-center {
+    text-align: center !important;
+}
+.section-heading h2 {
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-top: 20px;
+    line-height: 56px;
+}
+.categories .item h4 {
+    font-size: 15Spx;
+    font-weight: 600;
+    color: #fff;
+    padding: 22px;
+    margin-bottom: 0px;
+}
+.categories .item {
+    background-color: #0071f8;
+    position: relative;
+    border-radius: 25px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.main-button a.active {
+    background-color: #f35525 !important;
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.main-button a:hover {
+    background-color: #d9441e !important; /* Màu nhấn khi hover */
+}
+
+
+</style>
+
+<!-- ƯU ĐÃI - CHÍNH SÁCH -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card" id="myCard">
+        <div class="card custom-bg">
+          <div class="card-body">
+            <h5 class="card-title" id="uudai-card">ƯU ĐÃI</h5>
+            <p class="card-text">🔥 Xem ngay ưu đãi dành cho bạn! 🎁👉</p>
+          </div>
+        </div>
+     </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card" id="myCard">
+        <div class="card custom-bg">
+          <div class="card-body">
+            <h5 class="card-title" id="chinhsach-card">CHÍNH SÁCH</h5>
+            <p class="card-text">📜 Xem ngay các chính sách dành cho khách hàng! 👉</p>
+          </div>
+        </div>
+     </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="section-heading text-center">
+          <h2>SunDental - Mang đến cho quý khách hàng chất lượng dịch vụ chất lượng cao và các chính sách hậu mãi chu đáo</h2>
+        </div>
+      </div>
+    </div>
+<!-- Nội dung ưu đãi sẽ được hiển thị tự động khi tải trang -->
+  <div class="card mt-5">
+    <div class="card-body" id="content-area">
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript để thay đổi nội dung khi click vào card -->
+<script>
+  // Lấy phần tử HTML
+  const uudaiCard = document.getElementById("uudai-card");
+  const chinhsachCard = document.getElementById("chinhsach-card");
+  const contentArea = document.getElementById("content-area");
+
+  // Hàm hiển thị nội dung ưu đãi
+  function showUuDai() {
+  contentArea.innerHTML = `
+  <div class="section best-deal">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="section-heading">
+            <h6>| ƯU ĐÃI</h6>
+            <h2> NHA KHOA SUNDENTAL</h2>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="tabs-content">
+            <div class="row">
+              <div class="nav-wrapper ">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="Customer_New-tab" data-bs-toggle="tab" data-bs-target="#Customer_New" type="button" role="tab" aria-controls="Customer_New" aria-selected="false" tabindex="-1">Khách hàng mới</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="Customer_Old-tab" data-bs-toggle="tab" data-bs-target="#Customer_Old" type="button" role="tab" aria-controls="Customer_Old" aria-selected="true">Khách hàng cũ</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="Student-tab" data-bs-toggle="tab" data-bs-target="#Student" type="button" role="tab" aria-controls="Student" aria-selected="false" tabindex="-1">Học sinh - Sinh viên</button>
+                  </li>
+                </ul>
+              </div>              
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="Customer_New" role="tabpanel" aria-labelledby="Customer_New-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Chi tiêu:<span>chi tiêu >5tr</span></li>
+                          <li>Ưu đãi: <span>5% - 15 %  </span></li>
+                          <li>Voucher: <span>giảm 50k</span></li>
+                          <li>Thời gian ưu đãi:<span>7 ngày</span></li>
+                          <li>Tích điểm:<span> x2 điểm làn đầu </span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="<" alt="">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>CHI TIẾT ƯU ĐÃI</h4>
+                      <br><br>Khi bạn chi tiêu trên 5 triệu đồng, bạn sẽ nhận ngay ưu đãi giảm giá từ 5% đến 15% cho các dịch vụ tiếp theo. Ngoài ra, bạn còn được tặng voucher giảm giá 50k cho đơn hàng tiếp theo. Thời gian ưu đãi kéo dài trong 7 ngày, giúp bạn tận dụng ngay cơ hội tiết kiệm. Hơn thế nữa, bạn còn có thể tích điểm để đổi quà hấp dẫn trong tương lai.</p>
+                      <div class="icon-button">
+                        <a href="dichvu.html"><i class="fa fa-calendar"></i> XEM THÊM: DỊCH VỤ NHA KHOA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade active show" id="Customer_Old" role="tabpanel" aria-labelledby="Customer_Old-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Chi tiêu:<span> > 1trđ </span></li>
+                          <li>1 dịch vụ: <span> 1 ưu đãi </span></li>
+                          <li>Voucher: <span> 10% - 30 % </span></li>
+                          <li>Thời gian ưu đãi:<span>Không giới hạn</span></li>
+                          <li>Tích điểm: <span> số điện thoại</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="assets/images/deal-02.jpg" alt="">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>CHI TIẾT ƯU ĐÃI:</h4>
+                      <p>Khi bạn chi tiêu trên 1 triệu đồng, bạn sẽ nhận được 1 ưu đãi cho mỗi dịch vụ sử dụng. Ưu đãi bao gồm voucher giảm giá từ 10% đến 30%, áp dụng cho các dịch vụ tiếp theo. Thời gian ưu đãi không giới hạn, giúp bạn thoải mái sử dụng khi cần. Bên cạnh đó, bạn còn có cơ hội tích điểm và đổi quà hấp dẫn, điều này mang lại nhiều lợi ích lâu dài cho bạn khi sử dụng dịch vụ.</p>
+                      <div class="icon-button">
+                        <a href="property-details.html"><i class="fa fa-calendar"></i> XEM THÊM: DỊCH VỤ NHA KHOA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="Student" role="tabpanel" aria-labelledby="Student-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Độ tuổi: <span>16 - 22</span></li>
+                          <li>Điều kiện: <span>thẻ học sinh/sinh viên</span></li>
+                          <li>Chi tiêu: <span> >5tr đ</span></li>
+                          <li>Thời gian ưu đãi<span>Không giới hạn</span></li>
+                          <li>1 Ưu đãi:<span>1 người</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'home/assets/img/uudai/mot.jpg' %}" alt="">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>CHI TIẾT ƯU ĐÃI:</h4>
+                      <p>Dành cho khách hàng từ 16-22 tuổi có thẻ học sinh/sinh viên và chi tiêu trên 5 triệu đồng, bạn sẽ nhận được một ưu đãi đặc biệt. Thời gian ưu đãi không giới hạn, giúp bạn có thể sử dụng bất cứ khi nào. Một ưu đãi duy nhất dành cho bạn, giúp tiết kiệm chi phí và tận hưởng dịch vụ tuyệt vời.</p>
+                      <div class="icon-button">
+                        <a href="dichvu.html"><i class="fa fa-calendar"></i>XEM THÊM: DỊCH VỤ NHA KHOA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+  }
+function showChinhSach() {
+    contentArea.innerHTML = `
+        <h3>🔥 ƯU ĐÃI ĐẶC BIỆT 🔥</h3>
+        <p>🎁 Nhận ngay ưu đãi hấp dẫn khi đặt lịch hẹn hôm nay!</p>
+        <p>💳 Giảm giá <b>20%</b> cho khách hàng mới.</p>
+        <p>🎉 Ưu đãi đặc biệt dành cho hội viên.</p>
+    `;
+}
+
+
+  // Khi tải trang, hiển thị nội dung ưu đãi trước
+  window.onload = showUuDai;
+
+  // Xử lý khi bấm vào thẻ card
+  uudaiCard.addEventListener("click", showUuDai);
+  chinhsachCard.addEventListener("click", showChinhSach);
+</script>
+
+<div class="section categories">
+  <div class="container">
+    <div class="row">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6">
+          <div class="section-heading">
+            <h6>NEWS-TIN TỨC</h6>
+            <h2>TIN TỨC NỔI BẬT TRONG TUẦN</h2>
+          </div>
+        </div>
+        <div class="col-lg-6 text-lg-end">
+          <div class="main-button">
+            <a href="kienthuc.html" class="active">XEM THÊM</a>
+          </div>
+        </div>        
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>TIÊU ĐỀ</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="assets/images/categories-01.jpg" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>TIÊU ĐỀ</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="assets/images/categories-05.jpg" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>TIÊU ĐỀ</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="assets/images/categories-03.jpg" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>TIÊU ĐỀ</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="assets/images/categories-04.jpg" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>TIÊU ĐỀ</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="assets/images/categories-05.jpg" alt=""></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

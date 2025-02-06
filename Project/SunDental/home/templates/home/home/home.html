@@ -1,0 +1,162 @@
+{% extends "..//master.html" %}
+{% load static %}
+
+{% block menu-inner %} 
+{% include "../includes/left_menu.html" %}
+{% endblock %}
+
+{% block navbar %} 
+{% include "../includes/Navbar.html" %}
+{% endblock %}
+
+{% block content %}
+<img src="https://nhakhoaviethan.vn/wp-content/uploads/2024/12/472090404_122135602502385286_7089660425999260246_n-scaled.jpg" width="100%" height="100%" style="margin:20px 10px 0px 10px" >
+
+
+<style>
+  .doctor-slider {
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .doctor-container {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .doctor-card {
+    min-width: 20%;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .doctor-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    overflow: hidden;
+  }
+  
+  .doctor-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .doctor-info h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+  }
+  
+  .doctor-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+  }
+  </style>
+  <div class="doctor-slider">
+    <div class="doctor-container">
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2024/05/BS-TINH-768x768.jpg" alt="Bác sĩ 1">
+        </div>
+        <div class="doctor-info">
+          <h3>BS. Nguyễn Văn A</h3>
+          <p>Năm sinh: 1980</p>
+          <p>Mã số: NHS-001</p>
+          <p>Chuyên môn: Nha khoa tổng quát</p>
+        </div>
+      </div>
+      
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2023/03/Bsi-Thinh-768x768.jpg" alt="Bác sĩ 2">
+        </div>
+        <div class="doctor-info">
+          <h3>BS. Trần Thị B</h3>
+          <p>Năm sinh: 1985</p>
+          <p>Mã số: NHS-002</p>
+          <p>Chuyên môn: Chỉnh nha</p>
+        </div>
+      </div>
+  
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2023/10/BSI-NGA-1-768x768.jpg" alt="Bác sĩ 3">
+        </div>
+        <div class="doctor-info">
+          <h3>BS. Lê Văn C</h3>
+          <p>Năm sinh: 1982</p>
+          <p>Mã số: NHS-003</p>
+          <p>Chuyên môn: Implant</p>
+        </div>
+      </div>
+  
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2021/12/Bs-Quan-768x768.jpg" alt="Bác sĩ 4">
+        </div>
+        <div class="doctor-info">
+          <h3>BS. Phạm Thị D</h3>
+          <p>Năm sinh: 1988</p>
+          <p>Mã số: NHS-004</p>
+          <p>Chuyên môn: Nha chu</p>
+        </div>
+      </div>
+  
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2021/12/Bs-Giang-23.12.001-768x768.png" alt="Bác sĩ 5">
+        </div>
+        <div class="doctor-info">
+          <h3>BS. Hoàng Văn E</h3>
+          <p>Năm sinh: 1983</p>
+          <p>Mã số: NHS-005</p>
+          <p>Chuyên môn: Phục hình răng</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.querySelector('.doctor-container');
+      const cards = document.querySelectorAll('.doctor-card');
+      let currentIndex = 0;
+  
+      // Clone all cards to create a seamless loop
+      const totalCards = cards.length;
+      for (let i = 0; i < totalCards; i++) {
+        const clone = cards[i].cloneNode(true);
+        container.appendChild(clone);
+      }
+  
+      function slideNext() {
+        currentIndex++;
+        container.style.transform = `translateX(-${currentIndex * 20}%)`;
+        container.style.transition = 'transform 0.5s ease';
+  
+        // Reset to the start seamlessly when reaching the end of the loop
+        if (currentIndex === totalCards) {
+          setTimeout(() => {
+            container.style.transition = 'none';
+            currentIndex = 0;
+            container.style.transform = 'translateX(0)';
+          }, 500); // Wait for the transition to finish
+        }
+      }
+  
+      // Auto slide every 3 seconds
+      setInterval(slideNext, 3000);
+    });
+</script>
+
+{% endblock  %}
+
+{% block footer %} 
+{% include "../includes/footer.html" %}
+{% endblock %}  

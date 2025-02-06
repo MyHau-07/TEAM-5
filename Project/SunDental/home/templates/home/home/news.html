@@ -1,0 +1,155 @@
+{% extends "..//master.html" %}
+{% load static %}
+
+{% block menu-inner %} 
+{% include "../includes/left_menu.html" %}
+{% endblock %}
+
+{% block navbar %} 
+{% include "../includes/Navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- DANH MỤC -->
+    <div class="card mb-">
+      <div class="card-header">
+        <div class="card-body">
+          <div class="row gy-4 gy-sm-1">
+            <div class="col-sm-6 col-lg-4">
+              <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-4 pb-sm-0">
+                <div>
+                  <p class="mb-1">học sinh - sinh viên</p>
+                  <p class="mb-0"><span class="me-2">5k orders</span><span class="badge bg-label-success">+5.7%</span></p>
+                </div>
+                <span class="avatar me-sm-6">
+                  <span class="avatar-initial rounded w-px-44 h-px-44">
+                    <i class="icon-base bx bx-store-alt icon-lg text-heading"></i>
+                  </span>
+                </span>
+              </div>
+              <hr class="d-none d-sm-block d-lg-none me-6">
+            </div>
+            <div class="col-sm-6 col-lg-4">
+              <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-4 pb-sm-0">
+                <div>
+                  <p class="mb-1">Website Sales</p>
+                  <h4 class="mb-1">$674,347.12</h4>
+                  <p class="mb-0"><span class="me-2">21k orders</span><span class="badge bg-label-success">+12.4%</span></p>
+                </div>
+                <span class="avatar p-2 me-lg-6">
+                  <span class="avatar-initial rounded w-px-44 h-px-44">
+                    <i class="icon-base bx bx-laptop icon-lg text-heading"></i>
+                  </span>
+                </span>
+              </div>
+              <hr class="d-none d-sm-block d-lg-none">
+            </div>
+            <div class="col-sm-6 col-lg-4">
+              <div class="d-flex justify-content-between align-items-start border-end pb-4 pb-sm-0 card-widget-3">
+                <div>
+                  <p class="mb-1">Discount</p>
+                  <h4 class="mb-1">$14,235.12</h4>
+                  <p class="mb-0">6k orders</p>
+                </div>
+                <span class="avatar p-2 me-sm-6">
+                  <span class="avatar-initial rounded w-px-44 h-px-44">
+                    <i class="icon-base bx bx-gift icon-lg text-heading"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- THANH TÌM KIẾM -->
+    <div class="row card-header border-bottom mx-12 px-3 py-2">
+        <div class="d-md-flex justify-content-between align-items-center dt-layout-start col-md-auto me-auto">
+            <h5 class="card-title mb-0 text-nowrap text-md-start text-center">Tin tức nổi bật</h5>
+        </div>
+        <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto">
+            <div class="dt-search">
+                <input type="search" class="form-control" id="dt-search-0" placeholder="Tìm kiếm" aria-controls="DataTables_Table_0">
+                <label for="dt-search-0"> 
+                </label>
+            </div>
+        </div>
+    </div>
+
+<!-- DANH SÁCH TIN TỨC-->
+<div class="col-xxl-12 mb-xxl-0 mb-6">
+    <div class="card h-200">
+        <div class="px-5 py-4 border border-start-0 border-end-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-uppercase" style="font-size: 1.5rem;">Danh mục tin tức</p>
+                <p class="mb-0 text-uppercase" style="font-size: 1.5rem;">Lượt xem</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-6">
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4" style="width: 50px; height: 50px;">
+                        <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div>
+                        <h6 class="mb-0 text-truncate" style="font-size: 1.5rem; color: #007bff;">Thế nào là các bước trồng răng implant nguyên hàm đạt chuẩn?</h6>
+                        <small class="text-truncate text-body" style="font-size: 1.125rem; color: #000000;">Business Intelligence</small>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <h6 class="mb-0" style="font-size: 1.5rem; color: #28a745;">33</h6>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-6">
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4" style="width: 50px; height: 50px;">
+                        <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div>
+                        <h6 class="mb-0 text-truncate" style="font-size: 1.5rem; color: #007bff;">Làm răng ưu đãi không ngại đường xa chẳng lo về giá</h6>
+                        <small class="text-truncate text-body" style="font-size: 1.125rem; color: #000000;">Digital Marketing</small>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <h6 class="mb-0" style="font-size: 1.5rem; color: #28a745;">52</h6>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-6">
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4" style="width: 50px; height: 50px;">
+                        <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div>
+                        <h6 class="mb-0 text-truncate" style="font-size: 1.5rem; color: #007bff;">Sau khi trồng răng implant bao lâu thì ăn được?</h6>
+                        <small class="text-truncate text-body" style="font-size: 1.125rem; color: #000000;">UI/UX Design</small>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <h6 class="mb-0" style="font-size: 1.5rem; color: #28a745;">12</h6>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4" style="width: 50px; height: 50px;">
+                        <img src="../../assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div>
+                        <h6 class="mb-0 text-truncate" style="font-size: 1.5rem; color: #007bff;">Các loại răng sứ thẩm mỹ hiện nay</h6>
+                        <small class="text-truncate text-body" style="font-size: 1.125rem; color: #000000;">React Native</small>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <h6 class="mb-0" style="font-size: 1.5rem; color: #28a745;">8</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  {% endblock %}
+
+  {% block footer %} 
+{% include "../includes/footer.html" %}
+{% endblock %}  
