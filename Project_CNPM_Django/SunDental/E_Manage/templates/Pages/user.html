@@ -1,0 +1,166 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+ 
+ <head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .navbar {
+            width: 100%;
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .main-container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+        .container {
+            flex-grow: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+            margin-top: 15px;
+            margin-right: 15px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 15px;
+            margin-top: 10px;
+        }
+        .img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-around;
+            margin: 15px 0;
+        }
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            background-color: white;
+            text-align: center;
+            flex-grow: 1;
+            max-width: 150px;
+        }
+        .sections {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        .section {
+            flex: 1 1 48%;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .sidebar {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .container {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+ </head>
+ <body>
+    <div class="container">
+        <div class="header">
+            <img class="img" src="{%static 'home/assets/img/avatars/1.png' %}" alt="Ảnh đại diện">
+            <div class="info">
+                <p><strong>Họ tên:</strong> Nguyễn Văn A</p>
+                <p><strong>Năm sinh:</strong> 19/04/1994</p>
+                <p><strong>Số điện thoại:</strong> 0900100110</p>
+                <p><strong>Địa chỉ:</strong> Tp. Hồ Chí Minh</p>
+                <p><strong>Giới tính:</strong> Nam</p>
+                <p><strong>Email:</strong> NguyenVanA1904@gmail.com</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100" href="#">
+                Lịch hẹn
+               </a>
+               <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100" href="#">
+                Ưu đãi
+               </a>
+               <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100" href="#">
+                Tư vấn
+               </a>
+               <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100" href="#">
+                Lịch sử
+               </a>
+               <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100" href="#">
+                Hóa đơn
+               </a>
+        </div>
+        <div class="sections">
+            <div class="section">Thống kê lịch trình điều trị</div>
+            <div class="section">Thông kê ...</div>
+        </div>
+    </div>
+    <div class="container">
+   <div class="mt-4 p-4">
+   </div>
+   <div class="mt-4 p-4">
+   </div>
+   <div class="mt-4 p-4">
+   </div>
+  </div>
+ </body>
+{% endblock  %}
+
+{% block footer %} 
+{% include "home/includes/footer.html" %}
+{% endblock %}
