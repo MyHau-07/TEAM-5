@@ -91,4 +91,19 @@
       localStorage.setItem("activeMenuItem", activeLink);
     });
   });
+  $(function() {
+  // Check local storage for the active menu item
+  var activeMenuItem = localStorage.getItem('activeMenuItem');
+  if (activeMenuItem) {
+      $('ul.menu-inner li').removeClass('active');
+      $('ul.menu-inner li a[href="' + activeMenuItem + '"]').closest('li').addClass('active');
+  }
+
+  // Click event for menu items
+  $('ul.menu-inner li a').click(function(event) {
+      // Store the active menu item's href in local storage
+      var activeLink = $(this).attr('href');
+      localStorage.setItem('activeMenuItem', activeLink);
+  });
 </script>
+

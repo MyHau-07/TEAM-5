@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 # Create your models here.
 class Customer (models.Model):
@@ -6,6 +7,4 @@ class Customer (models.Model):
     gender = models.BooleanField()
     birth_day = models.DateField()
 
-class Services (models.Model):
-    name = models.CharField(max_length=50)
-    price = models.CharField(max_length=10)
+
