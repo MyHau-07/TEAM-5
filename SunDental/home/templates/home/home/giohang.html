@@ -1,0 +1,173 @@
+{% extends "..//master.html" %}
+{% load static %}
+
+{% block menu-inner %} 
+{% include "../includes/left_menu.html" %}
+{% endblock %}
+
+{% block navbar %} 
+{% include "../includes/Navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="vi" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Giỏ hàng - Dịch vụ nha khoa</title>
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">  
+    <link rel="stylesheet" href="../vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <style>
+        body {
+            color: #797CFF;
+        }
+        .navbar {
+            background-color: #f8f9fa;
+        }
+        .list-group-item {
+            color: #797CFF;
+        }
+        .btn-primary {
+            background-color: #797CFF;
+            border-color: #797CFF;
+        }
+        .btn-primary:hover {
+            background-color: #6a6eff;
+            border-color: #6a6eff;
+        }
+    </style>
+</head>
+<body>
+    
+
+  <main role="main">
+    <div class="container mt-4">
+      <div class="py-5 text-center" >
+        <h2 style="color: #797CFF">Chọn dịch vụ</h2>
+        <p class="lead">Vui lòng chọn các dịch vụ mà bạn muốn đăng ký.</p>
+      </div>
+
+      <form class="needs-validation" name="frmthanhtoan" method="post" action="#">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="mb-3"style="color: black" >Dịch vụ</h4>
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Nhổ răng</div>
+                  <small class="text-muted">500.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="500000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Trám răng</div>
+                  <small class="text-muted">300.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="300000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Cấy ghép Implant</div>
+                  <small class="text-muted">20.000.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="20000000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Cạo vôi răng</div>
+                  <small class="text-muted">250.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="250000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Trồng răng sứ</div>
+                  <small class="text-muted">3.000.000 - 15.000.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="3000000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Vệ sinh răng</div>
+                  <small class="text-muted">200.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="200000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Niềng răng chỉnh nha</div>
+                  <small class="text-muted">20.000.000 - 40.000.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="20000000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Chữa tủy răng</div>
+                  <small class="text-muted">2.000.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="2000000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Tháo lắp răng</div>
+                  <small class="text-muted">3.000.000 - 15.000.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="3000000" class="form-check-input">
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <div>Nhổ răng khôn</div>
+                  <small class="text-muted">1.500.000 VND</small>
+                </div>
+                <input type="checkbox" name="dichvu[]" value="1500000" class="form-check-input">
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-4">
+            <h4 class="mb-3" style= "color: black">Tổng thanh toán</h4>
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>Tổng cộng</span>
+                <strong id="totalAmount">0 VND</strong>
+              </li>
+            </ul>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Thanh toán</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('input[type="checkbox"]').change(function() {
+            let total = 0;
+            $('input[type="checkbox"]:checked').each(function() {
+                total += parseInt($(this).val());
+            });
+            $('#totalAmount').text(total.toLocaleString() + ' VND');
+        });
+    });
+  </script>
+</body>
+</html>
+{% endblock %}
+
+{% block footer %} 
+{% include "../includes/footer.html" %}
+{% endblock %}  
