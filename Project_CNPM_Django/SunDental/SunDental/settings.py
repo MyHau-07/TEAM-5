@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'E_Manage',
     'home',
     'Dentist',
-    'Booking',
+    'user',
+    'sukien',
+    'kienthuc',
+    'uudai',
+    'booking',
+    'news',
+    "django.contrib.postgres",
 ]
 
 MIDDLEWARE = [
@@ -78,22 +84,6 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # settings.py
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "mssql",
-#         "NAME": "testdb",
-#         "USER": "sa",
-#         "PASSWORD": "Anhhuy1711@",
-#         "HOST": "127.0.0.1",
-#         "PORT": "1433",
-#         "OPTIONS": {
-#             'driver': 'ODBC Driver 17 for SQL Server',
-#             'Trusted_Connection':'yes ',
-#         },
-#     },
-# }
-
-# Setting mysql 
 DATABASES = {
     "default": {
         "ENGINE": "mssql",

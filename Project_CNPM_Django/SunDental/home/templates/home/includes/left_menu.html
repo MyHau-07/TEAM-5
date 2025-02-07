@@ -33,7 +33,7 @@
 
     <!-- Service -->
     <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link">
+      <a href=";" class="menu-link">
         <i class="menu-icon tf-icons bx bx-layout"></i>
         <div class="text-truncate" data-i18n="Service">Dịch Vụ</div>
       </a>
@@ -41,25 +41,25 @@
 
     <!-- Front Pages -->
     <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link">
+      <a href="{% url 'uudai'%}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-store"></i>
         <div class="text-truncate" data-i18n="Front Pages">Ưu đãi</div>
       </a>
     </li>
     <li class="menu-item">
-      <a href="{% url 'home'%}" class="menu-link">
+      <a href="{% url 'sukien'%}" class="menu-link">
         <i class="menu-icon bi bi-gift-fill"></i>
         <div class="text-truncate" data-i18n="Event">Sự kiện</div>
       </a>
     </li>
     <li class="menu-item">
-      <a href="{% url 'home'%}" class="menu-link">
+      <a href="{% url 'kienthuc'%}" class="menu-link">
         <i class="menu-icon bi bi-lightbulb-fill"></i>
         <div class="text-truncate" data-i18n="Knowledge">Kiến thức</div>
       </a>
     </li>
     <li class="menu-item">
-      <a href="{% url 'home'%}" class="menu-link">
+      <a href="{% url 'contact'%}" class="menu-link">
         <i class="menu-icon bi bi-person-lines-fill"></i>
         <div class="text-truncate" data-i18n="Contact">Liên Hệ</div>
         <div
@@ -71,3 +71,40 @@
     </li>
   </ul>
 </aside>
+<!-- jQuery Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(function () {
+    // Check local storage for the active menu item
+    var activeMenuItem = localStorage.getItem("activeMenuItem");
+    if (activeMenuItem) {
+      $("ul.menu-inner li").removeClass("active");
+      $('ul.menu-inner li a[href="' + activeMenuItem + '"]')
+        .closest("li")
+        .addClass("active");
+    }
+
+    // Click event for menu items
+    $("ul.menu-inner li a").click(function (event) {
+      // Store the active menu item's href in local storage
+      var activeLink = $(this).attr("href");
+      localStorage.setItem("activeMenuItem", activeLink);
+    });
+  });
+  $(function() {
+  // Check local storage for the active menu item
+  var activeMenuItem = localStorage.getItem('activeMenuItem');
+  if (activeMenuItem) {
+      $('ul.menu-inner li').removeClass('active');
+      $('ul.menu-inner li a[href="' + activeMenuItem + '"]').closest('li').addClass('active');
+  }
+
+  // Click event for menu items
+  $('ul.menu-inner li a').click(function(event) {
+      // Store the active menu item's href in local storage
+      var activeLink = $(this).attr('href');
+      localStorage.setItem('activeMenuItem', activeLink);
+  });
+});
+</script>
+

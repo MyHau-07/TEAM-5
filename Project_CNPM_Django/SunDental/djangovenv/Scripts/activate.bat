@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\CNPM\TEAM-5\Project_CNPM_Django\SunDental\djangovenv
+set VIRTUAL_ENV=D:\CNPM\Dự án SunDental\Project_CNPM_Django\SunDental\djangovenv
 
 if not defined PROMPT set PROMPT=$P$G
 

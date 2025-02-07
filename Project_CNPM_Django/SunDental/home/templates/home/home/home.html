@@ -10,117 +10,46 @@
 {% endblock %}
 
 {% block content %}
-<img src="https://nhakhoaviethan.vn/wp-content/uploads/2024/12/472090404_122135602502385286_7089660425999260246_n-scaled.jpg" width="100%" height="100%" style="margin:20px 10px 0px 10px" >
+<img src="{% static "home/assets/img/banner/banner.png"%}" width="100%" height="auto" class=" rounded mt-5 mx-5 mb-2" >
 
 
 <style>
-  .doctor-slider {
-    width: 100%;
-    margin-bottom: 10px;
-    overflow: hidden;
-    position: relative;
+  .title {
+      color: #696CFF;
   }
-  
-  .doctor-container {
-    display: flex;
-    transition: transform 0.5s ease;
+  .description {
+      color: #4b5563;
   }
-  
-  .doctor-card {
-    min-width: 20%;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .doctor-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    overflow: hidden;
-  }
-  
-  .doctor-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .doctor-info h3 {
-    margin: 0;
-    color: #333;
-    font-size: 18px;
-  }
-  
-  .doctor-info p {
-    margin: 5px 0;
-    color: #666;
-    font-size: 14px;
-  }
-  </style>
-  <div class="doctor-slider">
-    <div class="doctor-container">
-      <div class="doctor-card">
-        <div class="doctor-image">
-          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2024/05/BS-TINH-768x768.jpg" alt="Bác sĩ 1">
+</style>
+
+<div class="container text-center py-5">
+    <h1 class="title fw-bold">CƠ SỞ VẬT CHẤT TẠI BỆNH VIỆN SUNDENTAL</h1>
+    <p class="description mt-3">
+        Với tiêu chí về chất lượng và uy tín, Bệnh viện Răng hàm mặt SUNDENTAL đầu tư các trang thiết bị hiện đại và ứng dụng các công nghệ tân tiến để mang lại kết quả điều trị tốt, an toàn và nhanh chóng cho từng khách hàng.
+    </p>
+    <div class="row">
+      <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-0">
+                <img src="{% static "home/assets/img/elements/csvc1.jpg"%}" class="card-img-top rounded zoom" alt="Dentist working in a modern dental office with various equipment and tools">
+            </div>
         </div>
-        <div class="doctor-info">
-          <h3>BS. Nguyễn Văn A</h3>
-          <p>Năm sinh: 1980</p>
-          <p>Mã số: NHS-001</p>
-          <p>Chuyên môn: Nha khoa tổng quát</p>
+        <div class="col-md-6">
+            <div class="card border-0">
+                <img src="{% static "home/assets/img/elements/csvc2.jpg"%}" class="card-img-top rounded zoom" alt="A person in a white shirt with a blue flower logo talking to a woman in a black uniform holding a clipboard">
+            </div>
         </div>
-      </div>
-      
-      <div class="doctor-card">
-        <div class="doctor-image">
-          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2023/03/Bsi-Thinh-768x768.jpg" alt="Bác sĩ 2">
-        </div>
-        <div class="doctor-info">
-          <h3>BS. Trần Thị B</h3>
-          <p>Năm sinh: 1985</p>
-          <p>Mã số: NHS-002</p>
-          <p>Chuyên môn: Chỉnh nha</p>
-        </div>
-      </div>
-  
-      <div class="doctor-card">
-        <div class="doctor-image">
-          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2023/10/BSI-NGA-1-768x768.jpg" alt="Bác sĩ 3">
-        </div>
-        <div class="doctor-info">
-          <h3>BS. Lê Văn C</h3>
-          <p>Năm sinh: 1982</p>
-          <p>Mã số: NHS-003</p>
-          <p>Chuyên môn: Implant</p>
-        </div>
-      </div>
-  
-      <div class="doctor-card">
-        <div class="doctor-image">
-          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2021/12/Bs-Quan-768x768.jpg" alt="Bác sĩ 4">
-        </div>
-        <div class="doctor-info">
-          <h3>BS. Phạm Thị D</h3>
-          <p>Năm sinh: 1988</p>
-          <p>Mã số: NHS-004</p>
-          <p>Chuyên môn: Nha chu</p>
-        </div>
-      </div>
-  
-      <div class="doctor-card">
-        <div class="doctor-image">
-          <img src="https://nhakhoaviethan.vn/wp-content/uploads/2021/12/Bs-Giang-23.12.001-768x768.png" alt="Bác sĩ 5">
-        </div>
-        <div class="doctor-info">
-          <h3>BS. Hoàng Văn E</h3>
-          <p>Năm sinh: 1983</p>
-          <p>Mã số: NHS-005</p>
-          <p>Chuyên môn: Phục hình răng</p>
-        </div>
-      </div>
     </div>
-  </div>
+    </div>
+</div>
+
+<style>
+  .zoom:hover {
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
+  }
+</style>
+
   
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -154,6 +83,218 @@
       setInterval(slideNext, 3000);
     });
 </script>
+
+
+
+
+
+<div class="container py-5">
+  <div class="text-center mb-5">
+   <h1 class="text-primary fw-bold">
+    DỊCH VỤ NỔI BẬT
+   </h1>
+   <p class="text-secondary">
+    Nha khoa của người Việt toàn cầu
+   </p>
+   <div class="d-flex justify-content-center mt-2">
+    <i class="fas fa-tooth text-warning fs-2">
+    </i>
+   </div>
+  </div>
+  <div class="carousel slide" data-bs-ride="carousel" id="serviceCarousel">
+   <div class="carousel-inner">
+    <div class="carousel-item active">
+     <div class="row justify-content-center g-4">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Dentist performing a procedure" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/x3Wwes5tjUn4alTHgNmC0Eci86n-BQoWQeSo2MLBaDY.jpg"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Bọc Răng Sứ: Ưu Điểm, Q...
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Happy patients with dental implants" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/gvYh604q2aMQH_tUA42h04XR4hElViOKh1Zd3EyIOQA.jpg"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Trồng Răng Implant Là G...
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Dental team with a patient" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/Lf5-UERZC_77mUq4Mx_UWwBdZ0cZrL8EGqsIYetIRjU.jpg"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Nhổ Răng Khôn: Ưu Điểm...
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Dental team with Invisalign product" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/JR1iKT9hZL9hYO9k8lRqm7Mqa2c2gbIoIOLyKv1HUS0.jpg"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Niềng Răng Mắc Cài: Chi...
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Woman with bright white teeth" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/qkZKB2dHef9TkLnuvYuXcd977UrmrmD7AxsBi98X4ow.jpg"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Tẩy Trắng Răng: Phương...
+         </p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="carousel-item">
+     <div class="row justify-content-center g-4">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Service 6" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/rSFukoBlTY_Gui7-fz5U2aSr7JPZn99QSQDl9xW9xqc.jpg" width="300"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Dịch Vụ 6
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Service 7" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/OEO7fq2avk1Yl0jVC_k055hSf92FVPW3aHgnmOLKf44.jpg" width="300"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Dịch Vụ 7
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Service 8" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/uRDwhUkMSArwdF8TA9zxgFs1w74y-mh-stetDH9dxGM.jpg" width="300"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Dịch Vụ 8
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Service 9" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/MfB2ukL1tMYJjuszNqDzduv7Ls_7fzpr0G-QiwHqqFY.jpg" width="300"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Dịch Vụ 9
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+       <div class="card service-card">
+        <img alt="Service 10" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/Yj9OfPI3VdL_es5XdPfGpfuR5tAGbhUc8g7gCvdrjag.jpg" width="300"/>
+        <div class="card-body">
+         <p class="card-text text-primary fw-semibold">
+          Dịch Vụ 10
+         </p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <button class="carousel-control-prev " data-bs-slide="prev" data-bs-target="#serviceCarousel" type="button">
+    <span aria-hidden="true" class="carousel-control-prev-icon">
+    </span>
+    <span class="visually-hidden">
+     Previous
+    </span>
+   </button>
+   <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#serviceCarousel" type="button">
+    <span aria-hidden="true" class="carousel-control-next-icon">
+    </span>
+    <span class="visually-hidden">
+     Next
+    </span>
+   </button>
+  </div>
+  <div class="d-flex justify-content-center mt-4">
+   <div class="carousel-indicators">
+    <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0" data-bs-target="#serviceCarousel" type="button">
+    </button>
+    <button aria-label="Slide 2" data-bs-slide-to="1" data-bs-target="#serviceCarousel" type="button">
+    </button>
+   </div>
+  </div>
+ </div>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+ </script>
+
+
+
+ <style>
+  body {
+      font-family: 'Roboto', sans-serif;
+  }
+  .text-teal {
+      color: #696CFF;
+  }
+  .bg-teal {
+      background-color: #696CFF;
+}
+</style>
+<div class="container my-5">
+  <div class="row bg-white p-4 rounded-lg shadow-lg">
+      <div class="col-md-6">
+          <img src="{%static "home/assets/img/elements/element1.png" %}" alt="A collage of smiling people and a dentist in a white coat" class="img-fluid rounded-lg mb-4 mb-md-0">
+      </div>
+      <div class="col-md-6">
+          <h1 class="text-teal fw-bold mb-4">GIỚI THIỆU VỀ HỆ THỐNG NHA KHOA SUNDENTAL</h1>
+          <p class="text-muted mb-4">Với sứ mệnh mang lại nụ cười tự tin và hạnh phúc cho tất cả mọi người, chúng tôi luôn nỗ lực không ngừng để mang đến dịch vụ tốt nhất cho khách hàng. SunDental luôn đặt chất lượng và sự hài lòng của khách hàng lên hàng đầu.</p>
+          <p class="text-muted mb-4">Chúng tôi tự hào với đội ngũ bác sĩ chuyên môn cao, trang thiết bị hiện đại và không gian thoải mái. SunDental cam kết mang đến cho bạn trải nghiệm nha khoa tốt nhất.</p>
+          <p class="text-muted mb-4">Hãy đến với chúng tôi để trải nghiệm dịch vụ và sự chăm sóc tận tình từ đội ngũ nhân viên chuyên nghiệp.</p>
+          <button class="btn bg-teal fw-bold">Tìm Hiểu Thêm</button>
+          <div class="row mt-5">
+            <div class="col-md-6 mb-4">
+                <div class="bg-white p-4 rounded-lg shadow-lg d-flex align-items-center">
+                    <div class="text-teal display-4 mr-4">
+                        <i class="fas fa-user-md "></i>
+                    </div>
+                    <div class="ms-2">
+                        <h3 class="text-teal font-weight-bold">Bác Sĩ</h3>
+                        <p class="text-muted">Đội ngũ bác sĩ giàu kinh nghiệm, chuyên môn cao.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="bg-white p-4 rounded-lg shadow-lg d-flex align-items-center">
+                    <div class="text-teal display-4 mr-4">
+                        <i class="fas fa-users mx-1"></i>
+                    </div>
+                    <div class="ms-2" >
+                        <h3 class="text-teal font-weight-bold">Nhân Viên</h3>
+                        <p class="text-muted">Tư vấn chu đáo, hỗ trợ khách hàng 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
+  
+  <div class="text-center mt-5">
+      <h2 class="text-teal display-4 fw-bold">WELCOME TO SUNDENTAL</h2>
+  </div>
+</div>
+
 
 {% endblock  %}
 

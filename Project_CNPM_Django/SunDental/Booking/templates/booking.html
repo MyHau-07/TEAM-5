@@ -1,0 +1,200 @@
+{% extends "home/master.html" %}
+
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="mt-10" style="margin-left: 25px;">
+    <!-- Thanh tiến trình -->
+    <div class="d-flex align-items-center justify-content-between w-100">
+        <h4 class="fw-bold">1. Dịch vụ</h4>
+            <div class=" bg-primary"  id="step1-progress"></div>
+    </div>
+
+    <!-- Các phần form -->
+    <form id="booking-form" method="POST">
+        {% csrf_token %}
+        <!-- Step 1: Dịch vụ và Thời gian -->
+        <div class="container mt-3 rounded-3 shadow" id="step-1">
+            <div class="row g-4">
+                <div class="col-md-12" style="margin-top: 25px;">
+                    <div class="bookly-form-group" data-type="location">
+                        <label for="location" class="bookly-label">Địa điểm *</label>
+                        <select id="location" class="form-control bookly-select" name="location" required>
+                            <option value="" >Chọn địa điểm</option>
+                            <option value="1">Hồ Chí Minh - 45 Trần Quang Khải, Phường Tân Định, Quận 1</option>
+                            <option value="2">Hà Nội - 156 Thái Thịnh, Phường Láng Hạ, Quận Đống Đa</option>
+                            <option value="3">Đà Nẵng - 108 Hoàng Hoa Thám, Phường Thạc Gián, Quận Thanh Khê</option>
+                            <option value="4">Cần Thơ - 138 Trần Hưng Đạo, Phường An Nghiệp, Quận Ninh Kiều</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <div class="bookly-form-group" data-type="service">
+                        <label for="service" class="bookly-label">Dịch vụ *</label>
+                        <select id="service" class="form-control bookly-select" name="service" required>
+                            <option value="">Chọn dịch vụ</option>
+                            <option value="12">Nhổ răng</option>
+                            <option value="13">Hàn răng</option>
+                            <option value="14">Điều trị tủy</option>
+                            <option value="15">Niềng răng kim loại</option>
+                            <option value="16">Niềng răng trong suốt</option>
+                            <option value="17">Điều trị lệch khớp cắn</option>
+                            <option value="18">Làm răng sứ</option>
+                            <option value="19">Cấy ghép Implant</option>
+                            <option value="20">Mặt dán sứ Veneer</option>
+                            <option value="21">Cạo vôi răng</option>
+                            <option value="22">Điều trị viêm nướu</option>
+                            <option value="23">Ghép nướu</option>
+                            <option value="24">Lấy cao răng sâu dưới nướu</option>
+                            <option value="25">Điều trị áp xe răng</option>
+                            <option value="26">Tái tạo xương ổ răng</option>
+                            <option value="27">Khám sức khỏe răng miệng định kỳ</option>
+                            <option value="28">Chụp X-quang răng toàn hàm</option>
+                            <option value="29">Tư vấn kế hoạch điều trị</option>
+                            <option value="30">Chụp CT Cone Beam 3D</option>
+                            <option value="31">Đo khớp cắn kỹ thuật số</option>
+                            <option value="32">Chụp phim Panorama</option>
+                            <option value="33">Tẩy trắng răng bằng công nghệ Laser</option>
+                            <option value="34">Tư vấn dinh dưỡng và phòng ngừa bệnh lý răng miệng</option>
+                            <option value="35">Đánh giá sức khỏe răng miệng chuyên sâu</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <div class="bookly-form-group" data-type="appointment-date">
+                        <label for="appointment-date" class="bookly-label">Chọn ngày hẹn *</label>
+                        <input type="date" id="appointment-date" class="form-control" name="appointment_date" required>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <div class="bookly-form-group" data-type="appointment-time">
+                        <label for="appointment-time" class="bookly-label">Chọn giờ hẹn *</label>
+                        <select id="appointment-time" class="form-control" name="appointment_time" required>
+                            <option value="">Chọn giờ hẹn</option>
+                            <option value="08:00">08:00 AM</option>
+                            <option value="08:45">08:45 AM</option>
+                            <option value="09:30">09:30 AM</option>
+                            <option value="09:30">10:15 AM</option>
+                            <option value="09:30">11:00 AM</option>
+                            <option value="09:30">11:45 AM</option>
+                            <option value="09:30">01:15 AM</option>
+                            <option value="09:30">02:00 AM</option>
+                            <option value="09:30">02:45 AM</option>
+                            <option value="09:30">03:30 AM</option>
+                            <option value="09:30">04:15 AM</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center " style="margin-top: 25px;">
+                <button class="btn btn-primary btn-lg mb-5" type="button" data-bs-toggle="collapse" data-bs-target="#step-2" aria-expanded="false" aria-controls="step-2">Tiếp tục</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Khách hàng -->
+        <h4 class="fw-bold mt-3">2. Khách hàng</h4>
+            <div class=" bg-primary"  id="step2-progress"></div>
+        <div class="container mt-6 collapse rounded-3 shadow" id="step-2">
+            <div class="row g-4 mb-5">
+                <div class="col-md-12">
+                    <div class="bookly-form-group">
+                        <label for="fullname" class="bookly-label">Họ tên *</label>
+                        <input type="text" id="fullname" class="form-control" name="fullname" placeholder="Nhập họ tên" required>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="bookly-form-group">
+                        <label for="phone" class="bookly-label">Số điện thoại *</label>
+                        <input type="tel" id="phone" class="form-control" name="phone" placeholder="Nhập số điện thoại" required>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="bookly-form-group">
+                        <label for="email" class="bookly-label">Email (nếu có)</label>
+                        <input type="email" id="email" class="form-control" name="email" placeholder="Nhập email">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="bookly-form-group">
+                        <label for="illness" class="bookly-label">Thông tin bệnh (nếu có)</label>
+                        <textarea id="illness" class="form-control" name="illness" rows="4" placeholder="Nhập thông tin bệnh (nếu có)"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="bookly-form-group">
+                        <label for="photo" class="bookly-label">Tải ảnh (nếu có)</label>
+                        <input type="file" id="photo" class="form-control" name="photo" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-secondary btn-lg mb-5" type="button" data-bs-toggle="collapse" data-bs-target="#step-1" aria-expanded="false" aria-controls="step-1">Quay lại</button>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <button class="btn btn-primary btn-lg mb-5" type="button" data-bs-toggle="collapse" data-bs-target="#step-3" aria-expanded="false" aria-controls="step-3">Tiếp tục</button>
+                    </div>
+                    <div class="col-md-4"></div> 
+                </div>
+            </div>
+            
+
+        </div>
+
+        <!-- Step 3: Xong -->
+            <div class="bg-primary" id="step3-progress"></div>
+        <div class="container mt-6 collapse" style="margin-bottom: 10px;" id="step-3">
+            <div class="alert alert-danger" role="alert" id="error-alert" style="display: none;">
+                <strong>Đặt lịch thất bại!</strong> Bạn cần điền đầy đủ thông tin bắt buộc.
+            </div>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-4"></div> <!-- Chừa trống để căn giữa nút -->
+                    <div class="col-md-4 text-center">
+                        <button id="complete-btn" class="btn btn-success btn-lg">
+                            Hoàn tất
+                        </button>
+                    </div>
+                    
+                    <div class="col-md-4"></div> <!-- Chừa trống để nút căn giữa -->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById("complete-btn").addEventListener("click", function(event) {
+        event.preventDefault(); // Ngăn form submit ngay lập tức
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Gửi thành công!',
+            text: 'Chúng tôi sẽ liên hệ với bạn sớm.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            document.getElementById("booking-form").submit(); // Sau khi nhấn OK thì gửi form
+        });
+    });
+</script>
+
+{% endblock %}
+
+{% block footer %} 
+{% include "home/includes/footer.html" %}
+{% endblock %}

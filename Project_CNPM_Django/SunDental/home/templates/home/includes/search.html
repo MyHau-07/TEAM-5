@@ -1,0 +1,118 @@
+{% extends "../master.html" %}
+{% load static %}
+
+{% block menu-inner %}
+{% include "../includes/left_menu.html" %}
+{% endblock menu-inner %}
+
+{% block navbar %}
+{% include "../includes/Navbar.html" %}
+{% endblock navbar %}
+
+
+{% block content %}
+{% comment %} <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        .filter-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .result-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+<div class="container mt-5">
+    <h2 class="text-center">Kết quả Tìm kiếm</h2>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="input-group mb-4">
+        <input type="text" class="form-control" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button"><i class="fas fa-search"></i> Tìm kiếm</button>
+        </div>
+    </div>
+
+    <!-- Bộ lọc -->
+    <div class="filter-section">
+        <h5>Bộ lọc Kết quả</h5>
+        <form>
+            <div class="form-group">
+                <label for="category">Danh mục</label>
+                <select class="form-control" id="category">
+                    <option>Tất cả</option>
+                    <option>Công nghệ</option>
+                    <option>Giáo dục</option>
+                    <option>Y tế</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Ngày</label>
+                <input type="date" class="form-control" id="date">
+            </div>
+            <button type="submit" class="btn btn-success">Áp dụng bộ lọc</button>
+        </form>
+    </div>
+
+    <!-- Kết quả tìm kiếm -->
+    <div id="search-results">
+        <div class="result-item">
+            <h5>Tên sản phẩm 1</h5>
+            <p>Mô tả ngắn về sản phẩm 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <a href="#" class="btn btn-info">Xem chi tiết</a>
+        </div>
+        <div class="result-item">
+            <h5>Tên sản phẩm 2</h5>
+            <p>Mô tả ngắn về sản phẩm 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <a href="#" class="btn btn-info">Xem chi tiết</a>
+        </div>
+        <div class="result-item">
+            <h5>Tên sản phẩm 3</h5>
+            <p>Mô tả ngắn về sản phẩm 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <a href="#" class="btn btn-info">Xem chi tiết</a>
+        </div>
+        <!-- Thêm nhiều kết quả ở đây -->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> {% endcomment %}
+
+
+<div class="container mt-4">
+    {% if searched %}
+        <h2>Kết quả tìm kiếm cho: "{{ searched }}"</h2>
+    {% endif %}
+        <div class="row">
+        {% if services %}
+            {% for service in services %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service.name }}</h5>
+                            {% comment %} <p class="card-text">{{ service.description|truncatewords:20 }}</p> {% endcomment %}
+                            <p class="card-text"><strong>Giá: {{ service.price }} VNĐ</strong></p>
+                            {% comment %} <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Xem chi tiết</a> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <p>Không tìm thấy sản phẩm nào.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% include "../includes/Footer.html" %}
+{% endblock footer %}

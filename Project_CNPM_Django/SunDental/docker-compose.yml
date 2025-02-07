@@ -6,9 +6,9 @@ services:
     container_name: sqlserver
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Anhhuy1711@" # Đặt mật khẩu cho người dùng sa
+      SA_PASSWORD: "yourStrong(!)Password" # Đặt mật khẩu cho người dùng sa
     ports:
-      - "1433:1433"
+      - "8000:8000"
     volumes:
       - sqlserverdata:/var/opt/mssql
 
