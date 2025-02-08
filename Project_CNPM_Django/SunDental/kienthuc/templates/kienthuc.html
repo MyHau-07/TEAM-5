@@ -1,0 +1,213 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <a href="{% url 'kienthuc'%}" class="news_card">
+            <div class="news_thumb">
+                <img src="{% static 'home/assets/img/avatars/rangtrang.jpg' %}" alt="TẨY TRẮNG RĂNG NHA KHOA LÀ GÌ?" style="width: 100%; height: auto; float: left; margin-right: 20px;">
+            </div>
+            <div class="news_content" style="color: black;">
+                <h3 style="font-size: 20px; font-weight: bold; color: #797CFF; transition: color 0.3s;" 
+                onmouseover="this.style.color='#FF5733'" 
+                onmouseout="this.style.color='#797CFF'">TẨY TRẮNG NHA KHOA LÀ GÌ?</h3>
+                <p>Hiện nay, phương pháp tẩy trắng không còn xa lạ với chúng ta. Tuy nhiên, không phải ai cũng nắm và hiểu hết được những thông tin về phương pháp này.</p>
+                <span class="news_date" style="color: #797CFF;"><i class="fa fa-clock-o"></i> 20-01-2025</span>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="kien-thuc/mat-rang-so-6-phuc-hinh-bang-cach-nao-hieu-qua-nhat-hien-nay-1306.html" class="news_card small_card">
+            <div class="news_thumb">
+                <img src="{% static 'home/assets/img/avatars/laser.jpg' %}" alt="MẤT RĂNG SỐ 6 PHỤC HÌNH BẰNG CÁCH NÀO HIỆU QUẢ NHẤT HIỆN NAY" style="width: 50%; height: auto; float: left; margin-right: 20px;"> 
+            </div>
+            <div class="news_content">
+                <h3 style="font-size: 20px; font-weight: bold; color: #797CFF; transition: color 0.3s;" 
+                onmouseover="this.style.color='#FF5733'" 
+                onmouseout="this.style.color='#797CFF'">Tẩy trắng răng bằng công nghệ Laser</h3> <p style="font-size: 14px; line-height: 1.5; color: black;">Tẩy trắng răng bằng laser là một quy trình nha khoa thẩm mỹ sử dụng ánh sáng laser để loại bỏ các vết ố và đổi màu trên răng, mang lại nụ cười sáng hơn, trẻ trung hơn. Tuy nhiên, đây là phương pháp đánh răng bóng tự nhiên nên chi phí cũng cao hơn so với những phương pháp truyền thống. Vậy có nên tẩy trắng răng bằng laser hay không?<span style="color: #797CFF; transition: color 0.3s;" onmouseover="this.style.color='#FF5733'" onmouseout="this.style.color='#797CFF'">...Xem thêm</span></p>
+                <span class="news_date"><i class="fa fa-clock-o"></i> 24-01-2025</span>
+            </div>
+        </a>
+
+        <a href="kien-thuc/mat-rang-so-6-phuc-hinh-bang-cach-nao-hieu-qua-nhat-hien-nay-1306.html" class="news_card small_card">
+            <div class="news_thumb">
+                <img src="{% static 'home/assets/img/avatars/rangsu.jpg' %}" alt="MẤT RĂNG SỐ 6 PHỤC HÌNH BẰNG CÁCH NÀO HIỆU QUẢ NHẤT HIỆN NAY" style="width: 50%; height: auto; float: left; margin-right: 20px;"> 
+            </div>
+            <div class="news_content">
+                <h3 style="font-size: 20px; font-weight: bold; color: #797CFF; transition: color 0.3s;" 
+                onmouseover="this.style.color='#FF5733'" 
+                onmouseout="this.style.color='#797CFF'">BỌC RĂNG SỨ LÀ GÌ? CÓ NÊN MÀI RĂNG ĐỂ BỌC RĂNG SỨ KHÔNG?</h3> <p style="font-size: 14px; line-height: 1.5;color: black">Bọc răng sứ không những là giải pháp thẩm mỹ mà còn là cách bảo vệ răng miệng hiệu quả. Quá trình bọc răng sứ đòi hỏi phải mài răng nhưng nếu bác sĩ có tay nghề tốt thì mài răng không gây ảnh hưởng gì. Vậy trường hợp nào Quý khách nên bọc răng sứ còn trường hợp nào thì không nên?<span style="color: #797CFF; transition: color 0.3s;" onmouseover="this.style.color='#FF5733'" onmouseout="this.style.color='#797CFF'">...Xem thêm</span></p>
+                <span class="news_date"><i class="fa fa-clock-o"></i> 24-01-2025</span>
+            </div>
+        </a>
+
+        <a href="kien-thuc/mat-rang-so-6-phuc-hinh-bang-cach-nao-hieu-qua-nhat-hien-nay-1306.html" class="news_card small_card">
+            <div class="news_thumb">
+                <img src="{% static 'home/assets/img/avatars/laytuy.jpg' %}" alt="MẤT RĂNG SỐ 6 PHỤC HÌNH BẰNG CÁCH NÀO HIỆU QUẢ NHẤT HIỆN NAY" style="width: 50%; height: auto; float: left; margin-right: 20px;"> 
+            </div>
+            <div class="news_content">
+                <h3 style="font-size: 20px; font-weight: bold; color: #797CFF; transition: color 0.3s;" 
+                onmouseover="this.style.color='#FF5733'" 
+                onmouseout="this.style.color='#797CFF'">Lấy Tủy Răng Có Hại Không? Có Nên Lấy Tủy Răng Không?</h3> <p style="font-size: 14px; line-height: 1.5; color: black">Lấy tủy răng là một trong những phương pháp điều trị trong lĩnh vực nha khoa và mang lại hiệu quả cao. Vậy lấy tủy răng là gì, có nên lấy tủy răng, lấy tủy răng có ảnh hưởng đến sức khỏe hay không…Tất cả những thắc mắc này sẽ được Nha khoa Westcoast giải đáp trong bài viết dưới đây<span style="color: #797CFF; transition: color 0.3s;" onmouseover="this.style.color='#FF5733'" onmouseout="this.style.color='#797CFF'">...Xem thêm</span></p>
+                <span class="news_date"><i class="fa fa-clock-o"></i> 24-01-2025</span>
+            </div>
+        </a>
+        
+    </div>
+</div>
+
+
+<h2 style="font-size: 30px;color: #797CFF">XEM TIN THEO TỪNG CHUYÊN MỤC</h2>
+
+        
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinite Image Slider</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #f4f4f4;
+    }
+    .image-slider {
+        width: 80%;
+        overflow: hidden;
+        position: relative;
+        border: 2px solid #ddd;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .slider-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        gap: 50px; /* Điều chỉnh khoảng cách giữa các ảnh */
+    }
+    .slider-item {
+        flex: 0 0 auto;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+    .slider-item img {
+        width: 180px;
+        height: auto;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+    .slider-item:hover img {
+        transform: scale(1.5); /* Phóng to ảnh khi hover */
+    }
+    .description {
+        margin-top: 5px;
+        font-size: 14px;
+        color: black;
+        padding: 5px;
+        display: block;
+    }
+    .slider-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        font-size: 18px;
+        z-index: 1000;
+    }
+    .slider-button.left {
+        left: 10px;
+    }
+    .slider-button.right {
+        right: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="image-slider">
+<button class="slider-button left">&lt;</button>
+<div class="slider-container">
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/implant1.jpg' %}" alt="Cấy ghép Implant"><div class="description" style= "color: #797CFF;">Cấy ghép Implant</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/thammy.jpg' %}" alt="Răng sứ thẫm mỹ"><div class="description" style="color: #797CFF;">Răng sứ thẫm mỹ</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/niengrang.jpg' %}" alt="Niềng răng chỉnh nha"><div class="description" style="color: #797CFF;">Niềng răng chỉnh nha</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/benhli.jpg' %}" alt="Bệnh lý răng miệng"><div class="description" style="color: #797CFF;">Bệnh lý răng miệng</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/caor.jpg' %}" alt="Cạo vôi răng"><div class="description" style="color: #797CFF;">Cạo vôi răng</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/chuatuy.jpg' %}" alt="nội nha chữa tủy"><div class="description" style="color: #797CFF;">Nội nha chữa tủy</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/thao_lap.jpg' %}" alt=""><div class="description" style="color: #797CFF;">Hàm giả tháo lắp</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/viem_nuou2.jpg' %}" alt=""><div class="description" style="color: #797CFF;">VIÊM NƯỚU - NHA CHU</div></div>
+    <div class="slider-item"><img src="{% static 'home/assets/img/avatars/rangkhon1.jpg' %}" alt=""><div class="description" style="color: #797CFF;">Tiểu phẫu răng khôn</div></div>
+</div>
+<button class="slider-button right">&gt;</button>
+</div>
+
+<script>
+const sliderContainer = document.querySelector('.slider-container');
+const images = document.querySelectorAll('.slider-item');
+const leftButton = document.querySelector('.slider-button.left');
+const rightButton = document.querySelector('.slider-button.right');
+let index = 0;
+
+function updateVisibleImages() {
+    // Ẩn tất cả các ảnh
+    images.forEach((img, i) => {
+        img.style.display = 'none';
+    });
+    // Hiển thị ba ảnh hiện tại
+    for (let i = 0; i < 3; i++) {
+        images[(index + i) % images.length].style.display = 'block';
+    }
+}
+
+function moveSlider(direction) {
+    if (direction === 'next') {
+        index++;
+        if (index >= images.length) {
+            index = 0;
+        }
+    } else {
+        index--;
+        if (index < 0) {
+            index = images.length - 1;
+        }
+    }
+    updateVisibleImages();
+}
+
+rightButton.addEventListener('click', () => moveSlider('next'));
+leftButton.addEventListener('click', () => moveSlider('prev'));
+
+// Khởi tạo hiển thị ảnh
+updateVisibleImages();
+</script>
+
+</body>
+</html>
+
+{% endblock  %}
+
+{% block footer %} 
+{% include "home/includes/footer.html" %}
+{% endblock %}

@@ -14,15 +14,22 @@
   <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
     <!-- Search -->
     <div class="navbar-nav align-items-center">
-      <div class="nav-item d-flex align-items-center">
-        <i class="bx bx-search bx-md"></i>
-        <input
-          type="text"
-          class="form-control border-0 shadow-none ps-1 ps-sm-2"
-          placeholder="Search..."
-          aria-label="Search..."
-        />
-      </div>
+      <form class="nav-item d-flex align-items-center" method=POST action="{% url 'search'%}">
+        {% csrf_token %}
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0">
+            <i class="bx bx-search bx-md text-primary"></i>
+          </span>
+          <input
+            type="search"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2"
+            placeholder="Search..."
+            aria-label="Search..."
+            name="searched"
+          />
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </form>
     </div>
     <!-- /Search -->
 
@@ -44,7 +51,7 @@
         >
           <div class="avatar avatar-online">
             <img
-              src="{%static 'home/assets/img/avatars/2.jpg' %}"
+              src="{%static 'home/assets/img/avatars/1.png' %}"
               alt
               class="w-px-40 h-auto rounded-circle"
             />
@@ -57,7 +64,7 @@
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
                     <img
-                      src="{%static 'home/assets/img/avatars/2.jpg' %}"
+                      src="{%static 'home/assets/img/avatars/1.png' %}"
                       alt
                       class="w-px-40 h-auto rounded-circle"
                     />
@@ -74,7 +81,7 @@
             <div class="dropdown-divider my-1"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{% url 'user'%}">
               <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
             </a>
           </li>
