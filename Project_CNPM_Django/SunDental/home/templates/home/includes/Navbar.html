@@ -36,10 +36,10 @@
     <ul class="navbar-nav flex-row align-items-center ms-auto">
       <!-- Place this tag where you want the button to render. -->
       <li class="nav-item lh-1 me-4">
-        <a class="btn btn-primary" href="{% url 'login'%}">Đăng nhập</a>
+        <a class="btn btn-primary login-section" href="{% url 'login_view'%}">Đăng nhập</a>
       </li>
       <li class="nav-item lh-1 me-4">
-        <a class="btn btn-secondary" href="{% url 'register'%}">Đăng ký</a>
+        <a class="btn btn-secondary register-section" href="{% url 'register'%}">Đăng ký</a>
       </li>
 
       <!-- User -->
@@ -51,7 +51,7 @@
         >
           <div class="avatar avatar-online">
             <img
-              src="{%static 'home/assets/img/avatars/2.jpg' %}"
+              src="{%static 'home/assets/img/avatars/1.png' %}"
               alt
               class="w-px-40 h-auto rounded-circle"
             />
@@ -64,7 +64,7 @@
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
                     <img
-                      src="{%static 'home/assets/img/avatars/2.jpg' %}"
+                      src="{%static 'home/assets/img/avatars/1.png' %}"
                       alt
                       class="w-px-40 h-auto rounded-circle"
                     />
@@ -81,7 +81,7 @@
             <div class="dropdown-divider my-1"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{% url 'user'%}">
               <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
             </a>
           </li>
@@ -115,3 +115,23 @@
     </ul>
   </div>
 </nav>
+
+
+<script>
+  // Function to check if the user is logged in
+function isUser LoggedIn() {
+  // Replace this with your actual logic to check login status
+  return !!document.cookie.match(/loggedIn=true/);
+}
+
+// Function to hide login and register elements
+function hideLoginRegister() {
+  if (isUser LoggedIn()) {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('register-section').style.display = 'none';
+  }
+}
+
+// Call the function on page load
+window.onload = hideLoginRegister;
+</script>
