@@ -3,7 +3,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def user (request):
-    return render(request, 'Pages/user.html')
+    return render(request, 'Users/user.html')
 
 def giohang (request):
     return render(request, 'Pages/giohang.html')
@@ -15,7 +15,25 @@ def booking (request):
     return render(request, 'Pages/booking.html')
 
 def Dentist (request):
-    return render(request, 'Pages/Dentist.html')
+    return render(request, 'Users/Dentist.html')
+
+def chamcong (request):
+    return render(request, 'Users/chamcong.html')
+
+def nghiphep (request):
+    return render(request, 'Users/nghiphep.html')
+
+def lichlam (request):
+    return render(request, 'Users/lichlam.html')
+
+def lichhen (request):
+    return render(request, 'Users/lichhen.html')
+
+def lichsu (request):
+    return render(request, 'Users/lichsu.html')
+
+def myuudai (request):
+    return render(request, 'Users/myuudai.html')
 
 #----left menu
 def dichvu (request):
