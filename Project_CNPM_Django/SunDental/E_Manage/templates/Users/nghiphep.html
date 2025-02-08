@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Ký Nghỉ Phép</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center text-"  style="font-weight: bold; color: #797CFF;">Đăng Ký Nghỉ Phép</h2>
+    <form id="leaveForm" class="mt-4">
+      <div class="mb-3" style="font-weight: bold; color: black">
+        <label class="form-label">Họ và Tên:</label>
+        <input type="text" class="form-control" id="employeeName" required>
+      </div>
+      <div class="mb-3"style="font-weight: bold; color: black">
+        <label class="form-label">Loại Nghỉ Phép:</label>
+        <select class="form-select" id="leaveType" required>
+          <option value="">Chọn loại nghỉ phép</option>
+          <option value="annual">Nghỉ phép năm</option>
+          <option value="sick">Nghỉ ốm</option>
+          <option value="unpaid">Nghỉ không lương</option>
+        </select>
+      </div>
+      <div class="mb-3" style="font-weight: bold; color: black">
+        <label class="form-label">Chọn Ngày:</label>
+        <input type="date" class="form-control" id="leaveDate" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label"style="font-weight: bold; color: black">Lý Do:</label>
+        <textarea class="form-control" id="reason" rows="3" required></textarea>
+      </div>
+      <div class="mb-3" style=" background-color: #797CFF;font-weight: bold; color: black">
+      <button type="submit" class="btn btn-primary w-100"style="background-color: #797CFF; font-weight: bold; color: black;" >Gửi Đơn</button>
+    </form>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('#leaveForm').submit(function (event) {
+        event.preventDefault();
+        let leaveData = {
+          employee_name: $('#employeeName').val(),
+          leave_type: $('#leaveType').val(),
+          leave_date: $('#leaveDate').val(),
+          reason: $('#reason').val()
+        };
+        console.log("Dữ liệu đơn nghỉ phép:", leaveData);
+        alert("Đơn nghỉ phép đã được gửi thành công!");
+      });
+    });
+  </script>
+</body>
+</html>
