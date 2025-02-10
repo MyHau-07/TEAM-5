@@ -101,117 +101,40 @@
     </i>
    </div>
   </div>
+
+
+  {% comment %}  {% endcomment %}
   <div class="carousel slide" data-bs-ride="carousel" id="serviceCarousel">
-   <div class="carousel-inner">
-    <div class="carousel-item active">
-     <div class="row justify-content-center g-4">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Dentist performing a procedure" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/x3Wwes5tjUn4alTHgNmC0Eci86n-BQoWQeSo2MLBaDY.jpg"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Bọc Răng Sứ: Ưu Điểm, Q...
-         </p>
+    <div class="carousel-inner">
+      {% for group in grouped_services %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}"> <!-- Sửa ở đây -->
+        <div class="row justify-content-center g-4">
+          {% for service in group %}
+          <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+            <div class="card service-card">
+              <img 
+                class="card-img-top" 
+                src="{{ service.image.url }}" 
+              >
+              <div class="card-body">
+                <h5 class="card-text text-primary fw-semibold">
+                  {{ service.name }}
+                </h5>
+                <span class="fw-semibold text-danger">Price : </span>
+                <span class="card-text fw-semibold text-black">
+                  {{ service.price }} VNĐ
+                </span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
-       </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Happy patients with dental implants" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/gvYh604q2aMQH_tUA42h04XR4hElViOKh1Zd3EyIOQA.jpg"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Trồng Răng Implant Là G...
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Dental team with a patient" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/Lf5-UERZC_77mUq4Mx_UWwBdZ0cZrL8EGqsIYetIRjU.jpg"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Nhổ Răng Khôn: Ưu Điểm...
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Dental team with Invisalign product" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/JR1iKT9hZL9hYO9k8lRqm7Mqa2c2gbIoIOLyKv1HUS0.jpg"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Niềng Răng Mắc Cài: Chi...
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Woman with bright white teeth" class="card-img-top" src="https://storage.googleapis.com/a1aa/image/qkZKB2dHef9TkLnuvYuXcd977UrmrmD7AxsBi98X4ow.jpg"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Tẩy Trắng Răng: Phương...
-         </p>
-        </div>
-       </div>
-      </div>
-     </div>
+      {% endfor %}
     </div>
-    <div class="carousel-item">
-     <div class="row justify-content-center g-4">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Service 6" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/rSFukoBlTY_Gui7-fz5U2aSr7JPZn99QSQDl9xW9xqc.jpg" width="300"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Dịch Vụ 6
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Service 7" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/OEO7fq2avk1Yl0jVC_k055hSf92FVPW3aHgnmOLKf44.jpg" width="300"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Dịch Vụ 7
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Service 8" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/uRDwhUkMSArwdF8TA9zxgFs1w74y-mh-stetDH9dxGM.jpg" width="300"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Dịch Vụ 8
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Service 9" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/MfB2ukL1tMYJjuszNqDzduv7Ls_7fzpr0G-QiwHqqFY.jpg" width="300"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Dịch Vụ 9
-         </p>
-        </div>
-       </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-       <div class="card service-card">
-        <img alt="Service 10" class="card-img-top" height="200" src="https://storage.googleapis.com/a1aa/image/Yj9OfPI3VdL_es5XdPfGpfuR5tAGbhUc8g7gCvdrjag.jpg" width="300"/>
-        <div class="card-body">
-         <p class="card-text text-primary fw-semibold">
-          Dịch Vụ 10
-         </p>
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
+{% comment %}  {% endcomment %}
+
+
    <button class="carousel-control-prev " data-bs-slide="prev" data-bs-target="#serviceCarousel" type="button">
     <span aria-hidden="true" class="carousel-control-prev-icon">
     </span>

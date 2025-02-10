@@ -1,7 +1,11 @@
 {% extends "home/master.html" %}
 {% load static %}
-
-
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
 {% block content %}
 <body>
 <style>
@@ -197,21 +201,21 @@
                                         <div class="col-sm-9">
                                             <form class="form-horizontal">
                                                 <div class="form-body">
-                                                    <div class="form-group" style="">
+                                                    <div class="form-group" >
                                                         <label class="col-xs-6"><span lang="bs-id">ID</span>: <span class="bold">036205003749</span></label>
                                                         <label class="col-xs-6"><span lang="bs-chinhanh">Chi nhánh</span>: <span class="bold">7480201300960</span></label>
                                                     </div>
-                                                    <div class="form-group" style="">
+                                                    <div class="form-group" >
                                                         <label class="col-xs-6"><span lang="bs-hoten">Họ tên</span>: <span class="bold">Võ Minh Đạt</span></label>
                                                             <label class="col-xs-6"><span lang="bs-gioitinh">Giới tính</span>: <span class="bold">Nam</span></label>
                                                     </div>
-                                                    <div class="form-group" style="">
+                                                    <div class="form-group" >
                                                         <label class="col-xs-6">
                                                             <span lang="bs-ngaysinh">Ngày sinh</span>: <span class="bold">05/08/2005</span>
                                                         </label>
                                                         <label class="col-xs-6"><span lang="sv-loaihinhdt">Nơi sinh</span>: <span class="bold">Tp. Hồ Chí Minh</span></label>
                                                     </div>
-                                                    <div class="form-group" style="">
+                                                    <div class="form-group" >
                                                         <label class="col-xs-6"><span lang="sv-nganh">Chuyên ngành</span>: <span class="bold">Nha chu</span></label>
                                                     </div>
                                                 </div>
