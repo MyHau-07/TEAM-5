@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%!88f9x(!5u&1dp8)#ck-z+5ap06a9^cq^l+q75%g4==_r()-$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -78,17 +78,16 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 
 # settings.py
 DATABASES = {
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": "db11",
-        "USER": "sa",
-        "PASSWORD": "LeThanh@123",
-        "HOST": "localhost",
-        "PORT": "1433",
-        "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
-        },
-    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Djangodb',
+        'USER': 'myuser',
+        'PASSWORD': 'khoivan@K2005',
+        'HOST':'localhost',
+        'PORT':'5432',
+    }
 }
+
 
 
 

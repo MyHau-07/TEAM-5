@@ -1,16 +1,63 @@
 version: "3.8"
-
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Anhhuy1711@" # Đặt mật khẩu cho người dùng sa
-    ports:
-      - "1433:1433"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+     sh -c "echo 'Checking DB connection...';
+             while ! pg_isready -h db -p 5432 -U myuser; do
+             echo 'Waiting for DB...';
+             sleep 2;
+             done;
+             echo 'DB is ready!';
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:9000"
     volumes:
-      - sqlserverdata:/var/opt/mssql
+      - .:/app
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    networks:
+      - djangonetwork
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: khoivan@K2005
+      POSTGRES_DB: Djangodb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - djangonetwork
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - djangonetwork
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+    ports:
+      - "9200:9200"
+    networks:
+      - djangonetwork
 
 volumes:
-  sqlserverdata:
+  db_data:
+
+networks:
+  djangonetwork:
+    driver: bridge
+
