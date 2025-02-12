@@ -15,7 +15,6 @@ WORKDIR /app
 # Tắt việc tạo các file .pyc và buffering của Python
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DOCKERIZED=1
 
 # Copy file requirements và cài đặt các package Python
 COPY requirements.txt .
@@ -32,5 +31,4 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER appuser
 
 # Khởi chạy ứng dụng Django
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:9000"]
-
+CMD ["python", "manage.py", "runserver", "localhost:9000"]

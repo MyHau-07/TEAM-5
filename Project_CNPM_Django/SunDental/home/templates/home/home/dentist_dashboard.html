@@ -1,0 +1,185 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %} 
+<nav
+  class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+  id="layout-navbar"
+>
+  <div
+    class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none"
+  >
+    <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+      <i class="bx bx-menu bx-md"></i>
+    </a>
+  </div>
+
+  <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <!-- Place this tag where you want the button to render. -->
+      {% if user.is_authenticated %}
+        <!-- Nếu người dùng đã đăng nhập, không hiển thị nút Đăng nhập và Đăng ký -->
+    {% else %}
+        <li class="nav-item lh-1 me-4" id="login-button">
+            <a class="btn btn-primary" href="{% url 'login_view' %}">Đăng nhập</a>
+        </li>
+        <li class="nav-item lh-1 me-4" id="register-button">
+            <a class="btn btn-secondary" href="{% url 'register' %}">Đăng ký</a>
+        </li>
+    {% endif %}
+
+      <!-- User -->
+      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a
+          class="nav-link dropdown-toggle hide-arrow p-0"
+          href="#"
+          data-bs-toggle="dropdown"
+          onclick="event.preventDefault();"
+        >
+          <div class="avatar avatar-online">
+            <img
+              src="{%static 'home/assets/img/avatars/1.png' %}"
+              alt
+              class="w-px-40 h-auto rounded-circle"
+            />
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#">
+              <div class="d-flex">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online">
+                    <img
+                      src="{%static 'home/assets/img/avatars/1.png' %}"
+                      alt
+                      class="w-px-40 h-auto rounded-circle"
+                    />
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-0">John Doe</h6>
+                  <small class="text-muted">Admin</small>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-divider my-1"></div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'user'%}">
+              <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
+            </a>
+          </li>
+
+          <li>
+            <div class="dropdown-divider my-1"></div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'logout' %}">
+              <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!--/ User -->
+    </ul>
+  </div>
+</nav>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Kiểm tra xem người dùng đã đăng nhập hay chưa
+      var isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
+
+      if (isAuthenticated === "true") {
+          // Ẩn các nút Đăng nhập và Đăng ký
+          var loginButton = document.getElementById("login-button");
+          var registerButton = document.getElementById("register-button");
+
+          if (loginButton) {
+              loginButton.style.display = "none";
+          }
+          if (registerButton) {
+              registerButton.style.display = "none";
+          }
+      }
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<style>
+.bg-custom{
+    background-color:rgb(90, 215, 215);
+}
+</style>
+<body>
+  <div class="container-fluid">
+    <div class="row" id="content">
+        <div class="col-md-7">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-custom">
+                    <h5 class="mb-0 col-6 " lang="db-thongtinbacsi">Thông tin bác sĩ</h5>
+                </div>
+                <div class="card-body mt-3">
+                    <div class="row">
+                        <div class="col-sm-3 text-center">
+                            <img src="{{ user.image.url }}" class="img-fluid rounded-circle" alt="Avatar">
+                            <a href="{% url 'user'%}" class="d-block mt-2 text-primary" lang="db-chitiet-button">Xem chi tiết</a>
+                        </div>
+                        <div class="col-sm-9">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 fs-5"><strong>ID:</strong>  {{ user.id }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Chi nhánh:</strong> {{ user.chi_nhanh }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Họ tên:</strong> {{ user.full_name }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Giới tính:</strong> {{ user.get_gender_display }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Ngày sinh:</strong> {{ user.birth_date }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Địa chỉ:</strong> {{ user.address }}</div>
+                                    <div class="col-12 mb-3 fs-5"><strong>Chuyên ngành:</strong> {{ user.chuyen_nganh }}</div>
+                                </div>
+                            </form>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="alert alert-warning d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0" lang="db-nhacnho">Nhắc nhở mới, chưa xem</h6>
+                            <p class="mb-0">0</p>
+                        </div>
+                        <i class="fa fa-bell text-warning"></i>
+                    </div>
+                    <a href="/ghi-chu-nhac-nho-sinh-vien.html" class="btn btn-link p-0" lang="db-chitiet-button">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center mt-4  ">
+        <div class="col-4">
+            <a href="/lichlam" class="d-block p-3 border rounded bg-custom text-dark">
+                <i class="fa fa-calendar-alt fa-2x text-dark"></i>
+                <p class="mb-0" lang="menusinhvien-25-vt">Lịch làm việc</p>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="/lichlam" class="d-block p-3 border rounded bg-custom text-dark">
+                <i class="fa fa-edit fa-2x text-dark"></i>
+                <p class="mb-0" lang="menusinhvien-15-vt">Đăng ký lịch nghỉ</p>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="/lichlam" class="d-block p-3 border rounded bg-custom text-dark">
+                <i class="fa fa-search-dollar fa-2x text-dark"></i>
+                <p class="mb-0" lang="menusinhvien-20-vt">Tra cứu công</p>
+            </a>
+        </div>
+    </div>
+  </div>
+</body>
+{% endblock %}

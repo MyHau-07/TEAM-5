@@ -92,28 +92,19 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # }
 
 
+
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DjangoDB',
-        'USER': 'root',
-        'PASSWORD': 'Anhhuy1711@',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
-}
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'DjangoDB',
-#         'USER': 'myuser',
-#         'PASSWORD': 'Nhom5CNPM',
-#         'HOST':'db',
-#         'PORT':'5432',
-#     }
-# }
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': 'DjangoDB',
+         'USER': 'myuser',
+         'PASSWORD': 'Nhom5CNPM',
+         'HOST':'db',
+         'PORT':'5432',
+     }
+ }
 
 
 

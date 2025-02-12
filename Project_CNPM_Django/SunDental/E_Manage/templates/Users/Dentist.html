@@ -1,331 +1,183 @@
 {% extends "home/master.html" %}
 {% load static %}
 {% block navbar %} 
-    {% include 'home/includes/Navbar.html' %}
-{% endblock %}
-{% block menu-inner %} 
-{% include 'home/includes/left_menu.html' %}
-{% endblock %}
-{% block content %}
-<body>
-<style>
-    /* Định dạng cho container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-  
-    /* Định dạng cho các phần tử trong main-section */
-    .main-section-content {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
-  
-    /* Định dạng cho phần thông tin bác sĩ */
-    .profile-ds-info {
-      background-color: #fff;
-      padding-bottom: 50px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-  
-    .portlet-title {
-      border-bottom: 2px solid #f1f1f1;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-  
-    .caption {
-      font-size: 25px;
-      font-weight: bold;
-      color: #333;
-    }
-  
-    .form-group label {
-      display: block;
-      font-size: 16px;
-      color: #555;
-    }
-  
-    .bold {
-      font-weight: bold;
-    }
-  
-    .color-active {
-      color: #007bff;
-      text-decoration: none;
-    }
-  
-    .color-active:hover {
-      text-decoration: underline;
-    }
-  
-    /* Định dạng cho cột thông báo và nhắc nhở */
-  
-  
-    .item-box-menu {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 15px;
-    }
-  
-    .item-box-menu .name {
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-  
-    }
-  
-    .desc {
-      display: flex;
-      align-items: left;
-    }
-  
-    .number {
-      font-size: 22px;
-      font-weight: bold;
-    }
-  
-    .icon-menu i {
-      font-size: 24px;
-      color: #007bff;
-    }
-  
-    .text-left {
-      margin-top: 10px;
-    }
-  
-    .nhacnho-border {
-      border: 2px solid #f1f1f1;
-  
-    }
-  
-    .nhacnho-custom {
-      color: #ff6347;
-    }
-    .featured {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: space-around;
-      padding: 20px;
-  }
-  
-  .featured-item {
-      width: 150px;
-      text-align: center;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: #CCFFFF;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .featured-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .box-df {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 15px;
-  }
-  
-  .auto-height {
-      height: auto;
-  }
-  
-  .icon img {
-      width: 35px;
-      height: 35px;
-      object-fit: contain;
-      margin-bottom: 10px;
-  }
-  
-  .featured-item span {
-      display: block;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-decoration: none;
-  }
-  
-  .featured-item a {
-      color: inherit;
-      text-decoration: none;
-  }
-    /* Định dạng cho các phần tử khi ở chế độ nhỏ */
-    @media (max-width: 768px) {
-      .main-section-content {
-        flex-direction: column;
-      }
-  
-      .col-md-7, .col-md-5 {
-        width: 100%;
-      }
-    }
-  </style>
-  <div class="container">
-    <div class="main-section-content" id="contnet">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="box-df profile-ds-info">
-                    <div class="portlet">
-                            <div class="portlet-title">
-                                <div class="caption" style="font-size: 25px;">
-                                    <span class="caption-subject bold" lang="db-thongtinbacsi">Thông tin bác sĩ</span>
-                                </div>
-                            </div>
-  
-                        <div class="portlet-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                        <div class="profile-userpic">
-                                          <img src="https://thiennhanhospital.com/wp-content/uploads/2023/05/Avatar-1-1.jpg"width="100%" height="100%" style="object-fit: cover;" >
-  
-                                        </div>
-  
-                                    <div class="text-center"style="allign:center;">
-                                        <a href="/thong-tin-sinh-vien.html" class="color-active" lang="db-chitiet-button">Xem chi tiết</a>
-                                    </div>
-                                </div>
-                                        <div class="col-sm-9">
-                                            <form class="form-horizontal">
-                                                <div class="form-body">
-                                                    <div class="form-group" >
-                                                        <label class="col-xs-6"><span lang="bs-id">ID</span>: <span class="bold">036205003749</span></label>
-                                                        <label class="col-xs-6"><span lang="bs-chinhanh">Chi nhánh</span>: <span class="bold">7480201300960</span></label>
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <label class="col-xs-6"><span lang="bs-hoten">Họ tên</span>: <span class="bold">Võ Minh Đạt</span></label>
-                                                            <label class="col-xs-6"><span lang="bs-gioitinh">Giới tính</span>: <span class="bold">Nam</span></label>
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <label class="col-xs-6">
-                                                            <span lang="bs-ngaysinh">Ngày sinh</span>: <span class="bold">05/08/2005</span>
-                                                        </label>
-                                                        <label class="col-xs-6"><span lang="sv-loaihinhdt">Nơi sinh</span>: <span class="bold">Tp. Hồ Chí Minh</span></label>
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <label class="col-xs-6"><span lang="sv-nganh">Chuyên ngành</span>: <span class="bold">Nha chu</span></label>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-  
-  
-                            </div>
-                        </div>
-  
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="portlet">
-                    <div class="portlet-body">
-                        <div class="box-menu row">
-                            
-  
-                            <div class="col-xs-12">
-                                <div class="item-box-menu box-df nhacnho-border">
-                                    <h3 class="name nhacnho-custom" lang="db-nhacnho">Nhắc nhở mới, chưa xem</h3>
-                                    <div class="desc clearfix">
-                                        <div class="number ">0</div>
-                                        <div class="text-runing" style="width:100%; height:51px;">
-                                        </div>
-                                        <div class="icon-menu text-right">
-                                            <i class="icon fa fa-bell-o" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div class="text-left">
-                                        <a href="/ghi-chu-nhac-nho-sinh-vien.html" class="color-active" lang="db-chitiet-button">Xem chi tiết</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <a href="/lich-theo-tuan.html?pLoaiLich=1" class="color-active" title="">
-                                    <div class="item-box-menu box-df nhacnho-border">
-                                        <h3 class="name" lang="db-lichhoctuan">Lịch làm việc trong tuần</h3>
-                                        <div class="desc clearfix">
-                                            <div class="number">0</div>
-                                            <div class="icon-menu text-right">
-                                                <i class="icon fa fa-calendar" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                        <div class="text-left" lang="db-chitiet-button">
-                                            Xem chi tiết
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            
-  
-                        </div>
-                    </div>
-                </div>
-            </div>
-  
-        
-  
-            <div class="featured">
-              <div class="featured-item">
-                  <a href="/phieu-thu.html" title="Lịch làm việc" langid="menusinhvien-25-title">
-                      <div class="box-df auto-height">
-                          <div class="icon">
-                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAWCAYAAAAinad/AAABqklEQVQ4jbXVu2sWQRTG4Wc/JHgFrZSgYr54BTUIIkg60UBEbBUbxdgY01qK/0CwCMTqi4hFIEYIaqGNpam0MN5QEYwXEBRFUBBR12JmZQnr7Da+zcyePfubM+8yZ7J2J7+I4ziHC4LGMYw3OIhH2IhbcbyEoZh7GqOYztqdPMd3LMZ0TN6FyxhANzo4hU+4gRN4igc4Wny/KNKH8Qx34/Nu3I/zyQi6icMxNoqH2Ib9WIlrrfhyDWaxGatKIDiGvhIIHmMFtr4ccgeroaisK44vVGuuIvYt7oZgkaKy/B+QpsrLlZV1D5tqFsjwDjvxswhWwebwuQHsw8KcKtjJBCSpVn1Kc1VVdh09+F1TxHvhdCQ9W4Jl6j1b2qSygQQkqf/u2RjWqt/mR6Fj/ErB9mFLA9jbOCYr256AJFV4liWz6pWVYcW+16n45cJZXagurI/zH2XYK+HQvsZXoekVmsBzTJVivfiC+d4JewX//no2JjTF22jjiXAPHBAa5hSOoB8zGMG8cDfMRrBWXHk5zmNQ+JNXcEZox3uEPr9DOGIjuIoNOISz0ZrJP0+DWdOY3V31AAAAAElFTkSuQmCC" alt="">
-                          </div>
-                          <span lang="menusinhvien-25-vt">Lịch làm việc</span>
-                      </div>
-                  </a>
-              </div>
-                  <div class="featured-item">
-                      <a href="/dang-ky-hoc-phan.html" title="Đăng ký lịch nghỉ" langid="menusinhvien-15-title">
-                          <div class="box-df auto-height">
-                              <div class="icon">
-                                      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAYCAYAAADpnJ2CAAADU0lEQVRIia3WbYhWRRQH8N88rlEaBS4lViYWtZDmhzIq6AVJC0wUpFxCyiaK2gRfSkrcKMosrKygFzXIa4EUfjDNisoy2FqhsEhdIi1IV0uxIAV7Mavpw9yN62Ou+1QH7ofLnDn/OXP+538mWJY0aDdjKfqjLUVLG9lca8C3Fd+iwHN4DEtC4ftQuPH/BLwaX+FVbMRQ3IW5GIL1eDkUukNhwn8BvBxdeAffoAWTsKvisydFrRiOz7E2FLaFwthGAC9AJzpwAKPLLLcdLUiKtqdoIkZhN9aFwiehcGlvgOfgPXyKE8sMLyn/+2Qp2pKiK3ExAjaEQkcojOzxCZal4Wgrv12YgzcbADmqhcJVeKpMZgkWB8vSAQzEQ3igr0B9AawAz8aTSDVMxirciddwdqOgvQANDYWVmIe1mNCEd8uvBW/ha7wiU3/PvwRqxhOySOzC2BRt4nDSnC5ndwPGymx7ESc3ADQgFJ7HD3ILxRQNRXMo9OsBvAfbyxP1lxv8VJlE12MfFuH4XoCaQmEBfiqzmp2iQSlaXroswM5QuK+GGRiGD3GoEmcJTpJZOwO/YP4/gLWX++ahPUUDUvR0ndv7sirNruEM3CJr5SFHMnVRmfl8tONX3IppsjA8jIVoStEjdYe5NxQOyoS8PUXNoW5aPIj7cVDWyvqTNuFxzCr/F2NOin6uA2or/QZiYYrm/r1WAl6D23AdTsCjmIn9co1fqAM+Df2ws9qHoTCtBDpFLsncFO0vW2NFitbU8DHelqWIXKtZGITX5dm3RyZQj32HnRWgSaHQjeX4AINT1Jai/ZWYq0NhUw1f4HcMxsRK0B9xk9wuHViJHbi24jMuFLZhtTwthqWoNUV7K4cZX8b4E101RHnG7cUabC2vuJrNFFkYvsQbMqPXy4KxGyNTNDFF3RWgMaGwWdbl38rDTK0nTQuelRt/C+7ABofbKKzAcZiaoo3VxVAYLdfvQnwkP0O6etab6oJtxThcJDO0s9w0E5+VPptxft0+oTACz2CMPNIuS1HnEX7HeERdIVP/PPn6pstaW7Uz5TfOBPkpMj1F644W8Fhvmg6MwHicVQZcJdd8iCzyO+SMJ6fo3N7AOHaG9TZFvrZ9+EPW3LtT9FJfA/wFQAIJ7FVYOrIAAAAASUVORK5CYII=" alt="">
-                              </div>
-                              <span lang="menusinhvien-15-vt">Đăng ký lịch nghỉ</span>
-                          </div>
-                      </a>
-                  </div>
-                  <div class="featured-item">
-                      <a href="/cong-no-sinh-vien.html" title="Tra cứu công" langid="menusinhvien-20-title">
-                          <div class="box-df auto-height">
-                              <div class="icon">
-                                      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAYAAABoMT8aAAAB0UlEQVQ4jZ3VTYjNURgG8N9cN8Og8f0RkZ3FZKhBiYWFWbExZWJBYoWyk2ywoGRhIhbyUSMbZKOUxsaERAlLxCxkJcQdRt0xFu/5c437/WzOR+/7nHOe9znntLg8pgouYBq2VQrIV8vGMsysFlCOYAp2YgM6MQG3cB/9+FwanBuXfA4FnMHS1C9gEU7hE65UIniNvdiPVnThAV5iNSZiD3bgQxr/IXicVpyUdjGa5tsxtWSRS+lIrXiRadCNNZiDn2U0KYeF+IHeHA7jFT7WmQwj+ILTecwS4jSKY5ibx400aBR9hIgn0sTFJkjkUcRGDGAydoszwphQvSKyMt7DOvQIda+jI/WriltqpIfCB4dEWZ9jE2YLU9UkyHASS4T7nmAlnuItDtRDkOEZhjCIFWlHfeJurK+HAOahTdh2i7D1nUTaXQ/B6LjxMLbiPO6irRZBJexL7ZEcjuJgEyQD2JwT9/t4EwTTMZwTpcn7997Xg1U4m8NtofL7BpKH8A79mYhdwv9FbC8J/CrqnqEH38QT0MnfMhYxH1dxDd/xCGuxXLyNBdwUPmhPRP/5YBcWCFELmCHEGhGv8mL04leW0FLjZxoUH0tHpYBaP9MbNarzG3VVYP2cWKHIAAAAAElFTkSuQmCC" alt="">
-                              </div>
-                              <span lang="menusinhvien-20-vt">Tra cứu công</span>
-                          </div>
-                      </a>
-                  </div>
-                  
-                  <div class="featured-item">
-                      <a href="/ghi-chu-nhac-nho-sinh-vien.html" title="Ghi chú nhắc nhở" langid="menusinhvien-6-title">
-                          <div class="box-df auto-height">
-                              <div class="icon">
-                                      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAYCAYAAADpnJ2CAAABl0lEQVRIie3WP2sVQRSG8d9cNwn+6Qy2goU2io0YtLAXQWJhKbiFVinUTrCzUARt1DTCTuEHECttk3SCja1lUGwURBSTaMZid8MS7nXnRpNCfGFhZ8+885w9e2bYoEoydQ/nEdCa2vsXqXQ9Z5EiE/YQc3jWgXV1LUTTqXTpbwEv4Amubg6kkhDN4zL5wEM4YHj2CZM4ilPqMm4oRAnHEUJ0cnO8nYaPqfQ2qNJt3OpJbBW7mmuYfuIHpnrWeRBUKeEmno7IDr43scnfJLSO3SPiCbN41JZ0Ce96shu+Upk3L0SLMGjG+7cCG1PTWG+B47xdwF3cN7rEw7SMQYE1XMFMhukrbuCwuknOhegO9mZ4j2AlqNIXdXetGd001B9+T3PfzlvFBL5leAusFNiHs3iZkeUZLOCYunMnMJtKz/uMITqNpbZLcw/URTzGm2Ycc2BdtcC+DdvVHKL6EHg1hm+qCxxXr7fo29iHO6b/wH8HmP1j8wdKXeD7HQAuYxBU6TM+qU+R7dQMDhY4gfnmwXaVNuADLv4Co1ZbwkqTYWcAAAAASUVORK5CYII=" alt="">
-                              </div>
-                              <span lang="menusinhvien-6-vt">Nhắc nhở</span>
-                          </div>
-                      </a>
-                  </div>
-            </div>
+<nav
+  class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+  id="layout-navbar"
+>
+  <div
+    class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none"
+  >
+    <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+      <i class="bx bx-menu bx-md"></i>
+    </a>
+  </div>
+
+  <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <!-- Place this tag where you want the button to render. -->
+      {% if user.is_authenticated %}
+        <!-- Nếu người dùng đã đăng nhập, không hiển thị nút Đăng nhập và Đăng ký -->
+    {% else %}
+        <li class="nav-item lh-1 me-4" id="login-button">
+            <a class="btn btn-primary" href="{% url 'login_view' %}">Đăng nhập</a>
+        </li>
+        <li class="nav-item lh-1 me-4" id="register-button">
+            <a class="btn btn-secondary" href="{% url 'register' %}">Đăng ký</a>
+        </li>
+    {% endif %}
+
+      <!-- User -->
+      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a
+          class="nav-link dropdown-toggle hide-arrow p-0"
+          href="#"
+          data-bs-toggle="dropdown"
+          onclick="event.preventDefault();"
+        >
+          <div class="avatar avatar-online">
+            <img
+              src="{%static 'home/assets/img/avatars/1.png' %}"
+              alt
+              class="w-px-40 h-auto rounded-circle"
+            />
           </div>
-        </div>
-      </div>
-    
-</body>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#">
+              <div class="d-flex">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online">
+                    <img
+                      src="{%static 'home/assets/img/avatars/1.png' %}"
+                      alt
+                      class="w-px-40 h-auto rounded-circle"
+                    />
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-0">John Doe</h6>
+                  <small class="text-muted">Admin</small>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-divider my-1"></div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'user'%}">
+              <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
+            </a>
+          </li>
+
+          <li>
+            <div class="dropdown-divider my-1"></div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'logout' %}">
+              <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!--/ User -->
+    </ul>
+  </div>
+</nav>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Kiểm tra xem người dùng đã đăng nhập hay chưa
+      var isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
+
+      if (isAuthenticated === "true") {
+          // Ẩn các nút Đăng nhập và Đăng ký
+          var loginButton = document.getElementById("login-button");
+          var registerButton = document.getElementById("register-button");
+
+          if (loginButton) {
+              loginButton.style.display = "none";
+          }
+          if (registerButton) {
+              registerButton.style.display = "none";
+          }
+      }
+  });
+</script>
 {% endblock %}
 
-{% block footer %} 
-{% include "home/includes/footer.html" %}
+{% block content %}
+<style>
+
+</style>
+<body>
+  <div class="container py-4">
+    <div class="row" id="content">
+        <div class="col-md-7">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info">
+                    <h5 class="mb-0 col-6 " lang="db-thongtinbacsi">Thông tin bác sĩ</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3 text-center">
+                            <img src="{{ user.image.url }}" class="img-fluid rounded-circle" alt="Avatar">
+                            <a href="/thong-tin-sinh-vien.html" class="d-block mt-2 text-primary" lang="db-chitiet-button">Xem chi tiết</a>
+                        </div>
+                        <div class="col-sm-9">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 fs-5"><strong>ID:</strong>  {{ user.id }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Chi nhánh:</strong> {{ user.chi_nhanh }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Họ tên:</strong> {{ user.full_name }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Giới tính:</strong> {{ user.get_gender_display }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Ngày sinh:</strong> {{ user.birth_date }}</div>
+                                    <div class="col-md-6 mb-3 fs-5"><strong>Nơi sinh:</strong> {{ user.address }}</div>
+                                    <div class="col-12 mb-3 fs-5"><strong>Chuyên ngành:</strong> {{ user.chuyen_nganh }}</div>
+                                </div>
+                            </form>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="alert alert-warning d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0" lang="db-nhacnho">Nhắc nhở mới, chưa xem</h6>
+                            <p class="mb-0">0</p>
+                        </div>
+                        <i class="fa fa-bell text-warning"></i>
+                    </div>
+                    <a href="/ghi-chu-nhac-nho-sinh-vien.html" class="btn btn-link p-0" lang="db-chitiet-button">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center mt-4  ">
+        <div class="col-4">
+            <a href="/lichlam" class="d-block p-3 border rounded bg-info text-dark">
+                <i class="fa fa-calendar-alt fa-2x text-dark"></i>
+                <p class="mb-0" lang="menusinhvien-25-vt">Lịch làm việc</p>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="/lichlam" class="d-block p-3 border rounded bg-info text-dark">
+                <i class="fa fa-edit fa-2x text-dark"></i>
+                <p class="mb-0" lang="menusinhvien-15-vt">Đăng ký lịch nghỉ</p>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="/lichlam" class="d-block p-3 border rounded bg-info text-dark">
+                <i class="fa fa-search-dollar fa-2x text-dark"></i>
+                <p class="mb-0" lang="menusinhvien-20-vt">Tra cứu công</p>
+            </a>
+        </div>
+    </div>
+  </div>
+</body>
 {% endblock %}

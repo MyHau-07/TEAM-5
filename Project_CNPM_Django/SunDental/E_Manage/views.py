@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import CustomUser
+from .models import Services
 from home.forms import CustomUserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -22,6 +23,16 @@ def user (request):
     else:
         form = CustomUserForm(instance=user)
     return render(request, 'Users/user.html', {'user': user, 'form': form})
+
+@login_required
+def dentist_profile(request):
+    user = request.user
+    if user.role == "dentist":  # Kiểm tra nếu người dùng là bác sĩ
+        return render(request, 'Users/Dentist.html', {'user': user, 'form': form})
+
+def dichvu_view(request):
+    services = Services.objects.filter(is_active=True)  # Lọc chỉ các dịch vụ đang hoạt động
+    return render(request, 'dichvu.html', {'Services': services})  # Chú ý tên biến Services
 
 def giohang (request):
     return render(request, 'Pages/giohang.html')
