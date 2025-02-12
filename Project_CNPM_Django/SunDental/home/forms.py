@@ -1,7 +1,92 @@
 from django import forms
 from django.forms import ModelForm
 from E_Manage.models import CommentForm
+from E_Manage.models import Work_Schedule
+from E_Manage.models import Work_day
 from django.contrib.auth.models import User
+
+class Workday(forms.ModelForm):
+    class Meta:
+        model = Work_day
+        fields = '__all__'
+        widgets = {
+             'ID': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': '01',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+             'Name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': 'Nguyen Van A',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+            'Specialty_Name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': 'Chuyen khoa',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+            'Actual working day': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': '01',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+        }
+
+
+class Workschedule (forms.ModelForm):
+    class Meta:
+        model = Work_Schedule
+        fields = '__all__'
+        widgets = {
+             'ID': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': '01',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+             'Name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': 'Nguyen Van A',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+            'Specialty_Name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'basic-icon-default-fullname',
+                'placeholder': 'Chuyen khoa',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+            'Work_Date': forms.DateInput(attrs={
+                'class': 'form-control',
+                'id': 'work-date',
+                'type': 'date',
+                'placeholder': 'Chọn ngày làm việc'
+            }),
+            'Start_Time': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'id': 'start-time',
+                'type': 'time',
+                'placeholder': 'Chọn giờ bắt đầu'
+            }),
+            'End_Time': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'id': 'end-time',
+                'type': 'time',
+                'placeholder': 'Chọn giờ kết thúc'
+            })
+        }
+
 
 class Comment_Form (forms.ModelForm):
     class Meta:

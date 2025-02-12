@@ -28,3 +28,22 @@ class Dentist(models.Model):
     License_number = models.CharField(max_length=50)
     Birthday = models.DateField()
     Gender = models.BooleanField()
+
+class Work_Schedule(models.Model):
+    ID = models.IntegerField()
+    name = models.CharField(max_length=255)
+    Specialty_Name = models.CharField(max_length=255)
+    Work_Date = models.DateField()
+    Start_Time = models.TimeField()
+    End_Time = models.TimeField() 
+    def __str__(self):
+        return f"{self.name}"
+    
+
+class Work_day (models.Model):
+    ID = models.IntegerField()
+    name = models.CharField(max_length=255)
+    Specialty_Name = models.CharField(max_length=255)
+    Actual_Working_Day = models.IntegerField()
+    def __str__(self):
+        return f"{self.name}"
