@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .models import DichVu, GioHang
 from django.views.decorators.csrf import csrf_exempt
+from .models import Work_Schedule
 @login_required
 def them_vao_gio_hang(request, dich_vu_id):
     dich_vu = get_object_or_404(DichVu, id=dich_vu_id)
@@ -21,12 +22,15 @@ def them_vao_gio_hang(request, dich_vu_id):
     return redirect('xem_gio_hang')
 
 @login_required
-def xoa_khoi_gio_hang(request, gio_hang_id):
-    gio_hang = get_object_or_404(GioHang, id=gio_hang_id, user=request.user)
-    gio_hang.delete()
+def xoa_khoi_gio_hang(request, item_id):
+    try:
+        item = GioHang.objects.get(id=item_id)
+        item.delete()  # Xóa item khỏi giỏ hàng
+    except GioHang.DoesNotExist:
+        # Nếu không tìm thấy item, có thể thông báo lỗi
+        pass
     
-    messages.success(request, 'Đã xóa sản phẩm khỏi giỏ hàng!')
-    return redirect('xem_gio_hang')
+    return redirect('giohang')  # Quay lại trang giỏ hàng hoặc trang phù hợp
 
 
 
@@ -83,7 +87,16 @@ def thanh_toan(request):
         return redirect('trang_chu')
 
     return redirect('xem_gio_hang')
-    
+#chu phong kham
+def ClicnicOwner (request):
+    return render(request, 'Pages/ClicnicOwner.html')
+#quan li phong kham
+def hosophongkham (request):
+    return render(request, 'Pages/ho-so-phong-kham.html') 
+
+
+
+
 def dichvu(request):
     dich_vu_list = DichVu.objects.all()
     return render(request, 'Pages/dichvu.html', {'dich_vu_list': dich_vu_list})

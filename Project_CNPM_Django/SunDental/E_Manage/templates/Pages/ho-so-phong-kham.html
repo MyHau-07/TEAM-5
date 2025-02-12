@@ -1,0 +1,79 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mt-4 text-center" style="font-weight: bold; color: #797CFF;">Quản Lý Phòng Khám</h1>
+    
+    <!-- Tổng Quan -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">Tổng Doanh Thu: <strong>50,000,000 VND</strong></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">Tổng Bệnh Nhân: <strong>120</strong></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">Lịch Hẹn Hôm Nay: <strong>25</strong></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Số Chi Nhánh: <strong>3</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quản lý các phần -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">Quản Lý Lịch Hẹn</div>
+                <div class="card-body">
+                    <a href="{% url 'hosophongkham' %}" class="btn btn-primary">Xem Lịch Hẹn</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">Quản Lý Bệnh Nhân</div>
+                <div class="card-body">
+                    <a href="{% url 'hosophongkham' %}" class="btn btn-success">Xem Danh Sách Bệnh Nhân</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">Quản Lý Nhân Viên</div>
+                <div class="card-body">
+                    <a href="{% url 'hosophongkham' %}" class="btn btn-warning">Xem Danh Sách Nhân Viên</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">Quản Lý Dịch Vụ</div>
+                <div class="card-body">
+                    <a href="{% url 'hosophongkham' %}" class="btn btn-danger">Xem Dịch Vụ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

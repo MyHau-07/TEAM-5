@@ -38,16 +38,11 @@
                               data-action="increase" data-item-id="{{ item.id }}">+</button>
                       <!-- Nút xóa dịch vụ khỏi giỏ hàng -->
                       <a href="{% url 'xoa_khoi_gio_hang' item.id %}" class="btn btn-danger btn-sm ms-3">Xóa</a>
-                     
-
                   </div>
               </li>
               {% empty %}
               <!-- Thông báo nếu giỏ hàng trống -->
               <li class="list-group-item">Giỏ hàng trống!</li>
-              <div class="add-service-section text-end mt-3">
-                <a href="{% url 'dichvu' %}" class="btn btn-success">Thêm Dịch Vụ</a>
-            </div>
               {% endfor %}
           </ul>
       </div>
@@ -62,13 +57,15 @@
               </li>
           </ul>
           <!-- Nút thanh toán -->
-          {% comment %} <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Thanh toán</button> {% endcomment %}
           <div class="checkout-section">
             <a href="javascript:void(0);" id="checkout-btn" class="btn btn-primary">Thanh toán</a>
         </div>
-        <!-- Thêm dịch vụ -->
-        
       </div>
+  </div>
+
+  <!-- Phần "Thêm Dịch Vụ" nằm cuối -->
+  <div class="add-service-section text-end mt-3" style="position: relative; margin-top: 20px;">
+      <a href="{% url 'dichvu' %}" class="btn btn-success">Thêm Dịch Vụ</a>
   </div>
 </form>
 
@@ -110,9 +107,6 @@ $(document).ready(function() {
         }
       });
   });
-
-  // Sự kiện khi nhấn nút "Thêm Dịch Vụ"
-  
 });
 </script>
 

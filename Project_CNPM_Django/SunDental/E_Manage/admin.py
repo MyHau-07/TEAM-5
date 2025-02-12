@@ -3,19 +3,14 @@ from django.contrib import admin
 from .models import DichVu, GioHang
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from .models import Work_Schedule
 
-# class GioHangAdmin(admin.ModelAdmin):
-#     # Hiển thị thông tin giỏ hàng bao gồm người dùng, dịch vụ và số lượng
-#     list_display = ('user', 'dich_vu', 'so_luong', 'get_total_price')
-#     # Thêm tính năng tìm kiếm theo tên người dùng và tên dịch vụ
-#     search_fields = ('user__username', 'dich_vu__ten_dich_vu')
-#     # Lọc theo người dùng
-#     list_filter = ('user',)
-    
-#     def get_total_price(self, obj):
-#         # Tính tổng giá trị của giỏ hàng dựa trên số lượng và giá của dịch vụ
-#         return obj.dich_vu.gia * obj.so_luong
-#     get_total_price.short_description = 'Tổng tiền'
+@admin.register(Work_Schedule)
+class WorkScheduleAdmin(admin.ModelAdmin):
+    list_display = ('ID', 'name', 'Specialty_Name', 'Work_Date', 'Start_Time', 'End_Time')
+    search_fields = ('name', 'Specialty_Name')
+    list_filter = ('Work_Date', 'Specialty_Name')
+    ordering = ('Work_Date', 'Start_Time')
 
 class GioHangAdmin(admin.ModelAdmin):
     list_display = ('user', 'dich_vu', 'so_luong', 'get_total_price', 'dich_vu_link')

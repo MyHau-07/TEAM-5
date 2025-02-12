@@ -48,6 +48,15 @@ class GioHang(models.Model):
     so_luong = models.PositiveIntegerField(default=1)  # Cột này phải có
 
 
+from django.db import models
+
+class Work_Schedule(models.Model):
+    ID = models.AutoField(primary_key=True)  # Nếu đây là khóa chính, Django tự xử lý
+    name = models.CharField(max_length=255)
+    Specialty_Name = models.CharField(max_length=255)
+    Work_Date = models.DateField()
+    Start_Time = models.TimeField()
+    End_Time = models.TimeField()
 
 
 

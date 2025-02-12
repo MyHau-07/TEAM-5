@@ -1,0 +1,91 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!-- Main Content -->
+            
+            <div class="col-md-10">
+            
+                <h1 class="mt-4 text-center" style="font-weight: bold; color: #797CFF;">
+                    Dashboard Quản Lý Phòng Khám
+                </h1>
+                
+            <style>
+                .equal-height {
+                    min-height: 60px; /* Đặt chiều cao tối thiểu để đồng đều */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                }     
+            </style>   
+                <!-- Tổng Quan -->
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 equal-height">
+                            <div class="card-body">Doanh Thu: <strong>50,000,000 VND</strong></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-success text-white mb-4 equal-height">
+                            <div class="card-body">Số Bệnh Nhân: <strong>120</strong></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4 equal-height">
+                            <div class="card-body">Lịch Hẹn Hôm Nay: <strong>25</strong></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-danger text-white mb-4 equal-height">
+                            <div class="card-body">Chi Nhánh: <strong>3</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Biểu đồ Doanh Thu -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar me-1"></i>
+                        Doanh Thu Tháng
+                    </div>
+                    <div class="card-body">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+            datasets: [{
+                label: 'Doanh thu',
+                data: [12000000, 15000000, 17000000, 20000000, 25000000],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+{% endblock %}
+

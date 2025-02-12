@@ -18,11 +18,15 @@ urlpatterns = [
     path('lichhen', views.lichhen, name = "lichhen"),
     path('lichsu', views.lichsu, name = "lichsu"),
     path('myuudai', views.myuudai, name = "myuudai"),
+    #clicnicowner
+    path('ClicnicOwner', views.ClicnicOwner, name = "ClicnicOwner"),
+    #ho so phong kham
+     path('hosophongkham', views.hosophongkham, name = "hosophongkham"),
     # Thêm dịch vụ vào giỏ hàng
     path('them/<int:dich_vu_id>/', views.them_vao_gio_hang, name='them_vao_gio_hang'),
     
     # Xóa dịch vụ khỏi giỏ hàng
-    path('xoa/<int:gio_hang_id>/', views.xoa_khoi_gio_hang, name='xoa_khoi_gio_hang'),
+    path('xoa_khoi_gio_hang/<int:item_id>/', views.xoa_khoi_gio_hang, name='xoa_khoi_gio_hang'),
     
     # Sửa số lượng trong giỏ hàng
     path('sua/<int:gio_hang_id>/', views.sua_so_luong, name='sua_so_luong'),
