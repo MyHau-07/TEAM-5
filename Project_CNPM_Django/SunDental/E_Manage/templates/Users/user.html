@@ -1,0 +1,496 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %}
+{% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %}
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .main-container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px;
+            padding-bottom: 15px;
+            margin-top: 10px;
+
+
+        }
+
+        .img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-left: 100px;
+            margin-right: 15px;
+        }
+
+        .info p {
+            margin: 5px 0;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-around;
+            margin: 15px 0;
+        }
+
+        .buttons a {
+            text-decoration: 1;
+            padding: 10px 15px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            background-color: white;
+            text-align: center;
+            flex-grow: 1;
+            max-width: 150px;
+        }
+
+        .sections {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .section {
+            flex: 1 1 48%;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sidebar {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-xxl flex-grow-1 container-p-y ">
+        <div class="container-xxl flex-grow-1 container-p-y bg-white">
+            <div class="header">
+                <img class="img" src="{{ user.image.url }}" alt="Ảnh đại diện">
+                <div class="fs-5 info">
+                    <p><strong>Họ tên:</strong> {{ user.full_name }}</p>
+                    <p><strong>Năm sinh:</strong> {{ user.birth_date|date:"d/m/Y" }}</p>
+                    <p><strong>Số điện thoại:</strong> {{ user.phone_number }}</p>
+                    <p><strong>Địa chỉ:</strong> {{ user.address }}</p>
+                    <p><strong>Giới tính:</strong> {{ user.get_gender_display }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <!-- Nút chỉnh sửa thông tin -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        Chỉnh sửa thông tin
+                    </button>
+                </div>
+            </div>
+{% comment %} Start form edit info {% endcomment %}
+<!-- Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Chỉnh sửa thông tin cá nhân</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="editProfileForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-3">
+                        {{ form.full_name.label_tag }}
+                        {{ form.full_name }}
+                        {% if form.full_name.errors %}
+                            <div class="text-danger">{{ form.full_name.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.birth_date.label_tag }}
+                        {{ form.birth_date }}
+                        {% if form.birth_date.errors %}
+                            <div class="text-danger">{{ form.birth_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.phone_number.label_tag }}
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <div class="text-danger">{{ form.phone_number.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.address.label_tag }}
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <div class="text-danger">{{ form.address.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.gender.label_tag }}
+                        {{ form.gender }}
+                        {% if form.gender.errors %}
+                            <div class="text-danger">{{ form.gender.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.image.label_tag }}  <!-- Hiển thị nhãn cho trường hình ảnh -->
+                        {{ form.image }}  <!-- Sử dụng trường hình ảnh từ form -->
+                        {% if form.image.errors %}
+                            <div class="text-danger">{{ form.image.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap JS and dependencies (make sure to include these in your project) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<!-- Thêm SweetAlert2 từ CDN vào trong <head> của template -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.7/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.7/dist/sweetalert2.min.js"></script>
+
+{% comment %} End {% endcomment %}
+
+            <div class="buttons">
+                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
+                    href="{% url 'lichhen' %}">
+                    Lịch hẹn
+                </a>
+                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
+                    href="{% url 'myuudai' %}">
+                    Ưu đãi
+                </a>
+                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
+                    href="#">
+                    Tư vấn
+                </a>
+                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
+                    href="{% url 'lichsu' %}">
+                    Lịch sử
+                </a>
+                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
+                    href="{% url 'giohang' %}">
+                    Giỏ hàng
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="container mt-4">
+                        <h4 class="text-center">Lịch trình điều trị</h4>
+                        <canvas id="customerTreatmentChart"></canvas>
+                    </div>
+
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        var ctx = document.getElementById("customerTreatmentChart").getContext("2d");
+
+                        var customerTreatmentChart = new Chart(ctx, {
+                            type: "line", // Biểu đồ đường thể hiện quá trình điều trị
+                            data: {
+                                labels: ["01/02", "05/02", "10/02", "15/02", "20/02", "25/02", "01/03"], // Ngày điều trị
+                                datasets: [{
+                                    label: "Số lần điều trị",
+                                    data: [1, 2, 3, 3, 4, 5, 6], // Số lần điều trị hoàn thành
+                                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                                    borderColor: "rgba(255, 99, 132, 1)",
+                                    borderWidth: 2,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: "top"
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: "Số lần điều trị"
+                                        }
+                                    },
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: "Ngày điều trị"
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+            
+            <div class="col-xl-6">
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <h4 class="text-center mt-4">Tiến trình điều trị</h4>
+                    <canvas id="treatmentProgressChart"></canvas>
+                </div>
+
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    var ctx = document.getElementById("treatmentProgressChart").getContext("2d");
+
+                    var treatmentProgressChart = new Chart(ctx, {
+                        type: "pie",
+                        data: {
+                            labels: ["Hoàn thành", "Đang điều trị", "Chưa bắt đầu"],
+                            datasets: [{
+                                data: [60, 30, 10],
+                                backgroundColor: ["#4CAF50", "#FFC107", "#F44336"],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: false, // Tắt responsive để cố định kích thước
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: "bottom" // Di chuyển chú thích xuống dưới
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+            </div>
+        </div>
+        <div>
+            <div class="container py-5 mt-8">
+
+                <div class="carousel slide" data-bs-ride="carousel" id="serviceCarousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center g-4">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Dentist performing a procedure" class="card-img-top"
+                                            src="https://storage.googleapis.com/a1aa/image/x3Wwes5tjUn4alTHgNmC0Eci86n-BQoWQeSo2MLBaDY.jpg">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Bọc Răng Sứ: Ưu Điểm, Q...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Happy patients with dental implants" class="card-img-top"
+                                            src="https://storage.googleapis.com/a1aa/image/gvYh604q2aMQH_tUA42h04XR4hElViOKh1Zd3EyIOQA.jpg">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Trồng Răng Implant Là G...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Dental team with a patient" class="card-img-top"
+                                            src="https://storage.googleapis.com/a1aa/image/Lf5-UERZC_77mUq4Mx_UWwBdZ0cZrL8EGqsIYetIRjU.jpg">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Nhổ Răng Khôn: Ưu Điểm...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Dental team with Invisalign product" class="card-img-top"
+                                            src="https://storage.googleapis.com/a1aa/image/JR1iKT9hZL9hYO9k8lRqm7Mqa2c2gbIoIOLyKv1HUS0.jpg">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Niềng Răng Mắc Cài: Chi...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Woman with bright white teeth" class="card-img-top"
+                                            src="https://storage.googleapis.com/a1aa/image/qkZKB2dHef9TkLnuvYuXcd977UrmrmD7AxsBi98X4ow.jpg">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Tẩy Trắng Răng: Phương...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center g-4">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Service 6" class="card-img-top" height="200"
+                                            src="https://storage.googleapis.com/a1aa/image/rSFukoBlTY_Gui7-fz5U2aSr7JPZn99QSQDl9xW9xqc.jpg"
+                                            width="300">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Dịch Vụ 6
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Service 7" class="card-img-top" height="200"
+                                            src="https://storage.googleapis.com/a1aa/image/OEO7fq2avk1Yl0jVC_k055hSf92FVPW3aHgnmOLKf44.jpg"
+                                            width="300">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Dịch Vụ 7
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Service 8" class="card-img-top" height="200"
+                                            src="https://storage.googleapis.com/a1aa/image/uRDwhUkMSArwdF8TA9zxgFs1w74y-mh-stetDH9dxGM.jpg"
+                                            width="300">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Dịch Vụ 8
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Service 9" class="card-img-top" height="200"
+                                            src="https://storage.googleapis.com/a1aa/image/MfB2ukL1tMYJjuszNqDzduv7Ls_7fzpr0G-QiwHqqFY.jpg"
+                                            width="300">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Dịch Vụ 9
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="card service-card">
+                                        <img alt="Service 10" class="card-img-top" height="200"
+                                            src="https://storage.googleapis.com/a1aa/image/Yj9OfPI3VdL_es5XdPfGpfuR5tAGbhUc8g7gCvdrjag.jpg"
+                                            width="300">
+                                        <div class="card-body">
+                                            <p class="card-text text-primary fw-semibold">
+                                                Dịch Vụ 10
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev " data-bs-slide="prev" data-bs-target="#serviceCarousel"
+                        type="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon">
+                        </span>
+                        <span class="visually-hidden">
+                            Previous
+                        </span>
+                    </button>
+                    <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#serviceCarousel"
+                        type="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon">
+                        </span>
+                        <span class="visually-hidden">
+                            Next
+                        </span>
+                    </button>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <div class="carousel-indicators">
+                        <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0"
+                            data-bs-target="#serviceCarousel" type="button">
+                        </button>
+                        <button aria-label="Slide 2" data-bs-slide-to="1" data-bs-target="#serviceCarousel"
+                            type="button">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+{% endblock %}
+
+{% block footer %}
+{% include "home/includes/footer.html" %}
+{% endblock %}

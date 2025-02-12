@@ -1,0 +1,148 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %}
+{% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %}
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<style>
+    .carousel img {
+        height: 450px;
+        object-fit: cover;
+    }
+</style>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <!-- Dấu chấm điều hướng -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+        </div>
+
+        <!-- Ảnh banner -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{%static 'home/assets/img/avatars/1.png' %}" class="d-block w-100" alt="Image 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{%static 'home/assets/img/avatars/5.png' %}" class="d-block w-100" alt="Image 2">
+            </div>
+            <div class="carousel-item">
+                <img src="{%static 'home/assets/img/avatars/7.png' %}" class="d-block w-100" alt="Image 3">
+            </div>
+        </div>
+
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div>
+        <h1 class="text-center mt-4">🔥các sự kiện hot🔥</h1>
+    </div>
+    <div>
+        <div id="post__block" class="row g-4">
+           
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="{%static 'home/assets/img/avatars/7.png' %}" class="card-img-top img-fluid object-fit-cover" alt="kiem-tra-su-chinh-hang-1">
+                    <div class="card-body text-center">
+                        <h4 class=" ">Hướng dẫn kiểm tra sứ chính hãng – Nha Khoa SunDental cam kết chất lượng dịch vụ đến khách hàng</h4>
+                        <p class="fs-6 text-muted">Nhằm đảm bảo quyền lợi cho khách hàng, Nha Khoa SunDental cam kết sử dụng…</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover" alt="Quy-trinh-boc-rang-su">
+                    <div class="card-body text-center">
+                        <h4 >Chương trình khuyến mãi cực hot</h4>
+                        <p class="fs-6 text-muted">Tặng vàng cho khách hàng dịp cuối năm…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài viết 3 -->
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover" alt="khach-hang-2">
+                    <div class="card-body text-center">
+                        <h4 >Ưu đãi tháng 11</h4>
+                        <p class="fs-6 text-muted">Nhiều khuyến mãi hấp dẫn từ 1/11…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài viết 4 -->
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover" alt="Thumb">
+                    <div class="card-body text-center">
+                        <h4 >LỄ KÝ KẾT CHUYỂN GIAO CÔNG NGHỆ</h4>
+                        <p class="fs-6 text-muted">Tích hợp xương nhanh, phục hình tức thì…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài viết 5 -->
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover" alt="thumb">
+                    <div class="card-body text-center">
+                        <h4 >Xu hướng cấy ghép Implant 4.0</h4>
+                        <p class="fs-6 text-muted">Giải pháp Implant mới trong nha khoa hiện đại…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài viết 6 -->
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover" alt="Nha-khoa-Sundental">
+                    <div class="card-body text-center">
+                        <h4 >Cùng SunDental làm đẹp nụ cười</h4>
+                        <p class="fs-6 text-muted">Tưng bừng khuyến mãi hấp dẫn…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài viết 7 -->
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover"
+                        alt="dn-group-ho-tro-khac-phuc-sau-bao-1">
+                    <div class="card-body text-center">
+                        <h4 >DNG GROUP ủng hộ 600 triệu đồng</h4>
+                        <p class="fs-6 text-muted">Chia sẻ yêu thương cùng 150 hộ dân…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bài viết 8 -->
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="img.img" class="card-img-top img-fluid object-fit-cover" alt="Thumb">
+                    <div class="card-body text-center">
+                        <h4 >Ưu đãi đặc biệt cho khách Việt Kiều</h4>
+                        <p class="fs-6 text-muted">Chăm sóc nha khoa chất lượng cao…</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include "home/includes/footer.html" %}
+{% endblock %}

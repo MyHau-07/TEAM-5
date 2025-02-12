@@ -1,0 +1,198 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<style>
+.page-dichvu {
+    background-color: #e3f2fd; /* Nền xanh nhạt */
+    padding: 20px 0;
+}
+
+.tit-page {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.bold-b {
+    font-weight: bold;
+}
+
+.clblue {
+    color: #007bff;
+}
+
+.block-dv {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.block-dv:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.img-dv img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.name-dv {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.name-dv a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.name-dv a:hover {
+    color: #007bff;
+}
+
+.fwmb {
+    margin-bottom: 20px;
+}
+
+.clear20 {
+    clear: both;
+    height: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-sm-4 {
+        width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-xs-6 {
+        width: 100%;
+    }
+}
+
+/* Thêm style cho info-dv */
+.info-dv {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+}
+
+.info-dv p {
+    margin: 5px 0;
+}
+
+.info-dv strong {
+    color: #007bff;
+}
+</style>
+<div class="page-dichvu">
+    <div class="clear20"></div>
+    <div class="container">
+        <h2 class="tit-page">Dịch vụ <span class="bold-b clblue">nha khoa</span></h2>
+        <div class="row flex-wrap">
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/trong-rang-implant-1.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/trong-rang-implant-dich-vu.jpg"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/trong-rang-implant-1.html">TRỒNG RĂNG IMPLANT</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/rang-su-tham-my-3.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/rang-su-tham-my-dich-vu.jpg"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/rang-su-tham-my-3.html">RĂNG SỨ THẨM MỸ</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/nieng-rang-tham-my-2.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/nieng-rang-mac-cai-dich-vu.jpg"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/nieng-rang-tham-my-2.html">NIỀNG RĂNG THẨM MỸ</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/nieng-rang-trong-suot-invisalign-1861.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/nieng-rang-trong-suot-dich-vu.jpg"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/nieng-rang-trong-suot-invisalign-1861.html">NIỀNG RĂNG INVISALIGN</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/tay-trang-rang-laser-5.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/tay-trang-rang-1736155826-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/tay-trang-rang-laser-5.html">TẨY TRẮNG RĂNG LASER</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/tram-rang-tham-my-6.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/tram-rang-tham-my-1736156022-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/tram-rang-tham-my-6.html">TRÁM RĂNG THẨM MỸ</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/noi-nha-chua-tuy-9.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/noi-nha-chua-tuy-1736156035-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/noi-nha-chua-tuy-9.html">NỘI NHA CHỮA TUỶ</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/cao-voi-rang-7.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/cao-voi-rang-1736156053-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/cao-voi-rang-7.html">CẠO VÔI RĂNG</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/nho-rang-khon-10.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/tieu-phau-rang-khon-1736156064-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/nho-rang-khon-10.html">NHỔ RĂNG KHÔN</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/nho-rang-thuong-11.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/nho-rang-thuong-1736156071-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/nho-rang-thuong-11.html">NHỔ RĂNG THƯỜNG</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/rang-thao-lap-4.html" class="img-dv"><img src="{%static "home/assets/img/icons/icons/ham-thao-lap-1736156079-.png"%} class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/rang-thao-lap-4.html">RĂNG THÁO LẮP</a></h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 fwmb">
+                <div class="block-dv">
+                    <a href="dich-vu/cat-nao-chop-8.html" class="img-dv"><img src="{%static 'home/assets/img/icons/icons/icon-web-300x200-v34.png'%}" class="fullwidth"></a>
+                    <h4 class="name-dv"><a href="dich-vu/cat-nao-chop-8.html">CẮT NẠO CHÓP</a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear20"></div>
+</div>
+
+
+{% endblock content %}
+
+{% block footer %} 
+{% include "home/includes/footer.html" %}
+{% endblock %}

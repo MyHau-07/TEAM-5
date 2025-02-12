@@ -15,65 +15,9 @@
                     <h5 class="mb-0">Wellcome to SunDental</h5>
                   </div>
                   <div class="card-body">
-                    <form>
-                      <div class="mb-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-                        <div class="input-group input-group-merge">
-                          <span id="basic-icon-default-fullname2" class="input-group-text"
-                            ><i class="bx bx-user"></i
-                          ></span>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="basic-icon-default-fullname"
-                            placeholder="Nguyen Van A"
-                            aria-label="John Doe"
-                            aria-describedby="basic-icon-default-fullname2" />
-                        </div>
-                      </div>
-                      <div class="mb-6">
-                        <label class="form-label" for="basic-icon-default-email">Email</label>
-                        <div class="input-group input-group-merge">
-                          <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                          <input
-                            type="text"
-                            id="basic-icon-default-email"
-                            class="form-control"
-                            placeholder="nguyenvana"
-                            aria-label="john.doe"
-                            aria-describedby="basic-icon-default-email2" />
-                          <span id="basic-icon-default-email2" class="input-group-text">@gmail.com</span>
-                        </div>
-                      </div>
-                      <div class="mb-6">
-                        <label class="form-label" for="basic-icon-default-phone">Phone</label>
-                        <div class="input-group input-group-merge">
-                          <span id="basic-icon-default-phone2" class="input-group-text"
-                            ><i class="bx bx-phone"></i
-                          ></span>
-                          <input
-                            type="text"
-                            id="basic-icon-default-phone"
-                            class="form-control phone-mask"
-                            placeholder="+84 386699723"
-                            aria-label="+84 386699723"
-                            aria-describedby="basic-icon-default-phone2" />
-                        </div>
-                      </div>
-                      <div class="mb-6">
-                        <label class="form-label" for="basic-icon-default-message">Message</label>
-                        <div class="input-group input-group-merge">
-                          <span id="basic-icon-default-message2" class="input-group-text"
-                            ><i class="bx bx-comment"></i
-                          ></span>
-                          <textarea
-                            id="basic-icon-default-message"
-                            class="form-control"
-                            placeholder="Nhập nội dung cần tư vấn"
-                            aria-label="Nhập nội dung cần tư vấn"
-                            aria-describedby="basic-icon-default-message2"></textarea>
-                        </div>
-                      </div>
+                    <form action="" method=POST>
+                      {% csrf_token %}
+                      {{ form.as_p }}
                       <button type="submit" class="btn btn-primary">Send</button>
                     </form>
                   </div>
@@ -151,7 +95,19 @@
           loading="lazy" 
           referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-    </div>
+</div>
+<!-- Bootstrap POP UP -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if submitted %}
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Gửi thành công!',
+        text: 'Chúng tôi sẽ liên hệ với bạn sớm.',
+        confirmButtonText: 'OK'
+    });
+</script>
+{% endif %}
 {% endblock content %}
 
 {% block navbar %}
