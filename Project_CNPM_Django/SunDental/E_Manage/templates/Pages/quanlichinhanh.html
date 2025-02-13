@@ -1,0 +1,147 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% comment %} {% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %} {% endcomment %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu_co.html' %}
+{% endblock %}
+{% block content %}
+    <!-- Chi nhánh -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Danh Sách Chi Nhánh</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Chi Nhánh 1 - Cơ sở 1</h5>
+                            <p class="card-text">Số 2, Đường D3, Phường 25, Quận Bình Thạnh, TP.HCM</p>
+                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Chi Nhánh 2 - Cơ sở 2</h5>
+                            <p class="card-text">Số 384, Đường Nam Kỳ Khởi Nghĩa, Phường 8, Quận 3, TP.HCM</p>
+                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Chi Nhánh 3 - Cơ sở 3</h5>
+                            <p class="card-text">Số 151, Đường Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM</p>
+                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thống kê -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Bệnh nhân hôm nay</h5>
+                    <p class="card-text display-4">25</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Bác sĩ trực</h5>
+                    <p class="card-text display-4">5</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Đang chờ khám</h5>
+                    <p class="card-text display-4">8</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách bệnh nhân -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Danh Sách Bệnh Nhân</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ Tên</th>
+                            <th>Thời Gian</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>08:00</td>
+                            <td><span class="badge bg-success">Đã khám</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Trần Thị B</td>
+                            <td>08:30</td>
+                            <td><span class="badge bg-warning">Đang khám</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Lê Văn C</td>
+                            <td>09:00</td>
+                            <td><span class="badge bg-secondary">Chờ khám</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lịch làm việc -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Lịch Làm Việc Bác Sĩ</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">BS. Nguyễn Văn X</h5>
+                            <p class="card-text">Chuyên khoa: Nội tổng quát</p>
+                            <p class="card-text">Thời gian: 08:00 - 12:00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">BS. Trần Thị Y</h5>
+                            <p class="card-text">Chuyên khoa: Da liễu</p>
+                            <p class="card-text">Thời gian: 13:30 - 17:30</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

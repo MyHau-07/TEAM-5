@@ -1,7 +1,13 @@
 from django import forms
 from django.forms import ModelForm
 from E_Manage.models import CommentForm
-from django.contrib.auth.models import User
+from E_Manage.models import CustomUser
+from E_Manage.models import Booking
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
 
 class Comment_Form (forms.ModelForm):
     class Meta:
@@ -45,7 +51,7 @@ class SignUpForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={
             'class': "form-control",
             'name': "password",
-            'placeholder': "Enter Password",
+            'placeholder': "Nhập mật khẩu",
             'aria-describedby': "password"
         })
     )
@@ -53,27 +59,27 @@ class SignUpForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={
             'class': "form-control",
             'name': "password_confirm",
-            'placeholder': "Enter Password Confirm ",
+            'placeholder': "Nhập lại mật khẩu",
             'aria-describedby': "password_confirm"
         })
     )
 
     class Meta:
-        model = User
+        model = User  # Sử dụng mô hình user tùy chỉnh
         fields = ['username', 'email']
         widgets = {
             'username': forms.TextInput(attrs={
                 'class': "form-control",
                 'id': "username",
                 'name': "username",
-                'placeholder': "Enter your username",
-                'autofocus': True  # 'autofocus' should be a key with a value
+                'placeholder': "Nhập tên người dùng",
+                'autofocus': True
             }),
             'email': forms.EmailInput(attrs={
                 'class': "form-control",
                 'id': "email",
                 'name': "email",
-                'placeholder': "Enter your email"
+                'placeholder': "Nhập email của bạn"
             }),
         }
 
@@ -82,6 +88,79 @@ class SignUpForm(forms.ModelForm):
         password = cleaned_data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
 
-        if password != password_confirm:
-            raise forms.ValidationError("Passwords do not match")
+        if password and password_confirm and password != password_confirm:
+            raise forms.ValidationError("Mật khẩu không khớp")
+
         return cleaned_data
+    
+    
+class CustomUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser 
+        fields = ['full_name', 'email', 'birth_date', 'phone_number', 'address', 'gender','image']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập họ và tên'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Nhập email'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập số điện thoại'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Nhập địa chỉ', 'rows': 2}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        widgets = {
+            'location': forms.Select(attrs={
+                'class': 'bookly-form-group',
+                
+            }),
+            'service': forms.Select(attrs={
+                'class': 'bookly-form-group',
+                
+            }),
+            'appointment-date': forms.Select(attrs={
+                'class': 'bookly-form-group',
+                
+            }),
+            'appointment-time': forms.Select(attrs={
+                'class': 'bookly-form-group',
+                
+            }),
+            'fullname': forms.TextInput(attrs={
+                'class': 'bookly-form-group',
+                'placeholder': 'Nguyen Van A',
+                'aria-label': 'John Doe',
+                'aria-describedby': 'basic-icon-default-fullname2'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'bookly-form-group',
+                'placeholder': 'nguyenvana@gmail.com',
+                'aria-label': 'nguyenvana@gmail.com',
+                'aria-describedby': 'basic-icon-default-email2'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'bookly-form-group',
+                'placeholder': '+84 386699723',
+                'aria-label': '+84 386699723',
+                'aria-describedby': 'basic-icon-default-phone2'
+            }),
+            'illness': forms.Textarea(attrs={
+                'class': 'bookly-form-group',
+                
+                'placeholder': 'Nhập nội dung cần tư vấn',
+                'aria-label': 'Nhập nội dung cần tư vấn',
+                'aria-describedby': 'basic-icon-default-message2',
+                'rows': 4
+            }),
+            'photo': forms.ClearableFileInput(attrs={
+                'class': 'bookly-form-group',
+                'placeholder': 'Nhập nội dung cần tư vấn',
+                'aria-label': 'Nhập nội dung cần tư vấn',
+                'aria-describedby': 'basic-icon-default-message2',
+                'rows': 4
+            })
+        }

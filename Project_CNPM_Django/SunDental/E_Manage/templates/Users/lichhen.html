@@ -1,0 +1,114 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %}
+{% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %}
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Nhắc Nhở Lịch Hẹn</h2>
+        
+        <div class="card">
+            <div class="card-header bg-primary text-white ">
+                Lịch hẹn sắp tới
+            </div>
+            <div class="card-body min-vh-100">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày hẹn</th>
+                            <th>Giờ</th>
+                            <th>Ghi chú</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ appointment.patient.full_name }}</td>
+                            <td>{{ appointment.date }}</td>
+                            <td>{{ appointment.time }}</td>
+                            <td>{{ appointment.notes }}</td>
+                            <td>
+                                {% if appointment.status == "pending" %}
+                                    <span class="badge bg-warning text-dark">Chưa xác nhận</span>
+                                {% elif appointment.status == "confirmed" %}
+                                    <span class="badge bg-success">Đã xác nhận</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Đã hủy</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if appointment.status == "pending" %}
+                                    <button class="btn btn-success btn-sm confirm-btn" data-id="{{ appointment.id }}">Xác nhận</button>
+                                    <button class="btn btn-danger btn-sm cancel-btn" data-id="{{ appointment.id }}">Hủy</button>
+                                {% else %}
+                                    <button class="btn btn-secondary btn-sm disabled">
+                                        {{ appointment.get_status_display }}
+                                    </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $(".confirm-btn").click(function() {
+                var appointmentId = $(this).data("id");
+                var button = $(this);
+
+                $.ajax({
+                    url: "/update-appointment/",
+                    type: "POST",
+                    data: {
+                        "appointment_id": appointmentId,
+                        "status": "confirmed",
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function() {
+                        button.closest("tr").find(".badge").removeClass("bg-warning text-dark").addClass("bg-success").text("Đã xác nhận");
+                        button.closest("td").html('<button class="btn btn-secondary btn-sm disabled">Đã xác nhận</button>');
+                    }
+                });
+            });
+
+            $(".cancel-btn").click(function() {
+                var appointmentId = $(this).data("id");
+                var button = $(this);
+
+                $.ajax({
+                    url: "/update-appointment/",
+                    type: "POST",
+                    data: {
+                        "appointment_id": appointmentId,
+                        "status": "cancelled",
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function() {
+                        button.closest("tr").find(".badge").removeClass("bg-warning text-dark").addClass("bg-danger").text("Đã hủy");
+                        button.closest("td").html('<button class="btn btn-secondary btn-sm disabled">Đã hủy</button>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+{% endblock %}
+
+{% block footer %}
+{% include "home/includes/footer.html" %}
+{% endblock %}
