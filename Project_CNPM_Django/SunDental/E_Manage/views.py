@@ -93,9 +93,15 @@ def ClicnicOwner (request):
 #quan li phong kham
 def hosophongkham (request):
     return render(request, 'Pages/ho-so-phong-kham.html') 
-
-
-
+#quan li chi nhanh
+def quanlichinhanh (request):
+    return render(request, 'Pages/quan-li-chi-nhanh.html') 
+#quan li nhan vien
+def quanlinhanvien (request):
+    return render(request, 'Pages/quan-li-nhan-vien.html') 
+#quanlidichvu
+def quanlidichvu (request):
+    return render(request, 'Pages/quan-li-dich-vu.html') 
 
 def dichvu(request):
     dich_vu_list = DichVu.objects.all()

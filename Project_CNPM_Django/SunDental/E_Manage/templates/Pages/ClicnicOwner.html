@@ -9,83 +9,163 @@
     {% include 'home/includes/left_menu.html' %}
 {% endblock %}
 
-{% block content %}
-<div class="container">
-    <div class="container-fluid">
-        <div class="row">
-            
-            <!-- Main Content -->
-            
-            <div class="col-md-10">
-            
-                <h1 class="mt-4 text-center" style="font-weight: bold; color: #797CFF;">
-                    Dashboard Quản Lý Phòng Khám
-                </h1>
-                
-            <style>
-                .equal-height {
-                    min-height: 60px; /* Đặt chiều cao tối thiểu để đồng đều */
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                }     
-            </style>   
-                <!-- Tổng Quan -->
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4 equal-height">
-                            <div class="card-body">Doanh Thu: <strong>50,000,000 VND</strong></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-success text-white mb-4 equal-height">
-                            <div class="card-body">Số Bệnh Nhân: <strong>120</strong></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4 equal-height">
-                            <div class="card-body">Lịch Hẹn Hôm Nay: <strong>25</strong></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4 equal-height">
-                            <div class="card-body">Chi Nhánh: <strong>3</strong></div>
-                        </div>
-                    </div>
-                </div>
+ {% block content %}
 
-                
-                <!-- Biểu đồ Doanh Thu -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar me-1"></i>
-                        Doanh Thu Tháng
-                    </div>
-                    <div class="card-body">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('revenueChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
+ <!-- Import Chart.js -->
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+ <!-- Overview Stats Row 1 -->
+ <div class="container-fluid mb-4">
+     <div class="row g-3">
+         <div class="col-xl-3 col-md-6">
+             <div class="card border-0 shadow-sm h-100">
+                 <div class="card-body">
+                     <div class="d-flex justify-content-between align-items-center">
+                         <div>
+                             <h6 class="text-muted mb-2">Doanh Thu Hôm Nay</h6>
+                             <h3 class="mb-0">35,200,000đ</h3>
+                             <small class="text-success">
+                                 <i class="fas fa-arrow-up"></i> 12.5% so với hôm qua
+                             </small>
+                         </div>
+                         <div class="bg-primary bg-opacity-10 p-3 rounded">
+                             <i class="fas fa-money-bill-wave text-primary fa-2x"></i>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="col-xl-3 col-md-6">
+             <div class="card border-0 shadow-sm h-100">
+                 <div class="card-body">
+                     <div class="d-flex justify-content-between align-items-center">
+                         <div>
+                             <h6 class="text-muted mb-2">Doanh Thu Tháng</h6>
+                             <h3 class="mb-0">850,500,000đ</h3>
+                             <small class="text-success">
+                                 <i class="fas fa-arrow-up"></i> 15.2% so với tháng trước
+                             </small>
+                         </div>
+                         <div class="bg-success bg-opacity-10 p-3 rounded">
+                             <i class="fas fa-chart-line text-success fa-2x"></i>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
+ <!-- Charts Row 1 -->
+ <div class="container-fluid mb-4">
+     <div class="row g-3">
+         <div class="col-xl-8">
+             <div class="card border-0 shadow-sm">
+                 <div class="card-header bg-transparent border-0">
+                     <div class="d-flex justify-content-between align-items-center">
+                         <h5 class="mb-0">Doanh Thu Theo Tháng</h5>
+                         <div class="dropdown">
+                             <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                 2024
+                             </button>
+                             <ul class="dropdown-menu">
+                                 <li><a class="dropdown-item" href="#">2024</a></li>
+                                 <li><a class="dropdown-item" href="#">2023</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="card-body">
+                     <canvas id="revenueChart" height="300"></canvas>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
+ <!-- Thêm các biểu đồ khác -->
+ <div class="container-fluid mb-4">
+     <div class="row g-3">
+         <div class="col-xl-6">
+             <div class="card border-0 shadow-sm">
+                 <div class="card-body">
+                     <canvas id="salaryChart" height="300"></canvas>
+                 </div>
+             </div>
+         </div>
+         <div class="col-xl-6">
+             <div class="card border-0 shadow-sm">
+                 <div class="card-body">
+                     <canvas id="costsChart" height="300"></canvas>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
+ <!-- JavaScript cho các biểu đồ -->
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+     // Revenue Chart
+     const revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
+         type: 'line',
+         data: {
+             labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+             datasets: [{
+                 label: 'Doanh thu (triệu đồng)',
+                 data: [850, 920, 880, 950, 1020, 980, 1100, 1050, 1150, 1200, 1250, 1300],
+                 borderColor: 'rgb(75, 192, 192)',
+                 tension: 0.1
+             }]
+         },
+         options: {
+             responsive: true,
+             maintainAspectRatio: false
+         }
+     });
+ 
+     // Salary Distribution Chart (Pie Chart)
+    const salaryChart = new Chart(document.getElementById('salaryChart').getContext('2d'), {
+        type: 'pie',
         data: {
-            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+            labels: ['< 10M', '10M-15M', '15M-20M', '20M-25M', '> 25M'],
             datasets: [{
-                label: 'Doanh thu',
-                data: [12000000, 15000000, 17000000, 20000000, 25000000],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                label: 'Phân bố lương nhân viên',
+                data: [10, 25, 35, 20, 10],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',  
+                    'rgba(54, 162, 235, 0.8)',  
+                    'rgba(255, 206, 86, 0.8)',  
+                    'rgba(75, 192, 192, 0.8)',  
+                    'rgba(153, 102, 255, 0.8)'  
+                ]
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
         }
     });
-</script>
-{% endblock %}
 
+    // Operating Costs Chart (Bar Chart)
+    const costsChart = new Chart(document.getElementById('costsChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Nhân sự', 'Thiết bị', 'Vật tư', 'Điện nước', 'Marketing', 'Khác'],
+            datasets: [{
+                label: 'Chi phí vận hành (triệu đồng)',
+                data: [250, 80, 60, 30, 40, 20],
+                backgroundColor: 'rgba(54, 66, 235, 0.8)' // Xanh sáng hơn
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+ });
+ </script>
+ 
+ {% endblock %}
+ 

@@ -20,8 +20,14 @@ urlpatterns = [
     path('myuudai', views.myuudai, name = "myuudai"),
     #clicnicowner
     path('ClicnicOwner', views.ClicnicOwner, name = "ClicnicOwner"),
-    #ho so phong kham
+    #quan li phong kham
      path('hosophongkham', views.hosophongkham, name = "hosophongkham"),
+    # quan li chi nhanh
+    path('quanlichinhanh', views.quanlichinhanh, name = "quanlichinhanh"),
+    # quan li nhan vien
+    path('quanlinhanvien', views.quanlinhanvien, name = "quanlinhanvien"),
+    # quan li dich vu
+    path('quanlidichvu', views.quanlidichvu, name = "quanlidichvu"),
     # Thêm dịch vụ vào giỏ hàng
     path('them/<int:dich_vu_id>/', views.them_vao_gio_hang, name='them_vao_gio_hang'),
     
