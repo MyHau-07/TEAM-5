@@ -1,0 +1,47 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+    {% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="page-dichvu py-4 bg-light">
+    <div class="container">
+        <h2 class="text-center text-primary font-weight-bold mb-4">Dịch vụ <span class="font-weight-bold">nha khoa</span></h2>
+        <div class="row">
+            {% for service in services %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <a class="img-dv">
+                        <img src="{{ service.image.url }}" class="card-img-top img-fluid rounded" alt="{{ service.name }}" style="width: 100%; height: 200px; object-fit: cover;" >
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <a  class="text-dark font-weight-bold">{{ service.name }}</a>
+                        </h5>
+                        <h5 class="card-title">
+                            <a class="text-dark font-weight-bold">Chi phí: <span class="formatted-price">{{ service.price }}</span> đ</a>
+                        </h5>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.formatted-price').forEach(element => {
+        const price = parseInt(element.textContent);
+        element.textContent = new Intl.NumberFormat('vi-VN').format(price);
+    });
+</script>
+{% endblock content %}
+
+{% block footer %} 
+    {% include "home/includes/footer.html" %}
+{% endblock %}

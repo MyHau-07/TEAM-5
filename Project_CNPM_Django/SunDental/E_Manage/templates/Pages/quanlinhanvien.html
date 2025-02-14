@@ -1,0 +1,203 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% comment %} {% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %} {% endcomment %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu_co.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <!-- Thống kê nhân viên -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5>Tổng nhân viên</h5>
+                        <h2>45</h2>
+                        <p>Tất cả chi nhánh</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5>Chi nhánh 1</h5>
+                        <h2>18</h2>
+                        <p>Bình Thạnh</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5>Chi nhánh 2</h5>
+                        <h2>15</h2>
+                        <p>Quận 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5>Chi nhánh 3</h5>
+                        <h2>12</h2>
+                        <p>Quận 10</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Công cụ quản lý -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                                    <i class="fas fa-plus"></i> Thêm nhân viên mới
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select mb-2">
+                                    <option>Tất cả chi nhánh</option>
+                                    <option>Chi nhánh 1 - Bình Thạnh</option>
+                                    <option>Chi nhánh 2 - Quận 3</option>
+                                    <option>Chi nhánh 3 - Quận 10</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control mb-2" placeholder="Tìm kiếm nhân viên...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng nhân viên -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ và tên</th>
+                                <th>Chức vụ</th>
+                                <th>Chi nhánh</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>NV001</td>
+                                <td>Nguyễn Văn A</td>
+                                <td>Bác sĩ</td>
+                                <td>Chi nhánh 1</td>
+                                <td>0901234567</td>
+                                <td>nguyenvana@clinic.com</td>
+                                <td><span class="badge bg-success">Đang làm việc</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NV002</td>
+                                <td>Trần Thị B</td>
+                                <td>Y tá</td>
+                                <td>Chi nhánh 2</td>
+                                <td>0907654321</td>
+                                <td>tranthib@clinic.com</td>
+                                <td><span class="badge bg-success">Đang làm việc</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NV003</td>
+                                <td>Lê Văn C</td>
+                                <td>Dược sĩ</td>
+                                <td>Chi nhánh 3</td>
+                                <td>0909876543</td>
+                                <td>levanc@clinic.com</td>
+                                <td><span class="badge bg-warning">Nghỉ phép</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Phân trang -->
+                <nav>
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Thêm nhân viên -->
+    <div class="modal fade" id="addEmployeeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm nhân viên mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Chức vụ</label>
+                            <select class="form-select">
+                                <option>Bác sĩ</option>
+                                <option>Y tá</option>
+                                <option>Dược sĩ</option>
+                                <option>Nhân viên hành chính</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Chi nhánh</label>
+                            <select class="form-select">
+                                <option>Chi nhánh 1 - Bình Thạnh</option>
+                                <option>Chi nhánh 2 - Quận 3</option>
+                                <option>Chi nhánh 3 - Quận 10</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

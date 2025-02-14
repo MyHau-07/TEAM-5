@@ -1,98 +1,173 @@
 {% load static %}
 <nav
-class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-id="layout-navbar">
-<div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
-  <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-    <i class="bx bx-menu bx-md"></i>
-  </a>
-</div>
-
-<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-  <!-- Search -->
-  <div class="navbar-nav align-items-center">
-    <div class="nav-item d-flex align-items-center">
-      <i class="bx bx-search bx-md"></i>
-      <input
-        type="text"
-        class="form-control border-0 shadow-none ps-1 ps-sm-2"
-        placeholder="Search..."
-        aria-label="Search..." />
-    </div>
+  class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+  id="layout-navbar"
+>
+  <div
+    class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none"
+  >
+    <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+      <i class="bx bx-menu bx-md"></i>
+    </a>
   </div>
-  <!-- /Search -->
 
-  <ul class="navbar-nav flex-row align-items-center ms-auto">
-    <!-- Place this tag where you want the button to render. -->
-    <li class="nav-item lh-1 me-4">
-      <a
-        class="github-button"
-        href="https://github.com/themeselection/sneat-html-admin-template-free"
-        data-icon="octicon-star"
-        data-size="large"
-        data-show-count="true"
-        aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-        >Star</a
-      >
-    </li>
-
-    <!-- User -->
-    <li class="nav-item navbar-dropdown dropdown-user dropdown">
-      <a
-        class="nav-link dropdown-toggle hide-arrow p-0"
-        href="javascript:void(0);"
-        data-bs-toggle="dropdown">
-        <div class="avatar avatar-online">
-          <img src="{%static 'home/assets/img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle" />
+  <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+    <!-- Search -->
+    <div class="navbar-nav align-items-center">
+      <form class="nav-item d-flex align-items-center" method=POST action="{% url 'search'%}">
+        {% csrf_token %}
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0">
+            <i class="bx bx-search bx-md text-primary"></i>
+          </span>
+          <input
+            type="search"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2"
+            placeholder="Search..."
+            aria-label="Search..."
+            name="searched"
+          />
+          <button class="btn btn-primary" type="submit">Search</button>
         </div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-          <a class="dropdown-item" href="#">
-            <div class="d-flex">
-              <div class="flex-shrink-0 me-3">
-                <div class="avatar avatar-online">
-                  <img src="{%static 'home/assets/img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle" />
-                </div>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="mb-0">John Doe</h6>
-                <small class="text-muted">Admin</small>
-              </div>
+      </form>
+    </div>
+    <!-- /Search -->
+
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <li>
+        <button id="toggle-mode">Chuyển đổi chế độ sáng/tối</button>
+      </li>
+      <!-- Place this tag where you want the button to render. -->
+      {% if user.is_authenticated %}
+        <!-- Nếu người dùng đã đăng nhập, không hiển thị nút Đăng nhập và Đăng ký -->
+        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+          <a
+            class="nav-link dropdown-toggle hide-arrow p-0"
+            href="#"
+            data-bs-toggle="dropdown"
+            onclick="event.preventDefault();"
+          >
+            <div class="avatar avatar-online">
+              <img
+                src="{%static 'home/assets/img/avatars/1.png' %}"
+                alt
+                class="w-px-40 h-auto rounded-circle"
+              />
             </div>
           </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="#">
+                <div class="d-flex">
+                  <div class="flex-shrink-0 me-3">
+                    <div class="avatar avatar-online">
+                      <img
+                        src="{%static 'home/assets/img/avatars/1.png' %}"
+                        alt
+                        class="w-px-40 h-auto rounded-circle"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-0">John Doe</h6>
+                    <small class="text-muted">Admin</small>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <div class="dropdown-divider my-1"></div>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'user'%}">
+                <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
+              </a>
+            </li>
+  
+            <li>
+              <div class="dropdown-divider my-1"></div>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">
+                <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li>
-          <div class="dropdown-divider my-1"></div>
+    {% else %}
+        <li class="nav-item lh-1 me-4" id="login-button">
+            <a class="btn btn-primary" href="{% url 'login_view' %}">Đăng nhập</a>
         </li>
-        <li>
-          <a class="dropdown-item" href="#">
-            <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
-          </a>
+        <li class="nav-item lh-1 me-4" id="register-button">
+            <a class="btn btn-secondary" href="{% url 'register' %}">Đăng ký</a>
         </li>
-        <li>
-          <a class="dropdown-item" href="#"> <i class="bx bx-cog bx-md me-3"></i><span>Settings</span> </a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="#">
-            <span class="d-flex align-items-center align-middle">
-              <i class="flex-shrink-0 bx bx-credit-card bx-md me-3"></i
-              ><span class="flex-grow-1 align-middle">Billing Plan</span>
-              <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <div class="dropdown-divider my-1"></div>
-        </li>
-        <li>
-          <a class="dropdown-item" href="javascript:void(0);">
-            <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
-          </a>
-        </li>
-      </ul>
-    </li>
-    <!--/ User -->
-  </ul>
-</div>
+    {% endif %}
+
+      <!-- User -->
+
+      <!--/ User -->
+    </ul>
+  </div>
 </nav>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Kiểm tra xem người dùng đã đăng nhập hay chưa
+      var isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
+
+      if (isAuthenticated === "true") {
+          // Ẩn các nút Đăng nhập và Đăng ký
+          var loginButton = document.getElementById("login-button");
+          var registerButton = document.getElementById("register-button");
+
+          if (loginButton) {
+              loginButton.style.display = "none";
+          }
+          if (registerButton) {
+              registerButton.style.display = "none";
+          }
+      }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.getElementById('toggle-mode');
+      const body = document.body;
+
+      // Kiểm tra chế độ đã lưu trong localStorage
+      const currentMode = localStorage.getItem('mode');
+      if (currentMode) {
+          body.classList.add(currentMode);
+      } else {
+          body.classList.add('light-mode'); // Mặc định là chế độ sáng
+      }
+
+      toggleButton.addEventListener('click', function() {
+          if (body.classList.contains('light-mode')) {
+              body.classList.remove('light-mode');
+              body.classList.add('dark-mode');
+              localStorage.setItem('mode', 'dark-mode'); // Lưu chế độ tối
+          } else {
+              body.classList.remove('dark-mode');
+              body.classList.add('light-mode');
+              localStorage.setItem('mode', 'light-mode'); // Lưu chế độ sáng
+          }
+      });
+  });
+</script>
+
+<style>
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.light-mode {
+  background-color: white;
+  color: black;
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+</style>

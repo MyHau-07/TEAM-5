@@ -1,0 +1,494 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<!--THIET KE-->
+
+<style>
+/* Màu nền nhẹ nhàng, chuyên nghiệp */
+.custom-bg {
+    background-color: #E3F2FD; /* Xanh dương nhạt */
+}
+
+/* Tiêu đề card - Kiểu chữ thanh lịch, chuyên nghiệp */
+.card-title {
+    font-weight: 600;  /* Đậm vừa phải */
+    font-size: 26px;  /* Tăng kích thước một chút */
+    text-align: center; 
+    font-family: 'Poppins', sans-serif; /* Font chữ hiện đại */
+    color: #0D47A1; /* Xanh dương đậm làm điểm nhấn */
+}
+
+/* Nội dung card - Dễ đọc, thoải mái */
+.card-text {
+    font-size: 18px;  /* Cỡ chữ vừa phải */
+    text-align: center;  
+    font-family: 'Roboto', sans-serif; /* Font chữ chuyên nghiệp */
+    color: #333; /* Màu chữ tối hơn để dễ đọc */
+}
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex
+;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-.5* var(--bs-gutter-x));
+    margin-left: calc(-.5* var(--bs-gutter-x));
+}
+.best-deal .tabs-content ul.nav-tabs {
+    border-bottom: none !important;
+    margin-bottom: 80px;
+    align-items: end;
+    justify-content: end;
+    margin-top: -130px;
+}
+.best-deal .info-table {
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+    padding: 35px 30px;
+}
+.best-deal .tabs-content .nav-tabs .nav-link.active {
+    background-color: #f35525 !important;
+    color: #fff;
+}
+.best-deal .tabs-content .nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #1e1e1e !important;
+    border-radius: 5px;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    padding: 0px 25px;
+    color: #fff;
+}
+.best-deal .info-table ul li {
+    display: block;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 17px;
+    color: #1e1e1e;
+    font-weight: 400;
+}
+.best-deal .tab-content img {
+    padding: 0px 45px;
+}
+img {
+    width: 100%;
+    overflow: hidden;
+}
+
+.best-deal .info-table ul li span {
+    font-size: 15px;
+    color: #1e1e1e;
+    font-weight: 700;
+    float: right;
+    display: inline-block;
+}
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.section-heading {
+    margin: 30px 0 30px; /* Căn lề trên 30px, dưới 50px */
+}
+.text-center {
+    text-align: center !important;
+}
+.section-heading h2 {
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-top: 20px;
+    line-height: 56px;
+}
+.categories .item h4 {
+    font-size: 18px; /* Thay đổi kích thước chữ */
+    font-weight: 700; /* Thay đổi độ đậm chữ */
+    color:#fff; /* Thay đổi màu chữ */
+    text-transform: uppercase; /* Chuyển chữ hoa */
+    text-align: center; /* Căn giữa tiêu đề */
+}
+.categories .item {
+    background-color: #0071f8;
+    position: relative;
+    border-radius: 25px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.main-button a.active {
+    background-color: #f35525 !important;
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.main-button a:hover {
+    background-color: #d9441e !important; /* Màu nhấn khi hover */
+}
+.categories .item h4 {
+    font-family: 'Roboto', sans-serif; /* Sử dụng font chữ Roboto */
+}
+.categories .item h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #333;
+}
+.categories .item h4 {
+    transition: all 0.3s ease; /* Thêm hiệu ứng khi hover */
+}
+
+.categories .item h4:hover {
+    color: #f00; /* Thay đổi màu khi hover */
+    transform: translateY(-2px); /* Thay đổi vị trí khi hover */
+}
+.categories .item h4 {
+    padding: 10px; /* Thay đổi padding */
+    margin-bottom: 10px; /* Thay đổi margin bottom */
+    line-height: 1.5; /* Thay đổi khoảng cách dòng */
+}
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+        .text-muted {
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .policy-section {
+            margin-bottom: 20px;
+        }
+        .policy-section h3 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .policy-section p, .policy-section ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+</style>
+
+<!-- ƯU ĐÃI - CHÍNH SÁCH -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card" id="myCard">
+        <div class="card custom-bg">
+          <div class="card-body">
+            <h5 class="card-title" id="uudai-card">ƯU ĐÃI</h5>
+            <p class="card-text">🔥 Xem ngay ưu đãi dành cho bạn! 🎁👉</p>
+          </div>
+        </div>
+     </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card" id="myCard">
+        <div class="card custom-bg">
+          <div class="card-body">
+            <h5 class="card-title" id="chinhsach-card">CHÍNH SÁCH</h5>
+            <p class="card-text">📜 Xem ngay các chính sách dành cho khách hàng! 👉</p>
+          </div>
+        </div>
+     </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="section-heading text-center">
+          <h2>SunDental - Mang đến cho quý khách hàng chất lượng dịch vụ chất lượng cao và các chính sách hậu mãi chu đáo</h2>
+        </div>
+      </div>
+    </div>
+<!-- Nội dung ưu đãi sẽ được hiển thị tự động khi tải trang -->
+  <div class="card mt-5">
+    <div class="card-body" id="content-area">
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript để thay đổi nội dung khi click vào card -->
+<script>
+  // Lấy phần tử HTML
+  const uudaiCard = document.getElementById("uudai-card");
+  const chinhsachCard = document.getElementById("chinhsach-card");
+  const contentArea = document.getElementById("content-area");
+
+  // Hàm hiển thị nội dung ưu đãi
+  function showUuDai() {
+  contentArea.innerHTML = `
+  <div class="section best-deal">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="section-heading">
+            <h6>| ƯU ĐÃI</h6>
+            <h2> NHA KHOA SUNDENTAL</h2>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="tabs-content">
+            <div class="row">
+              <div class="nav-wrapper ">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="Customer_New-tab" data-bs-toggle="tab" data-bs-target="#Customer_New" type="button" role="tab" aria-controls="Customer_New" aria-selected="false" tabindex="-1">Khách hàng mới</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="Customer_Old-tab" data-bs-toggle="tab" data-bs-target="#Customer_Old" type="button" role="tab" aria-controls="Customer_Old" aria-selected="true">Khách hàng cũ</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="Student-tab" data-bs-toggle="tab" data-bs-target="#Student" type="button" role="tab" aria-controls="Student" aria-selected="false" tabindex="-1">Học sinh - Sinh viên</button>
+                  </li>
+                </ul>
+              </div>              
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="Customer_New" role="tabpanel" aria-labelledby="Customer_New-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Chi tiêu:<span>chi tiêu >5tr</span></li>
+                          <li>Ưu đãi: <span>5% - 15 %  </span></li>
+                          <li>Voucher: <span>giảm 50k</span></li>
+                          <li>Thời gian ưu đãi:<span>7 ngày</span></li>
+                          <li>Tích điểm:<span> x2 điểm làn đầu </span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'home/assets/img/uudai/ba.jpg' %}" alt="">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>CHI TIẾT ƯU ĐÃI</h4>
+                      <br><br>Khi bạn chi tiêu trên 5 triệu đồng, bạn sẽ nhận ngay ưu đãi giảm giá từ 5% đến 15% cho các dịch vụ tiếp theo. Ngoài ra, bạn còn được tặng voucher giảm giá 50k cho đơn hàng tiếp theo. Thời gian ưu đãi kéo dài trong 7 ngày, giúp bạn tận dụng ngay cơ hội tiết kiệm. Hơn thế nữa, bạn còn có thể tích điểm để đổi quà hấp dẫn trong tương lai.</p>
+                      <div class="icon-button">
+                        <a href="dichvu.html"><i class="fa fa-calendar"></i> XEM THÊM: DỊCH VỤ NHA KHOA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade active show" id="Customer_Old" role="tabpanel" aria-labelledby="Customer_Old-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Chi tiêu:<span> > 1trđ </span></li>
+                          <li>1 dịch vụ: <span> 1 ưu đãi </span></li>
+                          <li>Voucher: <span> 10% - 30 % </span></li>
+                          <li>Thời gian ưu đãi:<span>Không giới hạn</span></li>
+                          <li>Tích điểm: <span> số điện thoại</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'home/assets/img/uudai/hai.jpg' %}" alt="">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>CHI TIẾT ƯU ĐÃI:</h4>
+                      <p>Khi bạn chi tiêu trên 1 triệu đồng, bạn sẽ nhận được 1 ưu đãi cho mỗi dịch vụ sử dụng. Ưu đãi bao gồm voucher giảm giá từ 10% đến 30%, áp dụng cho các dịch vụ tiếp theo. Thời gian ưu đãi không giới hạn, giúp bạn thoải mái sử dụng khi cần. Bên cạnh đó, bạn còn có cơ hội tích điểm và đổi quà hấp dẫn, điều này mang lại nhiều lợi ích lâu dài cho bạn khi sử dụng dịch vụ.</p>
+                      <div class="icon-button">
+                        <a href="property-details.html"><i class="fa fa-calendar"></i> XEM THÊM: DỊCH VỤ NHA KHOA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="Student" role="tabpanel" aria-labelledby="Student-tab">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="info-table">
+                        <ul>
+                          <li>Độ tuổi: <span>16 - 22</span></li>
+                          <li>Điều kiện: <span>thẻ học sinh/sinh viên</span></li>
+                          <li>Chi tiêu: <span> >5tr đ</span></li>
+                          <li>Thời gian ưu đãi<span>Không giới hạn</span></li>
+                          <li>1 Ưu đãi:<span>1 người</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img src="{% static 'home/assets/img/uudai/mot.jpg' %}" alt="">
+                    </div>
+                    <div class="col-lg-3">
+                      <h4>CHI TIẾT ƯU ĐÃI:</h4>
+                      <p>Dành cho khách hàng từ 16-22 tuổi có thẻ học sinh/sinh viên và chi tiêu trên 5 triệu đồng, bạn sẽ nhận được một ưu đãi đặc biệt. Thời gian ưu đãi không giới hạn, giúp bạn có thể sử dụng bất cứ khi nào. Một ưu đãi duy nhất dành cho bạn, giúp tiết kiệm chi phí và tận hưởng dịch vụ tuyệt vời.</p>
+                      <div class="icon-button">
+                        <a href="dichvu.html"><i class="fa fa-calendar"></i>XEM THÊM: DỊCH VỤ NHA KHOA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+  }
+function showChinhSach() {
+    contentArea.innerHTML = `
+            <div class="container">
+        <h2>CHÍNH SÁCH DỊCH VỤ NHA KHOA SUNDENTAL</h2>
+        <p class="text-muted">Cập nhật mới nhất: <strong>[2/11/2025]</strong></p>
+
+        <div class="policy-section">
+            <h3>1. CHÍNH SÁCH ĐẶT LỊCH VÀ HỦY LỊCH</h3>
+            <p><strong>Đặt lịch hẹn:</strong></p>
+            <p>Khách hàng có thể đặt lịch qua website, hotline hoặc trực tiếp tại phòng khám.</p>
+            <p><strong>Hủy hoặc thay đổi lịch:</strong></p>
+            <p>Vui lòng thông báo trước 24 giờ để đảm bảo quyền lợi.</p>
+        </div>
+
+        <div class="policy-section">
+            <h3>2. CHÍNH SÁCH THANH TOÁN</h3>
+            <p>Chúng tôi chấp nhận các phương thức thanh toán:</p>
+            <ul>
+                <li>Tiền mặt</li>
+                <li>Chuyển khoản ngân hàng</li>
+                <li>Thẻ tín dụng/thẻ ghi nợ</li>
+                <li>Ví điện tử (Momo, ZaloPay, VNPay)</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h3>3. CHÍNH SÁCH BẢO HÀNH</h3>
+            <p>Các dịch vụ bảo hành tại SunDental:</p>
+            <ul>
+                <li>Trám răng: 6 tháng</li>
+                <li>Bọc răng sứ: 5-10 năm</li>
+                <li>Cấy ghép Implant: 5 năm - trọn đời</li>
+                <li>Niềng răng: Bảo hành trong suốt quá trình điều trị</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h3>4. CHÍNH SÁCH BẢO MẬT THÔNG TIN</h3>
+            <p>Thông tin khách hàng được bảo mật tuyệt đối và không chia sẻ với bên thứ ba nếu không có sự đồng ý.</p>
+        </div>
+
+        <div class="policy-section">
+            <h3>5. CHÍNH SÁCH KHUYẾN MÃI & ƯU ĐÃI</h3>
+            <p>Các chương trình ưu đãi định kỳ:</p>
+            <ul>
+                <li>Giảm giá 5-10% cho khách hàng thân thiết</li>
+                <li>Ưu đãi đặc biệt vào dịp lễ</li>
+                <li>Giảm giá khi đăng ký theo nhóm/gia đình</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h3>6. LIÊN HỆ</h3>
+            <p><strong>Địa chỉ:</strong> [Địa chỉ phòng khám]</p>
+            <p><strong>Hotline:</strong> [Số điện thoại]</p>
+            <p><strong>Website:</strong> [Link website]</p>
+            <p><strong>Email:</strong> [Email liên hệ]</p>
+        </div>
+    </div>s
+    `;
+}
+
+
+  // Khi tải trang, hiển thị nội dung ưu đãi trước
+  window.onload = showUuDai;
+
+  // Xử lý khi bấm vào thẻ card
+  uudaiCard.addEventListener("click", showUuDai);
+  chinhsachCard.addEventListener("click", showChinhSach);
+</script>
+
+<div class="section categories">
+  <div class="container">
+    <div class="row">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6">
+          <div class="section-heading">
+            <h6>NEWS-TIN TỨC</h6>
+            <h2>TIN TỨC NỔI BẬT TRONG TUẦN</h2>
+          </div>
+        </div>
+        <div class="col-lg-6 text-lg-end">
+          <div class="main-button">
+            <a href="kienthuc.html" class="active">XEM THÊM</a>
+          </div>
+        </div>        
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>Kiến tạo nụ cười từ chuyên gia 15 năm cùng SUNDENTAL</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="{% static 'home/assets/img/uudai/bon.jpg' %}" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>Theo dõi sự kiện ưu đãi lớn nhất trong năm cùng SUNDENTAL</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="{% static 'home/assets/img/uudai/nam.jpg' %}" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>Trồng răng IMPLANT - Ưu đãi chưa từng có</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="{% static 'home/assets/img/uudai/sau.jpg' %}" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>SUNDENTAL - cam kết răng sứ chính hãng.</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="{% static 'home/assets/img/uudai/bay.jpg' %}" alt=""></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-sm-6 col-xs-12">
+        <div class="item">
+          <h4>Sử dụng dịch vụ răng sứ - implant để nhận ngay ưu đãi</h4>
+          <div class="thumb">
+            <a href="product-details.html"><img src="{% static 'home/assets/img/uudai/tam.jpg' %}" alt=""></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}
+
+{% block footer %} 
+{% include "home/includes/footer.html" %}
+{% endblock %}

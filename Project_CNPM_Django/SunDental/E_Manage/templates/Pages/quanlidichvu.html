@@ -1,0 +1,190 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% comment %} {% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %} {% endcomment %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu_co.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mt-4 text-center" style="font-weight: bold; color: #797CFF;">Quản Lý Dịch Vụ - Nha Khoa ABC</h1>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Quản Lý Dịch Vụ Nha Khoa</a>
+            <div class="d-flex">
+                <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+                    <i class="fas fa-plus"></i> Thêm Khoa Mới
+                </button>
+                <button class="btn btn-light" id="viewServicesBtn">
+                    <i class="fas fa-list"></i> Xem Danh Sách Dịch Vụ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <!-- Phần quản lý -->
+        <div id="managementSection">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <select class="form-select" style="max-width: 200px;">
+                            <option value="">Tất cả các khoa</option>
+                            <option>Khoa Răng</option>
+                            <option>Khoa Chỉnh nha</option>
+                            <option>Khoa Phục hình răng</option>
+                            <option>Khoa Nha chu</option>
+                            <option>Khoa Nội nha</option>
+                            <option>Khoa Khám tổng quát</option>
+                            <option>Khoa Chẩn đoán hình ảnh</option>
+                            <option>Khoa Tư vấn chăm sóc răng miệng</option>
+                        </select>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm dịch vụ...">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                        <i class="fas fa-plus"></i> Thêm Dịch Vụ Mới
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bảng dịch vụ -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên Dịch Vụ</th>
+                                    <th>Khoa</th>
+                                    <th>Giá Dịch Vụ</th>
+                                    <th>Thời Gian BH</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>DV001</td>
+                                    <td>Nhổ răng</td>
+                                    <td>Khoa Răng</td>
+                                    <td>500,000đ</td>
+                                    <td>7 ngày</td>
+                                    <td><span class="badge bg-success">Đang hoạt động</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DV002</td>
+                                    <td>Hàn răng</td>
+                                    <td>Khoa Răng</td>
+                                    <td>300,000đ</td>
+                                    <td>6 tháng</td>
+                                    <td><span class="badge bg-success">Đang hoạt động</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phần hiển thị dịch vụ -->
+        <div id="servicesSection" style="display: none;">
+            <div class="card mb-4 service-card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Khoa Răng</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Nhổ răng</h5>
+                            <p class="mb-0">Bảo hành 7 ngày để xử lý các biến chứng</p>
+                        </div>
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Hàn răng</h5>
+                            <p class="mb-0">Bảo hành 6 tháng với trường hợp răng trám bị bong tróc</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Thêm Khoa Mới -->
+    <div class="modal fade" id="addDepartmentModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm Khoa Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Tên Khoa</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const viewServicesBtn = document.getElementById('viewServicesBtn');
+        const managementSection = document.getElementById('managementSection');
+        const servicesSection = document.getElementById('servicesSection');
+
+        let isShowingServices = false;
+
+        viewServicesBtn.addEventListener('click', () => {
+            if (!isShowingServices) {
+                managementSection.style.display = 'none';
+                servicesSection.style.display = 'block';
+                viewServicesBtn.innerHTML = '<i class="fas fa-table"></i> Xem Bảng Quản Lý';
+                isShowingServices = true;
+            } else {
+                managementSection.style.display = 'block';
+                servicesSection.style.display = 'none';
+                viewServicesBtn.innerHTML = '<i class="fas fa-list"></i> Xem Danh Sách Dịch Vụ';
+                isShowingServices = false;
+            }
+        });
+    </script>
+
+</div>
+{% endblock %}

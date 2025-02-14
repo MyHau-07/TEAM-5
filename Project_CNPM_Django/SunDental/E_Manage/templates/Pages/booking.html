@@ -1,0 +1,142 @@
+{% extends "home/master.html" %}
+
+{% block navbar %} 
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %} 
+{% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="col-md-12">
+        <div class="card">
+          <h4 class="card-header text-center fw-bolder">ĐĂNG KÍ DỊCH VỤ 🏥</h4>
+          <div class="card-body">
+            <form action='{% url 'booking' %}' method = 'POST'>
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="defaultInput" class="form-label">Họ và tên</label>
+                    <input id="defaultInput" class="form-control" type="text" placeholder="Họ và tên" name='fullname' />
+                </div>
+                <div class="mb-4">
+                    <label for="defaultInput" class="form-label">Số điện thoại</label>
+                    <input id="defaultInput" class="form-control" type="text" placeholder="Nhập Số điện thoại" name='phone' />
+                  </div>
+                  <div class="mb-4">
+                    <label for="defaultInput" class="form-label">Email</label>
+                    <input id="defaultInput" class="form-control" type="email" placeholder="Nhập Email" name='email' />
+                  </div>
+
+                <div class="mb-4">
+                    <label for="defaultSelect" class="form-label">Địa điểm</label>
+                    <select id="defaultSelect" class="form-select" name='location'>
+                        <option value="02 Võ Oanh, Phường 25, Bình Thạnh, Hồ Chí Minh">02 Võ Oanh, Phường 25, Bình Thạnh, Hồ Chí Minh</option>
+                        <option value="Số 70 đường Tô Ký, phường Tân Chánh Hiệp, quận 12, TPHCM">Số 70 đường Tô Ký, phường Tân Chánh Hiệp, quận 12, TPHCM</option>
+                        <option value="10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM">10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="defaultSelect" class="form-label">Dịch Vụ</label>
+                    <select id="defaultSelect" class="form-select" name='service'>
+                            <option value="">Chọn dịch vụ</option>
+                            <option value="Nhổ răng">Nhổ răng</option>
+                            <option value="Hàn răng">Hàn răng</option>
+                            <option value="Điều trị tủy">Điều trị tủy</option>
+                            <option value="Niềng răng kim loại">Niềng răng kim loại</option>
+                            <option value="Niềng răng trong suốt">Niềng răng trong suốt</option>
+                            <option value="Điều trị lệch khớp cắn">Điều trị lệch khớp cắn</option>
+                            <option value="Làm răng sứ">Làm răng sứ</option>
+                            <option value="Cấy ghép Implant">Cấy ghép Implant</option>
+                            <option value="Mặt dán sứ Veneer">Mặt dán sứ Veneer</option>
+                            <option value="Cạo vôi răng">Cạo vôi răng</option>
+                            <option value="Điều trị viêm nướu">Điều trị viêm nướu</option>
+                            <option value="Ghép nướu">Ghép nướu</option>
+                            <option value="Lấy cao răng sâu dưới nướu">Lấy cao răng sâu dưới nướu</option>
+                            <option value="Điều trị áp xe răng">Điều trị áp xe răng</option>
+                            <option value="Tái tạo xương ổ răng">Tái tạo xương ổ răng</option>
+                            <option value="Khám sức khỏe răng miệng định kỳ">Khám sức khỏe răng miệng định kỳ</option>
+                            <option value="Chụp X-quang răng toàn hàm">Chụp X-quang răng toàn hàm</option>
+                            <option value="Tư vấn kế hoạch điều trị">Tư vấn kế hoạch điều trị</option>
+                            <option value="Chụp CT Cone Beam 3D">Chụp CT Cone Beam 3D</option>
+                            <option value="Đo khớp cắn kỹ thuật số">Đo khớp cắn kỹ thuật số</option>
+                            <option value="Chụp phim Panorama">Chụp phim Panorama</option>
+                            <option value="Tẩy trắng răng bằng công nghệ Laser">Tẩy trắng răng bằng công nghệ Laser</option>
+                            <option value="Tư vấn dinh dưỡng và phòng ngừa bệnh lý răng miệng">Tư vấn dinh dưỡng và phòng ngừa bệnh lý răng miệng</option>
+                            <option value=">Đánh giá sức khỏe răng miệng chuyên sâu">Đánh giá sức khỏe răng miệng chuyên sâu</option>
+                        </select>
+                </div>
+                <div class=" mb-4">
+                    <label for="defaultInput" class="form-label">Thông tin bệnh (nếu có)</label>
+                    <input
+                      id="defaultInput"
+                      class="form-control"
+                      type="text"
+                      placeholder="Nhập thông tin bệnh (nếu có)" name='message' />
+                  </div>
+                  <div class="mb-4">
+                    <label for="formFile" class="form-label">Tải ảnh (nếu có)</label>
+                    <input class="form-control" type="file" id="formFile" name="photo" />
+                  </div>
+                <div class="mb-4">
+                    <label for="defaultSelect" class="form-label">Chọn ngày hẹn</label>
+                    <input type="date" id="appointment-date" class="form-control" name="appointment_date" >
+                </div>
+
+                <div class="mb-4">
+                    <label for="defaultSelect" class="form-label">Chọn giờ hẹn</label>
+                    <select id="defaultSelect" class="form-select" name='appointment_time'>
+                        <option value="">Chọn giờ hẹn</option>
+                            <option value="08:00">08:00 AM</option>
+                            <option value="08:45">08:45 AM</option>
+                            <option value="09:30">09:30 AM</option>
+                            <option value="09:30">10:15 AM</option>
+                            <option value="09:30">11:00 AM</option>
+                            <option value="09:30">11:45 AM</option>
+                            <option value="09:30">01:15 AM</option>
+                            <option value="09:30">02:00 AM</option>
+                            <option value="09:30">02:45 AM</option>
+                            <option value="09:30">03:30 AM</option>
+                            <option value="09:30">04:15 AM</option>
+                    </select>
+                
+                </div>
+                
+            </div>
+            <div class="col-md-12 text-center mb-5">
+                <button id="complete-btn" class="btn btn-primary btn-lg">
+                    Hoàn tất
+                </button>
+            </div>
+            </form>
+            
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                {% for message in messages %}
+                    Swal.fire({
+                        title: 'Thông báo',
+                        text: '{{ message }}',
+                        icon: '{% if message.tags == "success" %}success{% else %}error{% endif %}',
+                        confirmButtonText: 'OK'
+                    });
+                {% endfor %}
+            });
+        </script>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block footer %} 
+{% include "home/includes/footer.html" %}
+{% endblock %}
