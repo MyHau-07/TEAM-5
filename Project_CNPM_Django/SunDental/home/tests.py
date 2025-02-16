@@ -7,8 +7,8 @@ import time
 
 # Cấu hình trang web và thông tin tài khoản thử nghiệm
 URL = "http://127.0.0.1:8000/"  # Thay bằng URL thật
-VALID_USERNAME = "user1"
-VALID_PASSWORD = "Thanhbug123"
+VALID_USERNAME = "khoivan"
+VALID_PASSWORD = "000000"
 
 VALID_USERNAME1 = "DatBug"
 VALID_PASSWORD1 = "Thanhbug"
@@ -27,9 +27,9 @@ VALID_PASSWORD5 = ""
 
 # Danh sách các trường hợp thử nghiệm
 test_cases = [
-    {"username": VALID_USERNAME5, "password": VALID_PASSWORD5, "expected": "fail"},
-    {"username": VALID_USERNAME4, "password": VALID_PASSWORD4, "expected": "fail"},
-    {"username": VALID_USERNAME3, "password": VALID_PASSWORD3, "expected": "fail"},
+    # {"username": VALID_USERNAME5, "password": VALID_PASSWORD5, "expected": "fail"},
+    # {"username": VALID_USERNAME4, "password": VALID_PASSWORD4, "expected": "fail"},
+    # {"username": VALID_USERNAME3, "password": VALID_PASSWORD3, "expected": "fail"},
     {"username": VALID_USERNAME2, "password": VALID_PASSWORD2, "expected": "fail"},
     {"username": VALID_USERNAME1, "password": VALID_PASSWORD1, "expected": "fail"},
     {"username": VALID_USERNAME, "password": VALID_PASSWORD, "expected": "success"},

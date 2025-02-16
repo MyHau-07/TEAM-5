@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission 
 from django.contrib.auth.models import BaseUserManager
+from datetime import date
+from django.contrib.auth import get_user_model
+
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -82,76 +85,20 @@ class Appointment(models.Model):
     
 
 class Booking(models.Model):
-    # Danh sách địa chỉ có thể chọn
-    ADDRESS_CHOICES = [
-    ('02 Võ Oanh, Phường 25, Bình Thạnh, Hồ Chí Minh', '02 Võ Oanh, Phường 25, Bình Thạnh, Hồ Chí Minh'),
-    ('70 Tô Ký, Tân Chánh Hiệp, Quận 12, TPHCM', '70 Tô Ký, Tân Chánh Hiệp, Quận 12, TPHCM'),
-    ('10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM', '10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM'),
-    ]
-
-
-    # Danh sách dịch vụ có thể chọn
-    SERVICE_CHOICES = [
-    ('nho_rang', 'Nhổ răng'),
-    ('han_rang', 'Hàn răng'),
-    ('dieu_tri_tuy', 'Điều trị tủy'),
-    
-    ('nieng_rang_kim_loai', 'Niềng răng kim loại'),
-    ('nieng_rang_trong_suot', 'Niềng răng trong suốt'),
-    ('dieu_tri_lech_khop_can', 'Điều trị lệch khớp cắn'),
-    
-    ('lam_rang_su', 'Làm răng sứ'),
-    ('cay_ghep_implant', 'Cấy ghép Implant'),
-    ('mat_dan_su_veneer', 'Mặt dán sứ Veneer'),
-    
-    ('cao_voi_rang', 'Cạo vôi răng'),
-    ('dieu_tri_viem_nuou', 'Điều trị viêm nướu'),
-    ('ghep_nuou', 'Ghép nướu'),
-    ('lay_cao_rang_sau', 'Lấy cao răng sâu dưới nướu'),
-    
-    ('dieu_tri_ap_xe_rang', 'Điều trị áp xe răng'),
-    ('tai_tao_xuong_o_rang', 'Tái tạo xương ổ răng'),
-    
-    ('kham_dinh_ky', 'Khám sức khỏe răng miệng định kỳ'),
-    ('chup_x_quang_toan_ham', 'Chụp X-quang răng toàn hàm'),
-    ('tu_van_ke_hoach_dieu_tri', 'Tư vấn kế hoạch điều trị'),
-    ('chup_ct_cone_beam_3d', 'Chụp CT Cone Beam 3D'),
-    ('do_khop_can_ky_thuat_so', 'Đo khớp cắn kỹ thuật số'),
-    ('chup_phim_panorama', 'Chụp phim Panorama'),
-    
-    ('tay_trang_bang_laser', 'Tẩy trắng răng bằng công nghệ Laser'),
-    ('tu_van_dinh_duong', 'Tư vấn dinh dưỡng và phòng ngừa bệnh lý răng miệng'),
-    ('danh_gia_suc_khoe_rang_mieng', 'Đánh giá sức khỏe răng miệng chuyên sâu'),
-    ]
-
-    # Danh sách các khung giờ
-    TIME_SLOTS = [
-        ('08:00', '08:00 AM'),
-        ('08:45', '08:45 AM'),
-        ('09:30', '09:30 AM'),
-        ('10:15', '10:15 AM'),
-        ('11:00', '11:00 AM'),
-        ('11:45', '11:45 AM'),
-        
-        ('13:15', '01:15 PM'),
-        ('14:00', '02:00 PM'),
-        ('14:45', '02:45 PM'),
-        ('15:30', '03:30 PM'),
-        ('16:15', '04:15 PM'),
-    ]
-
-    address = models.CharField(max_length=255, choices=ADDRESS_CHOICES)
-    service = models.CharField(max_length=50, choices=SERVICE_CHOICES)
-    day_appointment = models.DateField(max_length=10)
-    time_appointment = models.CharField(max_length=5, choices=TIME_SLOTS)
-    name = models.CharField(max_length=255,null=True, blank=True)
-    email = models.EmailField(max_length=255,null=True, blank=True)
-    phone = models.CharField(max_length=11,null=True, blank=True)
-    message = models.TextField(null=True, blank=True)
-    Image = models.ImageField(upload_to='booking_images/', null=True, blank=True)
-
+    fullname = models.CharField(max_length=100)  # Họ và tên
+    phone = models.CharField(max_length=15)  # Số điện thoại
+    email = models.EmailField()  # Địa chỉ email
+    location = models.CharField(max_length=255)  # Địa điểm
+    service = models.CharField(max_length=100)  # Dịch vụ
+    message = models.TextField(blank=True, null=True)  # Thông tin bệnh (nếu có)
+    photo = models.ImageField(upload_to='photos/', blank=True, null=True)  # Tải ảnh (nếu có)
+    appointment_date = models.DateField(null=True, default=date.today)  # Ngày hẹn
+    appointment_time = models.CharField(max_length=25,null=False)  # Giờ hẹn
+    created_at = models.DateTimeField(auto_now_add=True)  
+    updated_at = models.DateTimeField(auto_now=True) 
+    patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="bookings", null=True, blank=True)
     def __str__(self):
-        return f"{self.address} - {self.service} - {self.day_appointment} {self.time_appointment}"
+        return f"{self.fullname}"
 
 class Services (models.Model):
     name = models.CharField(max_length=50)
@@ -169,3 +116,65 @@ class GioHang(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     so_luong = models.PositiveIntegerField(default=1)  # Cột này phải có
 
+class HoaDon(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    dich_vu = models.CharField(max_length=255)  # Lưu tên dịch vụ (hoặc danh sách dịch vụ)
+    ngay_thanh_toan = models.DateTimeField(auto_now_add=True)
+    tong_tien = models.FloatField(default=0)
+
+    def __str__(self):
+        return f"Hóa đơn #{self.id} - {self.dich_vu}"   
+User = get_user_model()
+class MedicalRecord(models.Model):
+    patient = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='medical_record'
+    )
+    diagnosis = models.TextField(blank=True, null=True, verbose_name="Chẩn đoán")
+    treatment_plan = models.TextField(blank=True, null=True, verbose_name="Kế hoạch điều trị")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Hồ sơ của {self.patient.full_name or self.patient.username}"
+
+
+class lichhen(models.Model):
+    medical_record = models.ForeignKey(
+        MedicalRecord, on_delete=models.CASCADE, related_name='appointments'
+    )
+    doctor = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='doctor_appointments'
+    )
+    appointment_date = models.DateField(verbose_name="Ngày hẹn")
+    appointment_time = models.TimeField(verbose_name="Giờ hẹn")
+    notes = models.TextField(blank=True, null=True, verbose_name="Ghi chú (nếu có)")
+    STATUS_CHOICES = (
+        ('scheduled', 'Đã lên lịch'),
+        ('completed', 'Đã khám'),
+        ('cancelled', 'Đã hủy'),
+    )
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default='scheduled', verbose_name="Trạng thái"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return (f"Lịch khám của {self.medical_record.patient.full_name} với "
+                f"{self.doctor.full_name} vào {self.appointment_date} - {self.appointment_time}")
+
+
+class Communication(models.Model):
+    medical_record = models.ForeignKey(
+        MedicalRecord, on_delete=models.CASCADE, related_name='communications'
+    )
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='sent_messages'
+    )
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='received_messages'
+    )
+    message = models.TextField(verbose_name="Nội dung tin nhắn")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return (f"Tin nhắn từ {self.sender.full_name} đến "
+                f"{self.receiver.full_name} lúc {self.timestamp}")

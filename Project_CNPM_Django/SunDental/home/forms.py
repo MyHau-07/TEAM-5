@@ -114,53 +114,38 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = '__all__'
         widgets = {
-            'location': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'service': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'appointment-date': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'appointment-time': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
             'fullname': forms.TextInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'Nguyen Van A',
-                'aria-label': 'John Doe',
-                'aria-describedby': 'basic-icon-default-fullname2'
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'nguyenvana@gmail.com',
-                'aria-label': 'nguyenvana@gmail.com',
-                'aria-describedby': 'basic-icon-default-email2'
+                'placeholder': 'Nhập họ tên',
+                'class': 'form-control'
             }),
             'phone': forms.TextInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': '+84 386699723',
-                'aria-label': '+84 386699723',
-                'aria-describedby': 'basic-icon-default-phone2'
+                'placeholder': 'Nhập số điện thoại',
+                'class': 'form-control'
             }),
-            'illness': forms.Textarea(attrs={
-                'class': 'bookly-form-group',
-                
-                'placeholder': 'Nhập nội dung cần tư vấn',
-                'aria-label': 'Nhập nội dung cần tư vấn',
-                'aria-describedby': 'basic-icon-default-message2',
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Nhập địa chỉ email',
+                'class': 'form-control'
+            }),
+            'location': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'service': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'message': forms.TextInput(attrs={
+                'placeholder': 'Nhập tin nhắn',
+                'class': 'form-control',
                 'rows': 4
             }),
-            'photo': forms.ClearableFileInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'Nhập nội dung cần tư vấn',
-                'aria-label': 'Nhập nội dung cần tư vấn',
-                'aria-describedby': 'basic-icon-default-message2',
-                'rows': 4
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'appointment_date': forms.DateInput(attrs={
+                'type': 'date',  # Use HTML5 date input
+                'class': 'form-control'
+            }),
+            'appointment_time': forms.TextInput(attrs={
+                'class': 'form-control'
             })
         }
+        

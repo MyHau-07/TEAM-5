@@ -1,0 +1,66 @@
+{% extends "home/master.html" %}
+{% load static %}
+{% block menu-inner %}
+    {% include 'home/includes/left_menu_co.html' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container" style="margin-top: 50px;">
+    <h2  style="text-align: center; color: #696CFF; font-weight: bold;">Chi tiết Hồ Sơ Bệnh Án của {{ record.patient.full_name }}</h2>
+
+    <p><strong>Mã định danh:</strong> {{ record.patient.id }}</p>
+    <p><strong>Chẩn đoán:</strong> {{ record.diagnosis|default:"Chưa cập nhật" }}</p>
+    <p><strong>Kế hoạch điều trị:</strong> {{ record.treatment_plan|default:"Chưa cập nhật" }}</p>
+    <p><strong>Ngày tạo:</strong> {{ record.created_at|date:"d/m/Y H:i" }}</p>
+
+    <hr>
+    
+    <h3>Lịch Khám</h3>
+    {% if appointments %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Giờ</th>
+                    <th>Bác sĩ</th>
+                    <th>Trạng thái</th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt.appointment_date|date:"d/m/Y" }}</td>
+                    <td>{{ appt.appointment_time }}</td>
+                    <td>{{ appt.doctor.full_name }}</td>
+                    <td>{{ appt.get_status_display }}</td>
+                    <td>{{ appt.notes|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Chưa có lịch khám nào.</p>
+    {% endif %}
+
+    <hr>
+    
+    <h3>Trao Đổi Thông Tin</h3>
+    {% if communications %}
+        <ul class="list-group">
+            {% for msg in communications %}
+            <li class="list-group-item">
+                <strong>{{ msg.sender.full_name }}:</strong> {{ msg.message }}<br>
+                <small>{{ msg.timestamp|date:"d/m/Y H:i" }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Chưa có tin nhắn trao đổi.</p>
+    {% endif %}
+
+    <a href="{% url 'quanlithongtinbenhnhan' %}" class="btn btn-primary">Quay lại danh sách</a>
+</div>
+{% endblock %}
+
