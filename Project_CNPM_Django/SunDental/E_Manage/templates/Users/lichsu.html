@@ -1,46 +1,45 @@
 {% extends "home/master.html" %}
 {% load static %}
+
 {% block navbar %}
-{% include 'home/includes/Navbar.html' %}
+    {% include 'home/includes/Navbar.html' %}
 {% endblock %}
 
 {% block menu-inner %}
-{% include 'home/includes/left_menu.html' %}
+    {% include 'home/includes/left_menu.html' %}
 {% endblock %}
 
 {% block content %}
-<body>
-    <div class="container mt-4">
-        <h2 class="text-center">Lịch Sử Thanh Toán</h2>
-        <table class="table table-bordered bg-white min-vh-100 ">
-            <thead class="table ">
-                <tr>
-                    <th>#</th>
-                    <th>Dịch Vụ</th>
-                    <th>Ngày Thanh Toán</th>
-                    <th>Số Tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for thanh_toan in danh_sach_thanh_toan %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ thanh_toan.dich_vu.ten_dich_vu }}</td>
-                    <td>{{ thanh_toan.ngay_thanh_toan|date:"d/m/Y H:i" }}</td>
-                    <td>{{ thanh_toan.so_tien }} VND</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center">Không có giao dịch nào</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+<div class="container mt-4">
+    <h2 class="text-center">Lịch Sử Thanh Toán</h2>
+    <table class="table table-bordered bg-white min-vh-100">
+        <thead class="table">
+            <tr>
+                <th>#</th>
+                <th>Dịch Vụ</th>
+                <th>Ngày Thanh Toán</th>
+                <th>Số Tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for thanh_toan in danh_sach_thanh_toan %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ thanh_toan.dich_vu }}</td>
+                <td>{{ thanh_toan.ngay_thanh_toan|date:"d/m/Y H:i" }}</td>
+                <td>{{ thanh_toan.tong_tien|floatformat:0 }} VND</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Không có giao dịch nào</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
 
 {% block footer %}
-{% include "home/includes/footer.html" %}
+    {% include "home/includes/footer.html" %}
 {% endblock %}

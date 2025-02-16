@@ -6,9 +6,13 @@ from home.forms import BookingForm
 from .models import Appointment
 from .models import GioHang
 from .models import Services
+from .models import HoaDon
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
-# Create your views here.
+from django.http import JsonResponse# Create your views here.
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
+from .models import MedicalRecord
 
 @login_required
 def user (request):
@@ -82,8 +86,8 @@ def add_to_cart(request, dich_vu_id):
 @login_required
 def Gio_Hang(request):
     gio_hang_items = GioHang.objects.filter(user=request.user)
-    total_price = sum(item.dich_vu.gia * item.so_luong for item in gio_hang_items)
-    
+    #total_price = sum(item.dich_vu.gia * item.so_luong for item in gio_hang_items) sai sua thanh
+    total_price = sum(float(item.dich_vu.price) * item.so_luong for item in gio_hang_items)
     return render(request, 'Pages/GioHang.html', {
         'gio_hang_items': gio_hang_items,
         'total_price': total_price
@@ -97,17 +101,75 @@ def thanh_toan(request):
         if not gio_hang.exists():
             messages.error(request, 'Giỏ hàng của bạn đang trống!')
             return redirect('xem_gio_hang')
-
-        # Xóa các mục trong giỏ hàng (giả lập thanh toán thành công)
+        
+        service_names = []
+        tong_tien = 0
+        
+        for item in gio_hang:
+            service_names.append(item.dich_vu.name)
+            tong_tien += float(item.dich_vu.price) * item.so_luong
+        
+        services_str = ", ".join(service_names)
+        
+        # Tạo hóa đơn kèm user
+        hoadon = HoaDon.objects.create(
+            user=request.user, 
+            dich_vu=services_str, 
+            tong_tien=tong_tien
+        )
+        
+        # Xóa giỏ hàng sau khi thanh toán
         gio_hang.delete()
+        
         messages.success(request, 'Thanh toán thành công!')
-
-        return redirect('trang_chu')
-
+        return redirect('lichsu')  # Chuyển sang trang lichsu
+    
     return redirect('xem_gio_hang')
 
-def news (request):
-    return render(request, 'Pages/news.html')
+
+@login_required
+def lichsu(request):
+    hoadons = HoaDon.objects.filter(user=request.user).order_by('-ngay_thanh_toan')
+    return render(request, 'Users/lichsu.html', {'danh_sach_thanh_toan': hoadons})
+
+#quân li thong tin benh nhan
+@login_required
+def quanlithongtinbenhnhan(request):
+    query = request.GET.get('q', '').strip()
+    if query:
+        try:
+            query_id = int(query)
+        except ValueError:
+            query_id = None
+
+        if query_id is not None:
+            # Nếu nhập số, tìm theo ID của hồ sơ (MedicalRecord.id) hoặc theo tên bệnh nhân
+            records = MedicalRecord.objects.filter(
+                Q(id=query_id) | Q(patient__full_name__icontains=query)
+            )
+        else:
+            records = MedicalRecord.objects.filter(
+                patient__full_name__icontains=query
+            )
+    else:
+        records = MedicalRecord.objects.all()
+
+    context = {
+        'records': records,
+        'query': query,
+    }
+    return render(request, 'Pages/quanlithongtinbenhnhan.html', context)
+
+
+@login_required
+def hosobenhan_detail(request, record_id):
+    record = get_object_or_404(MedicalRecord, id=record_id)
+    context = {
+        'record': record,
+        'appointments': record.appointments.all(),
+        'communications': record.communications.all().order_by('timestamp'),
+    }
+    return render(request, 'Pages/hosobenhan_detail.html', context)
 
 def booking(request):
     if request.method == 'POST':
@@ -115,12 +177,12 @@ def booking(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Đặt lịch thành công! Thông tin đã được gửi đến quản trị viên.")
-            return redirect('success_page')  # Điều hướng sau khi đặt lịch thành công
         else:
             messages.error(request, "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin.")
     else:
         form = BookingForm()
     return render(request, 'Pages/booking.html', {'form': form})
+
 
 def ClicnicOwner (request):
     return render(request, 'Pages/ClicnicOwner.html')
@@ -152,8 +214,8 @@ def lichlam (request):
 def lichhen (request):
     return render(request, 'Users/lichhen.html')
 
-def lichsu (request):
-    return render(request, 'Users/lichsu.html')
+# def lichsu (request):
+#     return render(request, 'Users/lichsu.html')
 
 def appointment(request):
     appointments = Appointment.objects.all().order_by('date', 'time')

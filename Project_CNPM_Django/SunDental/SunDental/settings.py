@@ -78,33 +78,36 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # settings.py
-DATABASES = {
-     "default": {
-         "ENGINE": "mssql",
-         "NAME": "db11",
-         "USER": "sa",
-         "PASSWORD": "LeThanh@123",
-         "HOST": "localhost",
-         "PORT": "1433",
-         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
-         },
-     },
- }
-
-
-
-
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'DjangoDB',
-#         'USER': 'myuser',
-#         'PASSWORD': 'Nhom5CNPM',
-#         'HOST':'db',
-#         'PORT':'5432',
-#     }
-# }
+#      "default": {
+#          "ENGINE": "mssql",
+#          "NAME": "db11",
+#          "USER": "sa",
+#          "PASSWORD": "LeThanh@123",
+#          "HOST": "localhost",
+#          "PORT": "1433",
+#          "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+#          },
+#      },
+#  }
+
+
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Djangodb',
+        'USER': 'myuser',
+        'PASSWORD': 'khoivan@K2005',
+        'HOST':'localhost',
+        'PORT':'5432',
+        'OPTIONS': {
+            'options': '-c search_path=public',
+        },
+    }
+}
 
 
 
