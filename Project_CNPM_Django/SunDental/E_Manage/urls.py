@@ -30,4 +30,5 @@ urlpatterns = [
     path('thanh-toan/', views.thanh_toan, name='thanh_toan'),
     path('submit_dklichnghi', views.submit_dklichnghi, name = "submit_dklichnghi"),
     path('services/delete/<int:service_id>/', views.xoadichvu, name='xoadichvu'),
+    path('suadichvu/<int:service_id>/', views.suadichvu, name='suadichvu'),
 ]

@@ -7,8 +7,8 @@ from .models import Appointment
 from .models import GioHang
 from .models import Services
 from home.forms import DangKiLichNghiForm
-from home.forms import ThemDichVuForm
-
+from home.forms import ThemDichVuForm, SuaDichVuForm
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 
@@ -163,6 +163,28 @@ def xoadichvu(request,service_id):
         return redirect('quanlidichvu')  # Điều hướng về trang quản lý dịch vụ
 
     return redirect('quanlidichvu')
+
+@login_required
+def suadichvu(request, service_id):
+    service = get_object_or_404(Services, id=service_id)
+
+    if request.method == 'POST':
+        form = SuaDichVuForm(request.POST, request.FILES, instance=service)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})  # Trả về JSON khi cập nhật thành công
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)  # Trả về lỗi nếu form không hợp lệ
+    else:
+        # Trả về dữ liệu dịch vụ dưới dạng JSON
+        data = {
+            'id': service.id,
+            'name': service.name,
+            'price': service.price,
+            'info': service.info,
+            'time': service.time,
+        }
+        return JsonResponse(data)
 
 def dentist (request):
     return render(request, 'Users/Dentist.html')

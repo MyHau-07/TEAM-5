@@ -194,3 +194,14 @@ class ThemDichVuForm(forms.ModelForm):
             'time': forms.TextInput(),
         }
 
+class SuaDichVuForm(forms.ModelForm):
+    class Meta:
+        model=Services
+        fields=['name','price', 'info', 'image', 'time']
+        widgets = {
+            'name': forms.TextInput(),
+            'price': forms.TextInput(),
+            'info': forms.Textarea(),
+            'image': forms.FileInput(),
+            'time': forms.TextInput(),
+        }

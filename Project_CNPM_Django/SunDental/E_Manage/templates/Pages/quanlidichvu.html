@@ -94,14 +94,32 @@
                                     
                                     <td>
                                         <!-- Nút Chỉnh Sửa -->
-                                        <button class="btn btn-sm btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#editServiceModal">
+                                         {% comment %} <button class="btn btn-sm btn-primary mb-1" data-bs-toggle="modal" onclick="openEditModal({{ service.id }})">
                                             <i class="fas fa-edit"></i>
-                                        </button>
+                                        </button>  {% endcomment %}
 
                                         <!-- Nút Xóa (Kích hoạt Modal Xác Nhận) -->
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ service.id }}">
+                                        {% comment %} <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ service.id }}">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </button> {% endcomment %}
+
+
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                              <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                              <!-- Dropdown Item for Edit -->
+                                                <a class="dropdown-item" href="javascript:void(0);" onclick="openEditModal({{ service.id }})">
+                                                    <i class="bx bx-edit-alt me-1"></i> Edit
+                                                </a>
+
+                                                <!-- Dropdown Item for Delete -->
+                                                <a class="dropdown-item" href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ service.id }}">
+                                                    <i class="bx bx-trash me-1"></i> Delete
+                                                </a>
+                                            </div>
+                                          </div>
 
                                         <!-- Modal xác nhận xóa -->
                                         <div class="modal fade" id="confirmDeleteModal{{ service.id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -155,30 +173,8 @@
             </div>
         </div>
     </div>
-    <!-- Modal Xác Nhận Xóa -->
-{% comment %} <div class="modal fade" id="confirmDeleteModal{{ service.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Xác nhận xóa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Bạn có chắc chắn muốn xóa dịch vụ <strong>{{ service.name_service }}</strong> không?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                
-                <!-- Form Xóa (Đặt bên trong Modal) -->
-                <form action="{% url 'xoadichvu' service.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Xác nhận</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> {% endcomment %}
-    <!-- Modal Thêm Khoa Mới -->
+    
+    <!-- Modal Dich Vụ Mới -->
     <div class="modal fade" id="addServiceModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -219,9 +215,50 @@
             </div>
         </div>
     </div>
-
+<!-- Modal Chỉnh Sửa Dịch Vụ --> 
+<div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editServiceModalLabel">Chỉnh Sửa Dịch Vụ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editServiceForm" method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="service_id" id="service_id">
+                    <div class="mb-3">
+                        <label class="form-label">Tên Dịch Vụ</label>
+                        <input type="text" class="form-control" name="name" id="service_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giá tiền</label>
+                        <input type="number" class="form-control" name="price" id="service_price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" rows="3" name="info" id="service_info" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh</label>
+                        <input type="file" class="form-control" name="image">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Thời gian</label>
+                        <input type="text" class="form-control" name="time" id="service_time" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Scripts -->
     <script>
+        
         const viewServicesBtn = document.getElementById('viewServicesBtn');
         const managementSection = document.getElementById('managementSection');
         const servicesSection = document.getElementById('servicesSection');
@@ -241,6 +278,81 @@
                 isShowingServices = false;
             }
         });
+
+        // Hàm để mở modal và điền dữ liệu vào form
+        function openEditModal(serviceId) {
+            // Gọi API để lấy thông tin dịch vụ
+            fetch(`/suadichvu/${serviceId}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok.');
+                    }
+                    return response.json(); // Chuyển đổi phản hồi thành JSON
+                })
+                .then(data => {
+                    // Điền dữ liệu vào form
+                    document.getElementById('service_id').value = data.id;
+                    document.getElementById('service_name').value = data.name;
+                    document.getElementById('service_price').value = data.price;
+                    document.getElementById('service_info').value = data.info;
+                    document.getElementById('service_time').value = data.time;
+        
+                    // Mở modal
+                    const editServiceModal = new bootstrap.Modal(document.getElementById('editServiceModal'));
+                    editServiceModal.show();
+                })
+                .catch(error => console.error('Error fetching service data:', error));
+        }
+        
+        // Cập nhật form submit để gửi dữ liệu đến view suadichvu
+        document.getElementById('editServiceForm').onsubmit = function(event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của form
+
+            const formData = new FormData(this);
+            const serviceId = document.getElementById('service_id').value;
+        
+            fetch(`/suadichvu/${serviceId}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Lấy CSRF token từ cookie
+                },
+                credentials: 'include' // Đảm bảo gửi cookie
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Chuyển đổi phản hồi thành JSON
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                if (data.success) {
+                    // Nếu thành công, làm mới trang hoặc cập nhật danh sách dịch vụ
+                    location.reload(); // Hoặc bạn có thể cập nhật danh sách dịch vụ mà không cần tải lại trang
+                } else {
+                    console.error('Error updating service:', data.errors);
+                    // Xử lý lỗi nếu có
+                    alert('Có lỗi xảy ra: ' + JSON.stringify(data.errors));
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        };
+        
+        // Hàm để lấy CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
     </script>
 
 </div>
