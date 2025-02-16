@@ -17,9 +17,9 @@
         <div class="container">
             <a class="navbar-brand" href="#">Quản Lý Dịch Vụ Nha Khoa</a>
             <div class="d-flex">
-                <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+                {% comment %} <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
                     <i class="fas fa-plus"></i> Thêm Khoa Mới
-                </button>
+                </button> {% endcomment %}
                 <button class="btn btn-light" id="viewServicesBtn">
                     <i class="fas fa-list"></i> Xem Danh Sách Dịch Vụ
                 </button>
@@ -66,46 +66,67 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Tên Dịch Vụ</th>
-                                    <th>Khoa</th>
                                     <th>Giá Dịch Vụ</th>
-                                    <th>Thời Gian BH</th>
+                                    <th>Thời Gian Thực Hiện</th>
+                                    <th>Thông tin chi tiết</th>
                                     <th>Trạng Thái</th>
                                     <th>Thao Tác</th>
                                 </tr>
                             </thead>
                             <tbody>
+
+                                {% for service in services %}
                                 <tr>
-                                    <td>DV001</td>
-                                    <td>Nhổ răng</td>
-                                    <td>Khoa Răng</td>
-                                    <td>500,000đ</td>
-                                    <td>7 ngày</td>
-                                    <td><span class="badge bg-success">Đang hoạt động</span></td>
+                                    <td>{{service.id}}</td>
+                                    <td>{{service.name}}</td>
+                                    <td>{{service.price}}</td>
+                                    <td>{{service.time}}</td>
+                                    <td>{{service.info}}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal">
+                                        <span class="badge {% if service.is_active %}bg-success{% else %}bg-danger{% endif %}">
+                                            {% if service.is_active %}
+                                                Đang hoạt động
+                                            {% else %}
+                                                Không hoạt động
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    
+                                    <td>
+                                        <!-- Nút Chỉnh Sửa -->
+                                        <button class="btn btn-sm btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#editServiceModal">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger">
+
+                                        <!-- Nút Xóa (Kích hoạt Modal Xác Nhận) -->
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ service.id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
+
+                                        <!-- Modal xác nhận xóa -->
+                                        <div class="modal fade" id="confirmDeleteModal{{ service.id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fw-bold" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Bạn có chắc chắn muốn xóa dịch vụ "{{ service.name }}" không?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Hủy</button>
+                                                        <form action="{% url 'xoadichvu' service.id %}" method="post" style="display:inline;">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>DV002</td>
-                                    <td>Hàn răng</td>
-                                    <td>Khoa Răng</td>
-                                    <td>300,000đ</td>
-                                    <td>6 tháng</td>
-                                    <td><span class="badge bg-success">Đang hoạt động</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -134,31 +155,67 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal Xác Nhận Xóa -->
+{% comment %} <div class="modal fade" id="confirmDeleteModal{{ service.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa dịch vụ <strong>{{ service.name_service }}</strong> không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                
+                <!-- Form Xóa (Đặt bên trong Modal) -->
+                <form action="{% url 'xoadichvu' service.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Xác nhận</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}
     <!-- Modal Thêm Khoa Mới -->
-    <div class="modal fade" id="addDepartmentModal">
+    <div class="modal fade" id="addServiceModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm Khoa Mới</h5>
+                    <h5 class="modal-title">Thêm Dịch Vụ Mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{% url 'quanlidichvu' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="mb-3">
-                            <label class="form-label">Tên Khoa</label>
-                            <input type="text" class="form-control">
+                            <label class="form-label">Tên Dịch Vụ</label>
+                            <input type="text" class="form-control" name='name' required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Giá tiền</label>
+                            <input type="number" class="form-control" name='price' required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Mô tả</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name='info' required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Hình ảnh</label>
+                            <input type="file" class="form-control" name='image'>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Thời gian</label>
+                            <input type="text" class="form-control" name='time' required>
+                        </div>
+                        <div class="modal-footer mt-3">
+                            <button class="btn btn-secondary mx-3" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
-                </div>
+                
             </div>
         </div>
     </div>

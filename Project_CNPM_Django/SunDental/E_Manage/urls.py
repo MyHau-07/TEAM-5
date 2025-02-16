@@ -29,4 +29,5 @@ urlpatterns = [
     path('manage/cart/<int:dich_vu_id>/add/', views.add_to_cart, name='add_to_cart'),
     path('thanh-toan/', views.thanh_toan, name='thanh_toan'),
     path('submit_dklichnghi', views.submit_dklichnghi, name = "submit_dklichnghi"),
+    path('services/delete/<int:service_id>/', views.xoadichvu, name='xoadichvu'),
 ]

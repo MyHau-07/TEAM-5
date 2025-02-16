@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import CustomUser
 from home.forms import CustomUserForm
@@ -7,6 +7,8 @@ from .models import Appointment
 from .models import GioHang
 from .models import Services
 from home.forms import DangKiLichNghiForm
+from home.forms import ThemDichVuForm
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 
@@ -135,8 +137,32 @@ def quanlinhanvien (request):
 def hosophongkham (request):
     return render(request, 'Pages/hosophongkham.html')
 
+@login_required
 def quanlidichvu (request):
-    return render(request, 'Pages/quanlidichvu.html')
+    services = Services.objects.all()
+    if request.method == 'POST':
+        form = ThemDichVuForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Thêm dịch vụ thành công.")
+            return redirect('quanlidichvu')  # Tránh gửi lại form khi reload
+        else:
+            messages.error(request, "Thêm dịch vụ không thành công.")
+    else:
+        form = ThemDichVuForm()
+
+    return render(request, 'Pages/quanlidichvu.html', {'services': services, 'form': form})
+
+@login_required
+def xoadichvu(request,service_id):
+    service = get_object_or_404(Services, id=service_id)
+    
+    if request.method == "POST":
+        service.delete()
+        messages.success(request, "Dịch vụ đã được xóa thành công!")
+        return redirect('quanlidichvu')  # Điều hướng về trang quản lý dịch vụ
+
+    return redirect('quanlidichvu')
 
 def dentist (request):
     return render(request, 'Users/Dentist.html')

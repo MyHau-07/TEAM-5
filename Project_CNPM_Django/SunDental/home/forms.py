@@ -4,6 +4,7 @@ from E_Manage.models import CommentForm
 from E_Manage.models import CustomUser
 from E_Manage.models import Booking
 from E_Manage.models import DangKiLichNghi
+from E_Manage.models import Services
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -180,3 +181,16 @@ class DangKiLichNghiForm(forms.ModelForm):
             'ly_do_nghi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập lý do nghỉ'}),
             'mo_ta': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô tả chi tiết', 'rows': 3}),
         }
+        
+class ThemDichVuForm(forms.ModelForm):
+    class Meta:
+        model=Services
+        fields=['name','price', 'info', 'image', 'time']
+        widgets = {
+            'name': forms.TextInput(),
+            'price': forms.TextInput(),
+            'info': forms.Textarea(),
+            'image': forms.FileInput(),
+            'time': forms.TextInput(),
+        }
+
