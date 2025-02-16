@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-%!88f9x(!5u&1dp8)#ck-z+5ap06a9^cq^l+q75%g4==_r()-$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+import os
+if os.getenv('DOCKERIZED', False): 
+    ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -77,6 +78,20 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # settings.py
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "mssql",
+#         "NAME": "db11",
+#         "USER": "sa",
+#         "PASSWORD": "LeThanh@123",
+#         "HOST": "localhost",
+#         "PORT": "1433",
+#         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+#         },
+#     },
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -88,6 +103,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'DjangoDB',
+#         'USER': 'myuser',
+#         'PASSWORD': 'Nhom5CNPM',
+#         'HOST':'db',
+#         'PORT':'5432',
+#     }
+# }
 
 
 
@@ -96,7 +121,8 @@ DATABASES = {
 
 
 
-
+AUTH_USER_MODEL = 'E_Manage.CustomUser'
+LOGOUT_REDIRECT_URL = 'home'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -134,6 +160,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-xxl flex-grow-1 container-p-y ">
+    <div class="container-xxl flex-grow-1 container-p-y bg-white">
 <br>
 <div class="row">
     <div class="col-md-6">
@@ -147,7 +149,7 @@
 </head>
 <body>
 
-<div class="image-slider">
+<div class="image-slider ">
 <button class="slider-button left">&lt;</button>
 <div class="slider-container">
     <div class="slider-item"><img src="{% static 'home/assets/img/avatars/implant1.jpg' %}" alt="Cấy ghép Implant"><div class="description" style= "color: #797CFF;">Cấy ghép Implant</div></div>
@@ -196,15 +198,15 @@ function moveSlider(direction) {
     updateVisibleImages();
 }
 
-rightButton.addEventListener('click', () => moveSlider('next'));
-leftButton.addEventListener('click', () => moveSlider('prev'));
+    rightButton.addEventListener('click', () => moveSlider('next'));
+    leftButton.addEventListener('click', () => moveSlider('prev'));
 
-// Khởi tạo hiển thị ảnh
-updateVisibleImages();
-</script>
+        // Khởi tạo hiển thị ảnh
+    updateVisibleImages();
+    </script>
+</div>
+</div>
 
-</body>
-</html>
 
 {% endblock  %}
 

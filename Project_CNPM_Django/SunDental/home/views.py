@@ -8,6 +8,9 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import SignUpForm
+from .forms import DentistForm
+from .decorators import role_required
+from django.contrib.auth import logout
 # Create your views here.
 
 def home (request):
@@ -33,13 +36,35 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Login successful!')
-            return redirect('home')  # Redirect to home after successful login
+            if user.role == 'dentist':
+                return redirect('dentist_dashboard')  # Đường dẫn đến dashboard của dentist
+            elif user.role == 'clinic_owner':
+                return redirect('clinic_owner_dashboard')  # Đường dẫn đến dashboard của clinic_owner
+            else:
+              # Đường dẫn đến dashboard của patient
+                return redirect('patient_dashboard')
         else:
             messages.error(request, 'User  or password incorrect!')
 
     # Render the login page if GET request or login failed
     context = {}
     return render(request, 'home/includes/auth-login-basic.html', context)
+
+
+@role_required('patient')
+def patient_dashboard(request):
+    # Logic cho dashboard của patient
+    return render(request, 'home/home/patient_dashboard.html')
+
+@role_required('dentist')
+def dentist_dashboard(request):
+    # Logic cho dashboard của dentist
+    return render(request, 'home/home/dentist_dashboard.html')
+
+@role_required('clinic_owner')
+def clinic_owner_dashboard(request):
+    # Logic cho dashboard của clinic_owner
+    return render(request, 'home/home/clinic_owner_dashboard.html')
         
 
 
@@ -56,6 +81,13 @@ def register(request):
         form = SignUpForm()
 
     return render(request, 'home/includes/auth-register-basic.html', {'form': form})
+
+
+def custom_logout(request):
+    logout(request)
+    # Thêm logic tùy chỉnh nếu cần
+    return redirect('home')
+
 
 def contact(request):
     submitted = False

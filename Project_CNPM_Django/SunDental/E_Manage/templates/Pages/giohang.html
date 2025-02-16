@@ -1,171 +1,117 @@
 {% extends "home/master.html" %}
 {% load static %}
-{% block navbar %} 
+
+{% block navbar %}
     {% include 'home/includes/Navbar.html' %}
 {% endblock %}
 
-{% block menu-inner %} 
-{% include 'home/includes/left_menu.html' %}
+{% block menu-inner %}
+    {% include 'home/includes/left_menu.html' %}
 {% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="vi" class="h-100">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Giỏ hàng - Dịch vụ nha khoa</title>
-    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">  
-    <link rel="stylesheet" href="../vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/app.css">
-    <style>
-        body {
-            color: #797CFF;
-        }
-        .navbar {
-            background-color: #f8f9fa;
-        }
-        .list-group-item {
-            color: #797CFF;
-        }
-        .btn-primary {
-            background-color: #797CFF;
-            border-color: #797CFF;
-        }
-        .btn-primary:hover {
-            background-color: #6a6eff;
-            border-color: #6a6eff;
-        }
-    </style>
-</head>
-<body>
-    
-
-  <main role="main">
-    <div class="container mt-4">
-      <div class="py-5 text-center" >
-        <h2 style="color: #797CFF">Chọn dịch vụ</h2>
-        <p class="lead">Vui lòng chọn các dịch vụ mà bạn muốn đăng ký.</p>
+<form class="needs-validation" name="frmthanhtoan" method="post" action="{% url 'thanh_toan' %}">
+  {% csrf_token %}
+  <div class="row">
+      <!-- Phần hiển thị dịch vụ trong giỏ hàng -->
+      <div class="col-md-8">
+          <h4 class="mb-3" style="color: black">Dịch vụ</h4>
+          <ul class="list-group mb-3">
+              {% for item in gio_hang_items %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                      <!-- Checkbox để chọn dịch vụ -->
+                      <input type="checkbox" class="service-checkbox" 
+                             data-price="{{ item.dich_vu.gia }}" 
+                             data-quantity="{{ item.so_luong }}" 
+                             checked>
+                      <strong>{{ item.dich_vu.ten_dich_vu }}</strong>
+                      <span>({{ item.so_luong }} x {{ item.dich_vu.gia|floatformat:0 }} VND)</span>
+                  </div>
+                  <div>
+                      <!-- Nút giảm số lượng -->
+                      <button type="button" class="btn btn-sm btn-outline-primary me-2 quantity-btn" 
+                              data-action="decrease" data-item-id="{{ item.id }}">-</button>
+                      <span class="quantity">{{ item.so_luong }}</span>
+                      <!-- Nút tăng số lượng -->
+                      <button type="button" class="btn btn-sm btn-outline-primary ms-2 quantity-btn" 
+                              data-action="increase" data-item-id="{{ item.id }}">+</button>
+                      <!-- Nút xóa dịch vụ khỏi giỏ hàng -->
+                      <a href="{% url 'xoa_khoi_gio_hang' item.id %}" class="btn btn-danger btn-sm ms-3">Xóa</a>
+                  </div>
+              </li>
+              {% empty %}
+              <!-- Thông báo nếu giỏ hàng trống -->
+              <li class="list-group-item">Giỏ hàng trống!</li>
+              {% endfor %}
+          </ul>
       </div>
 
-      <form class="needs-validation" name="frmthanhtoan" method="post" action="#">
-        <div class="row">
-          <div class="col-md-8">
-            <h4 class="mb-3"style="color: black" >Dịch vụ</h4>
-            <ul class="list-group mb-3">
+      <!-- Phần tổng thanh toán -->
+      <div class="col-md-4">
+          <h4 class="mb-3" style="color: black">Tổng thanh toán</h4>
+          <ul class="list-group mb-3">
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Nhổ răng</div>
-                  <small class="text-muted">500.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="500000" class="form-check-input">
+                  <span>Tổng cộng</span>
+                  <strong id="totalAmount">{{ total_price|floatformat:0 }} VND</strong>
               </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Trám răng</div>
-                  <small class="text-muted">300.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="300000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Cấy ghép Implant</div>
-                  <small class="text-muted">20.000.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="20000000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Cạo vôi răng</div>
-                  <small class="text-muted">250.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="250000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Trồng răng sứ</div>
-                  <small class="text-muted">3.000.000 - 15.000.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="3000000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Vệ sinh răng</div>
-                  <small class="text-muted">200.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="200000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Niềng răng chỉnh nha</div>
-                  <small class="text-muted">20.000.000 - 40.000.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="20000000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Chữa tủy răng</div>
-                  <small class="text-muted">2.000.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="2000000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Tháo lắp răng</div>
-                  <small class="text-muted">3.000.000 - 15.000.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="3000000" class="form-check-input">
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <div>Nhổ răng khôn</div>
-                  <small class="text-muted">1.500.000 VND</small>
-                </div>
-                <input type="checkbox" name="dichvu[]" value="1500000" class="form-check-input">
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-md-4">
-            <h4 class="mb-3" style= "color: black">Tổng thanh toán</h4>
-            <ul class="list-group mb-3">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Tổng cộng</span>
-                <strong id="totalAmount">0 VND</strong>
-              </li>
-            </ul>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Thanh toán</button>
-          </div>
+          </ul>
+          <!-- Nút thanh toán -->
+          <div class="checkout-section">
+            <a href="javascript:void(0);" id="checkout-btn" class="btn btn-primary">Thanh toán</a>
         </div>
-      </form>
-    </div>
-  </main>
+      </div>
+  </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-        $('input[type="checkbox"]').change(function() {
-            let total = 0;
-            $('input[type="checkbox"]:checked').each(function() {
-                total += parseInt($(this).val());
-            });
-            $('#totalAmount').text(total.toLocaleString() + ' VND');
-        });
-    });
-  </script>
-</body>
-</html>
-{% endblock  %}
+  <!-- Phần "Thêm Dịch Vụ" nằm cuối -->
+  <div class="add-service-section text-end mt-3" style="position: relative; margin-top: 20px;">
+      <a href="{% url 'dichvu' %}" class="btn btn-success">Thêm Dịch Vụ</a>
+  </div>
+</form>
 
-{% block footer %} 
-{% include "home/includes/footer.html" %}
+<!-- Script để xử lý cập nhật số lượng và tổng tiền -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  // Hàm cập nhật tổng tiền
+  function updateTotal() {
+      let total = 0;
+      $('.service-checkbox:checked').each(function() {
+          const price = parseFloat($(this).data('price'));
+          const quantity = parseInt($(this).data('quantity'));
+          total += price * quantity;
+      });
+      $('#totalAmount').text(total.toLocaleString() + ' VND');
+  }
+
+  // Sự kiện khi checkbox thay đổi
+  $('.service-checkbox').change(updateTotal);
+
+  // Sự kiện khi nhấn nút tăng/giảm số lượng
+  $('.quantity-btn').click(function() {
+      const itemId = $(this).data('item-id');
+      const action = $(this).data('action');
+      
+      $.ajax({
+        url: `/manage/sua/${itemId}/`,  // Đảm bảo đúng đường dẫn
+        type: 'POST',
+        data: {
+            'action': action,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+            location.reload();
+        },
+        error: function(xhr) {
+            alert('Có lỗi xảy ra, vui lòng thử lại!');
+        }
+      });
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block footer %}
+    {% include "home/includes/footer.html" %}
 {% endblock %}
