@@ -3,6 +3,9 @@ from django.forms import ModelForm
 from E_Manage.models import CommentForm
 from E_Manage.models import CustomUser
 from E_Manage.models import Booking
+from E_Manage.models import DangKiLichNghi
+from E_Manage.models import Services
+from E_Manage.models import Dentist
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -114,53 +117,112 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = '__all__'
         widgets = {
-            'location': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'service': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'appointment-date': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'appointment-time': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
             'fullname': forms.TextInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'Nguyen Van A',
-                'aria-label': 'John Doe',
-                'aria-describedby': 'basic-icon-default-fullname2'
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'nguyenvana@gmail.com',
-                'aria-label': 'nguyenvana@gmail.com',
-                'aria-describedby': 'basic-icon-default-email2'
+                'placeholder': 'Nhập họ tên',
+                'class': 'form-control'
             }),
             'phone': forms.TextInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': '+84 386699723',
-                'aria-label': '+84 386699723',
-                'aria-describedby': 'basic-icon-default-phone2'
+                'placeholder': 'Nhập số điện thoại',
+                'class': 'form-control'
             }),
-            'illness': forms.Textarea(attrs={
-                'class': 'bookly-form-group',
-                
-                'placeholder': 'Nhập nội dung cần tư vấn',
-                'aria-label': 'Nhập nội dung cần tư vấn',
-                'aria-describedby': 'basic-icon-default-message2',
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Nhập địa chỉ email',
+                'class': 'form-control'
+            }),
+            'location': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'service': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'message': forms.TextInput(attrs={
+                'placeholder': 'Nhập tin nhắn',
+                'class': 'form-control',
                 'rows': 4
             }),
-            'photo': forms.ClearableFileInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'Nhập nội dung cần tư vấn',
-                'aria-label': 'Nhập nội dung cần tư vấn',
-                'aria-describedby': 'basic-icon-default-message2',
-                'rows': 4
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'appointment_date': forms.DateInput(attrs={
+                'type': 'date',  # Use HTML5 date input
+                'class': 'form-control'
+            }),
+            'appointment_time': forms.TextInput(attrs={
+                'class': 'form-control'
             })
         }
+
+
+class DangKiLichNghiForm(forms.ModelForm):
+    class Meta:
+        model = DangKiLichNghi
+        fields = ['full_name','ngay_nghi', 'ca_nghi', 'ly_do_nghi', 'mo_ta']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập họ và tên'}),
+            'ngay_nghi': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'ca_nghi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập ca nghỉ'}),
+            'ly_do_nghi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập lý do nghỉ'}),
+            'mo_ta': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô tả chi tiết', 'rows': 3}),
+        }
+
+class ThemDichVuForm(forms.ModelForm):
+    class Meta:
+        model=Services
+        fields=['name','price', 'info', 'image', 'time']
+        widgets = {
+            'name': forms.TextInput(),
+            'price': forms.TextInput(),
+            'info': forms.Textarea(),
+            'image': forms.FileInput(),
+            'time': forms.TextInput(),
+        }
+
+class SuaDichVuForm(forms.ModelForm):
+    class Meta:
+        model=Services
+        fields=['name','price', 'info', 'image', 'time']
+        widgets = {
+            'name': forms.TextInput(),
+            'price': forms.TextInput(),
+            'info': forms.Textarea(),
+            'image': forms.FileInput(),
+            'time': forms.TextInput(),
+        }
+
+class DentistForm(forms.ModelForm):
+    class Meta:
+        model = Dentist
+        fields = '__all__'
+        widgets = {
+            'FullName': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nguyen Van A'
+            }),
+            'Specialization': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'placeholder': 'Chuyên môn nha khoa'
+            }),
+            'License_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Số giấy phép hành nghề'
+            }),
+            'Dental_branch': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Chi nhánh nha khoa'
+            }),
+            'Phone_Number': forms.TextInput(attrs={
+                'class': 'form-control phone-mask',
+                'placeholder': '+84 386699723'
+            }),
+            'Email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'nguyenvana@gmail.com'
+            }),
+            'Birthday': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
+            'Gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
+                'class': 'form-control'
+            })
+        }        

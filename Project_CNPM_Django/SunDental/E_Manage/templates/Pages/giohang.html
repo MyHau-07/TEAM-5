@@ -19,15 +19,16 @@
           <ul class="list-group mb-3">
               {% for item in gio_hang_items %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div>
-                      <!-- Checkbox để chọn dịch vụ -->
-                      <input type="checkbox" class="service-checkbox" 
-                             data-price="{{ item.dich_vu.gia }}" 
-                             data-quantity="{{ item.so_luong }}" 
-                             checked>
-                      <strong>{{ item.dich_vu.ten_dich_vu }}</strong>
-                      <span>({{ item.so_luong }} x {{ item.dich_vu.gia|floatformat:0 }} VND)</span>
+                <div>
+                    <!-- Checkbox để chọn dịch vụ -->
+                    <input type="checkbox" class="service-checkbox" 
+                           data-price="{{ item.dich_vu.price }}" 
+                           data-quantity="{{ item.so_luong }}" 
+                           checked>
+                    <strong>{{ item.dich_vu.name }}</strong>
+                    <span>({{ item.so_luong }} x {{ item.dich_vu.price|floatformat:0 }} VND)</span>
                   </div>
+                  
                   <div>
                       <!-- Nút giảm số lượng -->
                       <button type="button" class="btn btn-sm btn-outline-primary me-2 quantity-btn" 
@@ -58,7 +59,9 @@
           </ul>
           <!-- Nút thanh toán -->
           <div class="checkout-section">
-            <a href="javascript:void(0);" id="checkout-btn" class="btn btn-primary">Thanh toán</a>
+            {% comment %} <a href="javascript:void(0);" id="checkout-btn" class="btn btn-primary">Thanh toán</a> {% endcomment %}
+            <button type="submit" id="checkout-btn" class="btn btn-primary">Thanh toán</button>
+
         </div>
       </div>
   </div>
@@ -93,7 +96,7 @@ $(document).ready(function() {
       const action = $(this).data('action');
       
       $.ajax({
-        url: `/manage/sua/${itemId}/`,  // Đảm bảo đúng đường dẫn
+        url: `/sua_so_luong/${itemId}/`,  // Đảm bảo đúng đường dẫn
         type: 'POST',
         data: {
             'action': action,

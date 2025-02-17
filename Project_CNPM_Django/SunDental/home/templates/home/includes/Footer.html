@@ -1,95 +1,50 @@
 {% load static %}
-<style>
-  .footer {
-    background-color: #222;
-    color: white;
-    padding: 20px 0;
-    text-align: left;
-  }
-  .footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  .footer-column {
-    flex: 1;
-    margin: 10px;
-    text-align: left;
-  }
-  .footer-column.small {
-    flex: 0.5;
-  }
-  .footer-logo span {
-    font-size: 20px;
-    font-weight: bold;
-    color: #f1c40f;
-  }
-  .footer ul {
-    list-style: none;
-    padding: 0;
-  }
-  .footer ul li {
-    margin: 8px 0;
-  }
-  .footer-social {
-    text-align: left;
-  }
-  .footer-social a {
-    color: #f1c40f;
-    margin: 0 10px;
-    font-size: 20px;
-  }
-  .footer-bottom {
-    margin-top: 20px;
-    text-align: left;
-  }
-  
-</style>
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-column">
-      <div class="footer-logo">
-        <span>SUNDENTAL</span>
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> {% endcomment %}
+<footer style="background-color: #696CFF; color: #56E8E1;" class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 class="text-warning">SUNDENTAL </h5>
+        <ul class="list-unstyled">
+          <li>Địa chỉ: Số 2, đường Võ Oanh, P.25, Q. Bình Thạnh, TP.HCM</li>
+          <li>Email: <a href="mailto:SunDental_support@gmail.com" class="text-warning">SunDental_support@gmail.com</a></li>
+          <li>HOTLINE: <a href="tel:0909123456" class="text-warning">0909 123 456</a></li>
+          <li>CSKH: <a href="tel:0933456789" class="text-warning">0933 456 789</a></li>
+          <li>Liên hệ hợp tác: <a href="tel:0888789123" class="text-warning">0888 789 123</a></li>
+        </ul>
       </div>
-      <ul>
-        <li>Số 123, Đường Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</li>
-        <li>Email: <a href="mailto:SunDental_support@gmail.com">SunDental_support@gmail.com</a></li>
-        <li>SĐT HOTLINE: <a href="tel:0909123456">0909 123 456</a></li>
-        <li>CSKH: <a href="tel:0933456789">0933 456 789</a></li>
-        <li>Liên hệ hợp tác: <a href="tel:0888789123">0888 789 123</a></li>
-      </ul>
+      <div class="col-md-4">
+        <h5 class="text-warning">CÁC CHI NHÁNH</h5>
+        <ul class="list-unstyled">
+          <li>Chi nhánh 2: Số 10, đường số 12, Khu phố 3, P. An Khánh, TP. Thủ Đức</li>
+          <li>Chi nhánh 3: Số 70, đường Tô Ký, P. Tân Chánh Hiệp, Q.12, TP.HCM</li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h5 class="text-warning">Thông Tin</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Trang Chủ</a></li>
+          <li><a href="#" class="text-white">Giới Thiệu</a></li>
+          <li><a href="#" class="text-white">Dịch Vụ</a></li>
+          <li><a href="#" class="text-white">Liên Hệ</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h5 class="text-warning">Hỗ Trợ</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Trợ Giúp</a></li>
+          <li><a href="#" class="text-white">Câu Hỏi Thường Gặp</a></li>
+          <li><a href="#" class="text-white">Vận Chuyển</a></li>
+          <li><a href="#" class="text-white">Theo Dõi Đơn Hàng</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-column">
-      <h4>CÁC CHI NHÁNH</h4>
-      <ul>
-        <li>Chi nhánh Hà Nội: Số 8 Nguyễn Văn Tuyết, Quận Đống Đa, Hà Nội</li>
-        <li>Chi nhánh Bình Định: 309 Trần Phú, TT. Bình Định, An Nhơn, Bình Định</li>
-        <li>Chi nhánh TP.HCM: Số 123, Đường Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</li>
-      </ul>
+    <div class="text-center mt-3">
+      <a href="#" class="text-warning mx-2"><i class="fa fa-facebook"></i></a>
+      <a href="#" class="text-warning mx-2"><i class="fa fa-twitter"></i></a>
+      <a href="#" class="text-warning mx-2"><i class="fa fa-linkedin"></i></a>
+      <a href="#" class="text-warning mx-2"><i class="fa fa-instagram"></i></a>
     </div>
-    <div class="footer-column small">
-      <h4>Thông Tin</h4>
-      <ul>
-        <li><a href="#">Trang Chủ</a></li>
-        <li><a href="#">Giới Thiệu</a></li>
-        <li><a href="#">Dịch Vụ</a></li>
-        <li><a href="#">Liên Hệ</a></li>
-      </ul>
-    </div>
-    <div class="footer-column small">
-      <h4>Hỗ Trợ </h4>
-      <ul>
-        <li><a href="#">Trợ Giúp</a></li>
-        <li><a href="#">Câu Hỏi Thường Gặp</a></li>
-        <li><a href="#">Vận Chuyển</a></li>
-        <li><a href="#">Theo Dõi Đơn Hàng</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-social">
-    <a href="#"><i class="fa fa-facebook"></i></a>
-    <a href="#"><i class="fa fa-twitter"></i></a>
-    <a href="#"><i class="fa fa-linkedin"></i></a>
-    <a href="#"><i class="fa fa-instagram"></i></a>
   </div>
 </footer>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
