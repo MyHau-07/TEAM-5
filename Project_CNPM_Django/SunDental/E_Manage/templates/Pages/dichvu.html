@@ -7,37 +7,109 @@
 {% block menu-inner %} 
     {% include 'home/includes/left_menu.html' %}
 {% endblock %}
-
 {% block content %}
-<div class="page-dichvu py-4 bg-light">
+<div class="page-dichvu py-4 bg-white">
     <div class="container">
-        <h2 class="text-center text-primary font-weight-bold mb-4">Dịch vụ <span class="font-weight-bold">nha khoa</span></h2>
-        <div class="row">
-            {% for service in services %}
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <a class="img-dv">
-                        <img src="{{ service.image.url }}" class="card-img-top img-fluid rounded" alt="{{ service.name }}" style="width: 100%; height: 200px; object-fit: cover;" >
-                    </a>
-                    <div class="card-body text-center">
-                        <h5 class="card-title">
-                            <a  class="text-dark font-weight-bold">{{ service.name }}</a>
-                        </h5>
-                        <h5 class="card-title">
-                            <a class="text-dark font-weight-bold">Chi phí: <span class="formatted-price">{{ service.price }}</span> đ</a>
-                        </h5>
-                        
+        <h2 class="text-center text-primary font-weight-bold mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 3px;">
+            DỊCH VỤ <span class="font-weight-bold" style="color: #009688;">NHA KHOA</span>
+        </h2>
+
+        <!-- Khám Services -->
+        <div class="service-group mb-5">
+            <h3 class="text-center text-primary mb-4 border border-primary p-2 rounded-3">Dịch vụ khám</h3>
+            <div class="row g-4">
+                {% for service in services %}
+                    {% if service.type == 'kham' %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card shadow-lg border-light rounded-3 h-100">
+                            <a class="img-dv">
+                                <img src="{{ service.image.url }}" class="card-img-top img-fluid rounded" alt="{{ service.name }}" style="width: 100%; height: 200px; object-fit: cover;">
+                            </a>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <a class="text-dark font-weight-bold">{{ service.name }}</a>
+                                </h5>
+                                <p class="card-text">Chi phí: <span class="formatted-price">{{ service.price }}</span> đ</p>
+                                <button class="btn btn-primary add-to-cart-btn" data-service-id="{{ service.id }}">Thêm vào giỏ hàng</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
+        </div>
+
+        <!-- Điều trị Services -->
+        <div class="service-group mb-5">
+            <h3 class="text-center text-primary mb-4 border border-primary p-2 rounded-3">Dịch vụ điều trị</h3>
+            <div class="row g-4">
+                {% for service in services %}
+                    {% if service.type == 'dieu_tri' %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card shadow-lg border-light rounded-3 h-100">
+                            <a class="img-dv">
+                                <img src="{{ service.image.url }}" class="card-img-top img-fluid rounded" alt="{{ service.name }}" style="width: 100%; height: 200px; object-fit: cover;">
+                            </a>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <a class="text-dark font-weight-bold">{{ service.name }}</a>
+                                </h5>
+                                <p class="card-text">Chi phí: <span class="formatted-price">{{ service.price }}</span> đ</p>
+                                <button class="btn btn-primary add-to-cart-btn" data-service-id="{{ service.id }}">Thêm vào giỏ hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.querySelectorAll('.formatted-price').forEach(element => {
         const price = parseInt(element.textContent);
         element.textContent = new Intl.NumberFormat('vi-VN').format(price);
+    });
+    // Xử lý sự kiện khi nhấn nút "Thêm vào giỏ hàng"
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const serviceId = this.getAttribute('data-service-id');
+            
+            // Gửi yêu cầu thêm vào giỏ hàng
+            fetch(`/them_vao_gio_hang/${serviceId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Hiển thị popup hỏi người dùng
+                    Swal.fire({
+                        title: 'Thêm thành công!',
+                        text: 'Bạn muốn tiếp tục chọn dịch vụ hay vào giỏ hàng?',
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonText: 'Vào giỏ hàng',
+                        cancelButtonText: 'Tiếp tục chọn',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Chuyển hướng đến trang giỏ hàng
+                            window.location.href = "{% url 'GioHang' %}";
+                        }
+                    });
+                } else {
+                    alert('Có lỗi xảy ra, vui lòng thử lại!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
     });
 </script>
 {% endblock content %}

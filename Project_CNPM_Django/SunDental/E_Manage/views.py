@@ -16,7 +16,7 @@ from django.http import JsonResponse# Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import MedicalRecord
-
+from django.views.decorators.csrf import csrf_exempt
 @login_required
 def user (request):
     user = request.user
@@ -33,20 +33,21 @@ def user (request):
         form = CustomUserForm(instance=user)
     return render(request, 'Users/user.html', {'user': user, 'form': form})
 
-@login_required
+@csrf_exempt
 def them_vao_gio_hang(request, dich_vu_id):
-    dich_vu = get_object_or_404(DichVu, id=dich_vu_id)
-    
-    # Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-    gio_hang, created = GioHang.objects.get_or_create(user=request.user, dich_vu=dich_vu)
-    
-    if not created:
-        gio_hang.so_luong += 1  # Nếu đã có thì tăng số lượng
-        gio_hang.save()
-
-    messages.success(request, f'Đã thêm {dich_vu.ten_dich_vu} vào giỏ hàng!')
-
-    return redirect('xem_gio_hang')
+    if request.method == 'POST':
+        user = request.user
+        service = Services.objects.get(id=dich_vu_id)
+        
+        # Kiểm tra xem dịch vụ đã có trong giỏ hàng chưa
+        gio_hang_item, created = GioHang.objects.get_or_create(user=user, dich_vu=service)
+        
+        if not created:
+            gio_hang_item.so_luong += 1
+            gio_hang_item.save()
+        
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
 
 @login_required
 def xoa_khoi_gio_hang(request, item_id):
@@ -78,13 +79,24 @@ def sua_so_luong(request, gio_hang_id):
 # them dich vu
 def add_to_cart(request, dich_vu_id):
     # Lấy dịch vụ từ cơ sở dữ liệu
-    dich_vu = DichVu.objects.get(id=dich_vu_id)
+    dich_vu = Services.objects.get(id=dich_vu_id)
     
     # Tạo đối tượng giỏ hàng mới
     GioHang.objects.create(user=request.user, dich_vu=dich_vu)
     
     # Sau khi thêm dịch vụ vào giỏ hàng, redirect về trang dịch vụ
     return redirect('dichvu_list')  # 'dichvu_list' là tên của URL trang dịch vụ
+
+def chon_dich_vu_booking(request):
+    if request.method == 'POST':
+        selected_service_id = request.POST.get('service')  # Lấy ID dịch vụ được chọn
+        if selected_service_id:
+            selected_service = Services.objects.get(id=selected_service_id)
+            # Xử lý logic với dịch vụ được chọn
+            print(f"Dịch vụ được chọn: {selected_service.name}")
+    else:
+        services = Services.objects.filter(is_active=True)
+        return render(request, 'booking.html', {'services': services})
 
 @login_required
 def Gio_Hang(request):

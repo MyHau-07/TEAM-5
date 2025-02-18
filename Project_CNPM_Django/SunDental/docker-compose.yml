@@ -1,64 +1,75 @@
-version: "3.8"
+# version: "3.4"
+
+# services:
+#   cnpm:
+#     build:
+#       context: .
+#       dockerfile: ./Dockerfile
+#     image: cnpm
+#     command: python manage.py runserver 0.0.0.0:9000
+#     ports:
+#       - "9000:9000"
+#     volumes:
+#       - .:/app
+#     depends_on:
+#       - db
+
+#   db:
+#     image: postgres:14
+#     environment:
+#       POSTGRES_USER: myuser
+#       POSTGRES_PASSWORD: Nhom5CNPM
+#       POSTGRES_DB: DjangoDB
+#     volumes:
+#       - db_data:/var/lib/postgresql/data
+#     ports:
+#       - "5432:5432"
+
+# volumes:
+#   db_data:
+#     external: true
+
+
+
 services:
-  web:
+  cnpm:
     build:
       context: .
-      dockerfile: Dockerfile
-    command: >
-     sh -c "echo 'Checking DB connection...';
-             while ! pg_isready -h db -p 5432 -U myuser; do
-             echo 'Waiting for DB...';
-             sleep 2;
-             done;
-             echo 'DB is ready!';
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:9000"
-    volumes:
-      - .:/app
+      dockerfile: ./Dockerfile
+    image: cnpm
+    command: python manage.py runserver 0.0.0.0:9000
     ports:
       - "9000:9000"
+    volumes:
+      - .:/app
     depends_on:
       - db
-      - redis
-      - elasticsearch
-    networks:
-      - djangonetwork
 
   db:
     image: postgres:14
     environment:
       POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: khoivan@K2005
-      POSTGRES_DB: Djangodb
+      POSTGRES_PASSWORD: Nhom5CNPM
+      POSTGRES_DB: DjangoDB
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    networks:
-      - djangonetwork
 
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    networks:
-      - djangonetwork
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+  backup:
+    image: postgres:14
     environment:
-      discovery.type: single-node
-      xpack.security.enabled: "false"
-    ports:
-      - "9200:9200"
-    networks:
-      - djangonetwork
+      POSTGRES_HOST: db
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: Nhom5CNPM
+      POSTGRES_DB: DjangoDB
+    command: >
+      bash -c "PGPASSWORD=Nhom5CNPM pg_dump -h db -U myuser -d DjangoDB -F c -b -v -f /backup/DjangoDB_backup.dump"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backup:/backup
+    depends_on:
+      - db
 
 volumes:
-  db_data:
-
-networks:
-  djangonetwork:
-    driver: bridge
-
-
+  db_data: {}

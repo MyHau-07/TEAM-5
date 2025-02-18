@@ -39,36 +39,14 @@
                         <option value="10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM">10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM</option>
                     </select>
                 </div>
-
                 <div class="mb-4">
                     <label for="defaultSelect" class="form-label">Dịch Vụ</label>
                     <select id="defaultSelect" class="form-select" name='service'>
                             <option value="">Chọn dịch vụ</option>
-                            <option value="Nhổ răng">Nhổ răng</option>
-                            <option value="Hàn răng">Hàn răng</option>
-                            <option value="Điều trị tủy">Điều trị tủy</option>
-                            <option value="Niềng răng kim loại">Niềng răng kim loại</option>
-                            <option value="Niềng răng trong suốt">Niềng răng trong suốt</option>
-                            <option value="Điều trị lệch khớp cắn">Điều trị lệch khớp cắn</option>
-                            <option value="Làm răng sứ">Làm răng sứ</option>
-                            <option value="Cấy ghép Implant">Cấy ghép Implant</option>
-                            <option value="Mặt dán sứ Veneer">Mặt dán sứ Veneer</option>
-                            <option value="Cạo vôi răng">Cạo vôi răng</option>
-                            <option value="Điều trị viêm nướu">Điều trị viêm nướu</option>
-                            <option value="Ghép nướu">Ghép nướu</option>
-                            <option value="Lấy cao răng sâu dưới nướu">Lấy cao răng sâu dưới nướu</option>
-                            <option value="Điều trị áp xe răng">Điều trị áp xe răng</option>
-                            <option value="Tái tạo xương ổ răng">Tái tạo xương ổ răng</option>
-                            <option value="Khám sức khỏe răng miệng định kỳ">Khám sức khỏe răng miệng định kỳ</option>
-                            <option value="Chụp X-quang răng toàn hàm">Chụp X-quang răng toàn hàm</option>
-                            <option value="Tư vấn kế hoạch điều trị">Tư vấn kế hoạch điều trị</option>
-                            <option value="Chụp CT Cone Beam 3D">Chụp CT Cone Beam 3D</option>
-                            <option value="Đo khớp cắn kỹ thuật số">Đo khớp cắn kỹ thuật số</option>
-                            <option value="Chụp phim Panorama">Chụp phim Panorama</option>
-                            <option value="Tẩy trắng răng bằng công nghệ Laser">Tẩy trắng răng bằng công nghệ Laser</option>
-                            <option value="Tư vấn dinh dưỡng và phòng ngừa bệnh lý răng miệng">Tư vấn dinh dưỡng và phòng ngừa bệnh lý răng miệng</option>
-                            <option value=">Đánh giá sức khỏe răng miệng chuyên sâu">Đánh giá sức khỏe răng miệng chuyên sâu</option>
-                        </select>
+                            {% for service in services %}
+                            <option value="{{ service.name }}">{{ service.name }}</option>
+                            {% endfor %}
+                    </select>
                 </div>
                 <div class=" mb-4">
                     <label for="defaultInput" class="form-label">Thông tin bệnh (nếu có)</label>
