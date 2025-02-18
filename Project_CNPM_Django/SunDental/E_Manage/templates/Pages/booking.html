@@ -8,32 +8,33 @@
 {% include 'home/includes/left_menu.html' %}
 {% endblock %}
 
-
 {% block content %}
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="col-md-12">
         <div class="card">
           <h4 class="card-header text-center fw-bolder">ĐĂNG KÍ DỊCH VỤ 🏥</h4>
+
           <div class="card-body">
-            <form action='{% url 'booking' %}' method = 'POST' enctype="multipart/form-data">
+            <form action='{% url 'booking' %}' method='POST' enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-4">
                     <label for="defaultInput" class="form-label">Họ và tên</label>
-                    <input id="defaultInput" class="form-control" type="text" placeholder="Họ và tên" name='fullname' />
+                    <input id="defaultInput" class="form-control" type="text" placeholder="Nhập họ và tên" name='fullname' required />
                 </div>
                 <div class="mb-4">
                     <label for="defaultInput" class="form-label">Số điện thoại</label>
-                    <input id="defaultInput" class="form-control" type="text" placeholder="Nhập Số điện thoại" name='phone' />
-                  </div>
-                  <div class="mb-4">
+                    <input id="defaultInput" class="form-control" type="text" placeholder="Nhập số điện thoại" name='phone' required />
+                </div>
+                <div class="mb-4">
                     <label for="defaultInput" class="form-label">Email</label>
-                    <input id="defaultInput" class="form-control" type="email" placeholder="Nhập Email" name='email' />
-                  </div>
+                    <input id="defaultInput" class="form-control" type="email" placeholder="Nhập email của bạn" name='email' required />
+                </div>
 
                 <div class="mb-4">
                     <label for="defaultSelect" class="form-label">Địa điểm</label>
-                    <select id="defaultSelect" class="form-select" name='location'>
+                    <select id="defaultSelect" class="form-select" name='location' required>
+                        <option value="">Chọn địa điểm</option>
                         <option value="02 Võ Oanh, Phường 25, Bình Thạnh, Hồ Chí Minh">02 Võ Oanh, Phường 25, Bình Thạnh, Hồ Chí Minh</option>
                         <option value="Số 70 đường Tô Ký, phường Tân Chánh Hiệp, quận 12, TPHCM">Số 70 đường Tô Ký, phường Tân Chánh Hiệp, quận 12, TPHCM</option>
                         <option value="10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM">10/12 Trần Não, KP3, P. Bình An, TP. Thủ Đức, TP. HCM</option>
@@ -41,79 +42,68 @@
                 </div>
                 <div class="mb-4">
                     <label for="defaultSelect" class="form-label">Dịch Vụ</label>
-                    <select id="defaultSelect" class="form-select" name='service'>
-                            <option value="">Chọn dịch vụ</option>
-                            {% for service in services %}
-                            <option value="{{ service.name }}">{{ service.name }}</option>
-                            {% endfor %}
+                    <select id="defaultSelect" class="form-select" name='dich_vu' required>
+                        <option value="">Chọn dịch vụ</option>
+                        {% for service in serv %}
+                            <option value="{{ service.id }}">{{ service.name }}</option> <!-- Use service.id if you need the ID -->
+                        {% endfor %}
                     </select>
                 </div>
-                <div class=" mb-4">
+                <div class="mb-4">
                     <label for="defaultInput" class="form-label">Thông tin bệnh (nếu có)</label>
-                    <input
-                      id="defaultInput"
-                      class="form-control"
-                      type="text"
-                      placeholder="Nhập thông tin bệnh (nếu có)" name='message' />
-                  </div>
-                  <div class="mb-4">
+                    <input id="defaultInput" class="form-control" type="text" placeholder="Nhập thông tin bệnh (nếu có)" name='message' />
+                </div>
+                <div class="mb-4">
                     <label for="formFile" class="form-label">Tải ảnh (nếu có)</label>
                     <input class="form-control" type="file" id="formFile" name="photo" />
-                  </div>
+                </div>
                 <div class="mb-4">
-                    <label for="defaultSelect" class="form-label">Chọn ngày hẹn</label>
-                    <input type="date" id="appointment-date" class="form-control" name="appointment_date" >
+                    <label for="appointment-date" class="form-label">Chọn ngày hẹn</label>
+                    <input type="date" id="appointment-date" class="form-control" name="appointment_date" required >
                 </div>
 
                 <div class="mb-4">
-                    <label for="defaultSelect" class="form-label">Chọn giờ hẹn</label>
-                    <select id="defaultSelect" class="form-select" name='appointment_time'>
+                    <label for "appointment-time-select" class "form-label">Chọn giờ hẹn</label>
+                    <select id "appointment-time-select" class "form-select" name "appointment_time">
                         <option value="">Chọn giờ hẹn</option>
-                            <option value="08:00">08:00 AM</option>
-                            <option value="08:45">08:45 AM</option>
-                            <option value="09:30">09:30 AM</option>
-                            <option value="09:30">10:15 AM</option>
-                            <option value="09:30">11:00 AM</option>
-                            <option value="09:30">11:45 AM</option>
-                            <option value="09:30">01:15 AM</option>
-                            <option value="09:30">02:00 AM</option>
-                            <option value="09:30">02:45 AM</option>
-                            <option value="09:30">03:30 AM</option>
-                            <option value="09:30">04:15 AM</option>
+                        {% for time in valid_times %}
+                            <option value="{{ time }}">{{ time }}</option>
+                        {% endfor %}
                     </select>
-                
                 </div>
-                
+
             </div>
-            <div class="col-md-12 text-center mb-5">
-                <button id="complete-btn" class="btn btn-primary btn-lg">
+            <div class "col-md-12 text-center mb-5">
+                <button id "complete-btn" type "submit"class "btn btn-primary btn-lg">
                     Hoàn tất
                 </button>
             </div>
             </form>
-            
-</div>
-</div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        </div> <!-- End of card body -->
+      </div> <!-- End of card -->
+    </div> <!-- End of col-md-12 -->
+</div> <!-- End of container -->
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% if messages %}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                {% for message in messages %}
-                    Swal.fire({
-                        title: 'Thông báo',
-                        text: '{{ message }}',
-                        icon: '{% if message.tags == "success" %}success{% else %}error{% endif %}',
-                        confirmButtonText: 'OK'
-                    });
-                {% endfor %}
-            });
-        </script>
-    {% endif %}
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% for message in messages %}
+                Swal.fire({
+                    title: 'Thông báo',
+                    text: '{{ message }}',
+                    icon: '{% if message.tags == "success" %}success{% else %}error{% endif %}',
+                    confirmButtonText: 'OK'
+                });
+            {% endfor %}
+        });
+    </script>
+{% endif %}
 
 {% endblock %}
+
 
 {% block footer %} 
 {% include "home/includes/footer.html" %}

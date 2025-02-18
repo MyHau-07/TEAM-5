@@ -6,6 +6,7 @@ from home.forms import BookingForm
 from .models import Appointment
 from .models import GioHang
 from .models import Services
+from .models import Booking
 from .models import HoaDon
 from .models import Dentist
 from home.forms import DentistForm
@@ -14,9 +15,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.http import JsonResponse# Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q
+from django.db.models import Q, Count
 from .models import MedicalRecord
 from django.views.decorators.csrf import csrf_exempt
+from datetime import date
 @login_required
 def user (request):
     user = request.user
@@ -86,17 +88,6 @@ def add_to_cart(request, dich_vu_id):
     
     # Sau khi thêm dịch vụ vào giỏ hàng, redirect về trang dịch vụ
     return redirect('dichvu_list')  # 'dichvu_list' là tên của URL trang dịch vụ
-
-def chon_dich_vu_booking(request):
-    if request.method == 'POST':
-        selected_service_id = request.POST.get('service')  # Lấy ID dịch vụ được chọn
-        if selected_service_id:
-            selected_service = Services.objects.get(id=selected_service_id)
-            # Xử lý logic với dịch vụ được chọn
-            print(f"Dịch vụ được chọn: {selected_service.name}")
-    else:
-        services = Services.objects.filter(is_active=True)
-        return render(request, 'booking.html', {'services': services})
 
 @login_required
 def Gio_Hang(request):
@@ -186,19 +177,55 @@ def hosobenhan_detail(request, record_id):
     }
     return render(request, 'Pages/hosobenhan_detail.html', context)
 
-def booking(request):
+def booking(request):       
+    services = Services.objects.filter(is_active=True)
+    
     if request.method == 'POST':
         form = BookingForm(request.POST, request.FILES)
         if form.is_valid():
+            appointment_date = request.POST.get('appointment_date')  # Get appointment_date from POST
             form.save()
             messages.success(request, "Đặt lịch thành công! Thông tin đã được gửi đến quản trị viên.")
         else:
             messages.error(request, "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin.")
+        selected_date = request.POST.get('appointment_date', date.today().isoformat())
     else:
         form = BookingForm()
-    return render(request, 'Pages/booking.html', {'form': form})
+        selected_date = request.GET.get('appointment_date', date.today().isoformat())
+        
+    # If appointment_date is in POST, use it; otherwise, check GET
 
+    all_times = [
+        "08:00", "08:45", "09:30", "10:15", "11:00", "11:45",
+        "13:15", "14:00", "14:45", "15:30", "16:15"
+    ]
 
+    # Fetch all bookings for the selected date at once
+    booked_bookings = Booking.objects.filter(appointment_date=selected_date)
+
+    valid_times = []
+    for time in all_times:
+        # Check if any booking exists for this time with service type 'dieu_tri'
+        is_dieu_tri_booked = booked_bookings.filter(
+            appointment_time=time,
+            dich_vu__type='dieu_tri'  # Accessing type through the ForeignKey relationship
+        ).exists()
+
+        # Count how many bookings exist for this time with service type 'kham'
+        kham_count = booked_bookings.filter(
+            appointment_time=time,
+            dich_vu__type='kham'  # Accessing type through the ForeignKey relationship
+        ).count()
+
+        if not is_dieu_tri_booked and kham_count < 3:
+            valid_times.append(time)
+
+    return render(request, 'Pages/booking.html', {
+        'form': form,
+        'serv': services,
+        'valid_times': valid_times,
+        'selected_date': selected_date,
+    })
 def ClicnicOwner (request):
     return render(request, 'Pages/ClicnicOwner.html')
 

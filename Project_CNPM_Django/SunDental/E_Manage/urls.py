@@ -9,7 +9,6 @@ urlpatterns = [
     path('user/', views.user, name="user"),
     
     path('booking', views.booking, name = "booking"),
-    path('chon_dich_vu_booking/<int:dich_vu_id>/', views.chon_dich_vu_booking, name='chon_dich_vu_booking'),
     path('dichvu', views.dichvu, name = "dichvu"),
     path('chamcong', views.chamcong, name = "chamcong"),
     path('nghiphep', views.nghiphep, name = "nghiphep"),
