@@ -218,28 +218,30 @@
 
 {% comment %} End {% endcomment %}
 
-            <div class="buttons">
-                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
-                    href="{% url 'lichhen' %}">
-                    Lịch hẹn
-                </a>
-                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
-                    href="{% url 'uudai' %}">
-                    Ưu đãi
-                </a>
-                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
-                    href="#">
-                    Tư vấn
-                </a>
-                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
-                    href="{% url 'lichsu' %}">
-                    Lịch sử
-                </a>
-                <a class="col-span-1 border-2 border-black flex justify-center items-center p-2 bg-white hover:bg-gray-100"
-                    href="{% url 'GioHang' %}">
-                    Giỏ hàng
-                </a>
+<div class="container-fluid mt-4">
+    <div class="card shadow-lg border-0 rounded-4 p-3 bg-light bg-opacity-75 mx-3" style="backdrop-filter: blur(10px);">
+        <div class="card-body">
+            <div class="row g-2">
+                <div class="col-6 col-md">
+                    <a class="btn btn-danger w-100 fw-bold py-2" href="{% url 'lichhen' %}">Lịch hẹn</a>
+                </div>
+                <div class="col-6 col-md">
+                    <a class="btn btn-danger w-100 fw-bold py-2" href="{% url 'uudai' %}">Ưu đãi</a>
+                </div>
+                <div class="col-6 col-md">
+                    <a class="btn btn-danger w-100 fw-bold py-2" href="#">Tư vấn</a>
+                </div>
+                <div class="col-6 col-md">
+                    <a class="btn btn-danger w-100 fw-bold py-2" href="{% url 'lichsu' %}">Lịch sử</a>
+                </div>
+                <div class="col-6 col-md">
+                    <a class="btn btn-danger w-100 fw-bold py-2" href="{% url 'home' %}">Giỏ hàng</a>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+
             <div class="row">
                 <div class="col-xl-6">
                     <div class="container mt-4">

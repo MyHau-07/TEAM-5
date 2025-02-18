@@ -1,4 +1,5 @@
 {% load static %}
+
 <nav
   class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
   id="layout-navbar"
@@ -40,16 +41,24 @@
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
           <a
             class="nav-link dropdown-toggle hide-arrow p-0"
-            href="#"
+            href="javascript:void(0)"
             data-bs-toggle="dropdown"
             onclick="event.preventDefault();"
           >
             <div class="avatar avatar-online">
-              <img
-                src="{%static 'home/assets/img/avatars/1.png' %}"
-                alt
-                class="w-px-40 h-auto rounded-circle"
-              />
+              {% if request.user.image %}
+                <img
+                  src="{{ request.user.image.url }}"
+                  alt="User  Avatar"
+                  class="w-px-40 h-auto rounded-circle"
+                />
+              {% else %}
+                <img
+                  src="{% static 'home/assets/img/avatars/default.png' %}"
+                  alt="Default Avatar"
+                  class="w-px-40 h-auto rounded-circle"
+                />
+              {% endif %}
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -58,16 +67,24 @@
                 <div class="d-flex">
                   <div class="flex-shrink-0 me-3">
                     <div class="avatar avatar-online">
-                      <img
-                        src="{%static 'home/assets/img/avatars/1.png' %}"
-                        alt
-                        class="w-px-40 h-auto rounded-circle"
-                      />
+                      {% if request.user.image %}
+                        <img
+                          src="{{ request.user.image.url }}"
+                          alt="User  Avatar"
+                          class="w-px-40 h-auto rounded-circle"
+                        />
+                      {% else %}
+                        <img
+                          src="{% static 'home/assets/img/avatars/default.png' %}"
+                          alt="Default Avatar"
+                          class="w-px-40 h-auto rounded-circle"
+                        />
+                      {% endif %}
                     </div>
                   </div>
                   <div class="flex-grow-1">
-                    <h6 class="mb-0">John Doe</h6>
-                    <small class="text-muted">Admin</small>
+                    <h6 class="mb-0">{{ request.user.full_name }}</h6>  <!-- Tên đầy đủ -->
+                    <small class="text-muted">{{ request.user.get_role_display }}</small>  <!-- Vai trò -->
                   </div>
                 </div>
               </a>
@@ -76,11 +93,22 @@
               <div class="dropdown-divider my-1"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'user'%}">
+              <a class="dropdown-item" href="{% url 'user' %}">
                 <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
               </a>
             </li>
-  
+            <li>
+              <div class="dropdown-divider my-1"></div>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'lichhen' %}">
+                <i class="bx bx-bell bx-md me-3"></i>
+                <span>Nhắc nhở</span>
+                {% if reminder_count > 0 %}
+                  <span class="badge bg-danger rounded-circle">{{ reminder_count }}</span>  <!-- Hiển thị số lượng nhắc nhở -->
+                {% endif %}
+              </a>
+            </li>
             <li>
               <div class="dropdown-divider my-1"></div>
             </li>

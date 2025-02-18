@@ -78,19 +78,29 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # settings.py
-DATABASES = {
-      "default": {
-          "ENGINE": "mssql",
-          "NAME": "db11",
-          "USER": "sa",
-          "PASSWORD": "LeThanh@123",
-          "HOST": "localhost",
-          "PORT": "1433",
-          "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
-          },
-      },
-  }
+# DATABASES = {
+#       "default": {
+#           "ENGINE": "mssql",
+#           "NAME": "db11",
+#           "USER": "sa",
+#           "PASSWORD": "LeThanh@123",
+#           "HOST": "localhost",
+#           "PORT": "1433",
+#           "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+#           },
+#       },
+#   }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'DjangoDB',
+        'USER': 'root',
+        'PASSWORD': 'Anhhuy1711@',
+        'HOST':'localhost',
+        'PORT':'3306',
+    }
+}
 
 
 
@@ -162,3 +172,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Cấu hình múi giờ
+TIME_ZONE = 'Asia/Ho_Chi_Minh'  # Múi giờ Việt Nam
+USE_TZ = True  # Sử dụng timezone

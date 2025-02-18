@@ -8,6 +8,7 @@ from .models import GioHang
 from .models import Services
 from .models import HoaDon
 from .models import Dentist
+from .models import Booking
 from home.forms import DentistForm
 from home.forms import DangKiLichNghiForm, ThemDichVuForm, SuaDichVuForm
 from django.contrib import messages
@@ -16,6 +17,8 @@ from django.http import JsonResponse# Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import MedicalRecord
+from django.utils import timezone
+from pytz import timezone as pytz_timezone
 
 @login_required
 def user (request):
@@ -178,7 +181,7 @@ def booking(request):
     if request.method == 'POST':
         form = BookingForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            form.save(user=request.user)
             messages.success(request, "Đặt lịch thành công! Thông tin đã được gửi đến quản trị viên.")
         else:
             messages.error(request, "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin.")
@@ -214,8 +217,38 @@ def nghiphep (request):
 def lichlam (request):
     return render(request, 'Users/lichlam.html')
 
-def lichhen (request):
-    return render(request, 'Users/lichhen.html')
+@login_required
+def lichhen(request):
+    vn_tz = pytz_timezone('Asia/Ho_Chi_Minh')  # Múi giờ Việt Nam
+    now = timezone.now().astimezone(vn_tz) 
+    
+    # Lọc các lịch hẹn chưa qua của người dùng hiện tại
+    upcoming_appointments = Booking.objects.filter(patient=request.user, appointment_date__gte=now.date()).order_by('appointment_date', 'appointment_time')
+    
+    # Tính toán thời gian còn lại cho mỗi lịch hẹn
+    reminder_count = 0  # Biến đếm số lượng nhắc nhở
+    for appointment in upcoming_appointments:
+        # Kết hợp ngày hẹn và giờ hẹn
+        appointment_time = timezone.datetime.combine(appointment.appointment_date, timezone.datetime.strptime(appointment.appointment_time, '%H:%M').time())
+        
+        # Chuyển appointment_time thành offset-aware
+        appointment_time = timezone.make_aware(appointment_time)
+
+        # Tính toán sự khác biệt thời gian
+        time_difference = appointment_time - now
+        appointment.hours_until = int(time_difference.total_seconds() // 3600)  # Chuyển đổi thành giờ
+        appointment.minutes_until = int((time_difference.total_seconds() % 3600) // 60)  # Phần còn lại là phút
+
+        # Kiểm tra nếu thời gian còn lại dưới 14 tiếng
+        if 0 <= appointment.hours_until < 24:
+            reminder_count += 1  # Tăng biến đếm
+
+    context = {
+        'appointments': upcoming_appointments,
+        'reminder_count': reminder_count  # Thêm số lượng nhắc nhở vào context
+    }
+    
+    return render(request, 'Users/lichhen.html', context)
 
 # def lichsu (request):
 #     return render(request, 'Users/lichsu.html')

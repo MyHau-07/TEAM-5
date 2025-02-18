@@ -9,6 +9,17 @@
 {% endblock %}
 
 {% block content %}
+<style>
+    .red {
+        color: red;
+    }
+    .yellow {
+        color: orange; /* Màu vàng có thể là màu cam */
+    }
+    .green {
+        color: green;
+    }
+</style>
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Nhắc Nhở Lịch Hẹn</h2>
@@ -21,42 +32,33 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>STT</th>
                             <th>Khách hàng</th>
                             <th>Ngày hẹn</th>
                             <th>Giờ</th>
                             <th>Ghi chú</th>
                             <th>Trạng thái</th>
-                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for appointment in appointments %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ appointment.patient.full_name }}</td>
-                            <td>{{ appointment.date }}</td>
-                            <td>{{ appointment.time }}</td>
-                            <td>{{ appointment.notes }}</td>
+                            <td>{{ appointment.fullname }}</td>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.appointment_time }}</td>
+                            <td>{{ appointment.message }}</td>
                             <td>
-                                {% if appointment.status == "pending" %}
-                                    <span class="badge bg-warning text-dark">Chưa xác nhận</span>
-                                {% elif appointment.status == "confirmed" %}
-                                    <span class="badge bg-success">Đã xác nhận</span>
+                                {% if appointment.hours_until >= 0 %}
+                                    Còn {{ appointment.hours_until }} giờ {{ appointment.minutes_until }} phút đến lịch hẹn
                                 {% else %}
-                                    <span class="badge bg-danger">Đã hủy</span>
+                                    Đã qua lịch hẹn
                                 {% endif %}
                             </td>
-                            <td>
-                                {% if appointment.status == "pending" %}
-                                    <button class="btn btn-success btn-sm confirm-btn" data-id="{{ appointment.id }}">Xác nhận</button>
-                                    <button class="btn btn-danger btn-sm cancel-btn" data-id="{{ appointment.id }}">Hủy</button>
-                                {% else %}
-                                    <button class="btn btn-secondary btn-sm disabled">
-                                        {{ appointment.get_status_display }}
-                                    </button>
-                                {% endif %}
-                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">Không có lịch hẹn nào.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

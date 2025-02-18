@@ -91,8 +91,17 @@ class SignUpForm(forms.ModelForm):
         password = cleaned_data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
 
+        # Kiểm tra nếu mật khẩu không được nhập
+        if not password:
+            raise forms.ValidationError("Mật khẩu là bắt buộc.")
+
+        # Kiểm tra nếu mật khẩu xác nhận không được nhập
+        if not password_confirm:
+            raise forms.ValidationError("Mật khẩu xác nhận là bắt buộc.")
+
+        # Kiểm tra nếu mật khẩu và mật khẩu xác nhận không khớp
         if password and password_confirm and password != password_confirm:
-            raise forms.ValidationError("Mật khẩu không khớp")
+            raise forms.ValidationError("Mật khẩu không khớp.")
 
         return cleaned_data
     
@@ -151,6 +160,13 @@ class BookingForm(forms.ModelForm):
                 'class': 'form-control'
             })
         }
+    def save(self, commit=True, user=None):
+        booking = super().save(commit=False)
+        if user:
+            booking.patient = user  # Gán patient là người dùng hiện tại
+        if commit:
+            booking.save()
+        return booking
 
 
 class DangKiLichNghiForm(forms.ModelForm):
