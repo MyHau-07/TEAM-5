@@ -4,7 +4,8 @@ from E_Manage.models import CommentForm
 from E_Manage.models import CustomUser
 from E_Manage.models import Booking
 from django.contrib.auth import get_user_model
-
+from E_Manage.models import LichHen
+from E_Manage.models import LichLamViec, CaLamViec
 User = get_user_model()
 
 
@@ -148,4 +149,36 @@ class BookingForm(forms.ModelForm):
                 'class': 'form-control'
             })
         }
+#lich hen
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = LichHen
+        fields = ['doctor', 'appointment_date', 'appointment_time', 'notes', 'status']
+
+#lich lam đentist
+class LichLamViecForm(forms.ModelForm):
+    ca_lam = forms.ModelMultipleChoiceField(
+        queryset=CaLamViec.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        label="Chọn ca làm"
+    )
+
+    class Meta:
+        model = LichLamViec
+        fields = ['ngay', 'thu', 'ca_lam', 'trang_thai']
+        widgets = {
+            'ngay': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        ngay = cleaned_data.get("ngay")
+        thu = cleaned_data.get("thu")
+
+        if ngay and thu is not None:
+            # Kiểm tra ngày có khớp với thứ hay không
+            if ngay.weekday() != thu:
+                raise forms.ValidationError("⚠ Ngày và thứ trong tuần không khớp! Vui lòng kiểm tra lại.")
         
+        return cleaned_data

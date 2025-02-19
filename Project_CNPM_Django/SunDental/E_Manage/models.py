@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission 
 from django.contrib.auth.models import BaseUserManager
-from datetime import date
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from datetime import date
 
 
 # Create your models here.
@@ -137,7 +139,7 @@ class MedicalRecord(models.Model):
         return f"Hồ sơ của {self.patient.full_name or self.patient.username}"
 
 
-class lichhen(models.Model):
+class LichHen(models.Model):
     medical_record = models.ForeignKey(
         MedicalRecord, on_delete=models.CASCADE, related_name='appointments'
     )
@@ -178,3 +180,60 @@ class Communication(models.Model):
     def __str__(self):
         return (f"Tin nhắn từ {self.sender.full_name} đến "
                 f"{self.receiver.full_name} lúc {self.timestamp}")
+#lịch làm của bác sĩ
+
+class CaLamViec(models.Model):
+    TEN_CA = [
+        ('SANG', 'Ca Sáng (7:00 - 11:00)'),
+        ('CHIEU', 'Ca Chiều (13:00 - 17:00)'),
+        ('TOI', 'Ca Tối (18:00 - 22:00)')
+    ]
+
+    ten_ca = models.CharField(max_length=10, choices=TEN_CA)
+
+    def __str__(self):
+        return self.get_ten_ca_display()
+
+
+class LichLamViec(models.Model):
+    THU_TRONG_TUAN = [
+        (0, 'Thứ Hai'),
+        (1, 'Thứ Ba'),
+        (2, 'Thứ Tư'),
+        (3, 'Thứ Năm'),
+        (4, 'Thứ Sáu'),
+        (5, 'Thứ Bảy'),
+        (6, 'Chủ Nhật'),
+    ]
+
+    bac_si = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Bác sĩ")
+    ngay = models.DateField(verbose_name="Ngày làm việc")
+    thu = models.IntegerField(choices=THU_TRONG_TUAN, verbose_name="Thứ")
+    ca_lam = models.ManyToManyField(CaLamViec, verbose_name="Ca làm việc")
+    trang_thai = models.BooleanField(default=True, verbose_name="Còn hoạt động")
+    ghi_chu = models.TextField(blank=True, null=True, verbose_name="Ghi chú")
+
+    class Meta:
+        ordering = ['thu', 'ngay']
+        unique_together = ['bac_si', 'ngay']
+        verbose_name = "Lịch làm việc"
+        verbose_name_plural = "Lịch làm việc"
+
+    def clean(self):
+        """ Kiểm tra tính hợp lệ của ngày và thứ trong tuần """
+        if self.ngay < date.today():
+            raise ValidationError("❌ Ngày không thể là quá khứ!")
+
+        if self.ngay.weekday() != self.thu:
+            raise ValidationError("❌ Ngày và thứ trong tuần không khớp!")
+
+    def save(self, *args, **kwargs):
+        """ Gọi validation trước khi lưu """
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def get_bac_si_full_name(self):
+        return self.bac_si.get_full_name() if self.bac_si else "Không xác định"
+
+    def __str__(self):
+        return f"{self.get_bac_si_full_name()} - {self.get_thu_display()} - {self.ngay}"    

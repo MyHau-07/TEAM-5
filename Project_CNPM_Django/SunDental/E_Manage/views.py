@@ -13,7 +13,12 @@ from django.http import JsonResponse# Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import MedicalRecord
+from .models import  LichHen, LichLamViec, CaLamViec
+from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime, timedelta
+from home.forms import LichLamViecForm
 
+#user
 @login_required
 def user (request):
     user = request.user
@@ -29,7 +34,7 @@ def user (request):
     else:
         form = CustomUserForm(instance=user)
     return render(request, 'Users/user.html', {'user': user, 'form': form})
-
+#GIO HANG
 @login_required
 def them_vao_gio_hang(request, dich_vu_id):
     dich_vu = get_object_or_404(DichVu, id=dich_vu_id)
@@ -126,7 +131,7 @@ def thanh_toan(request):
     
     return redirect('xem_gio_hang')
 
-
+#LĨH SU HOA DONN CUA GIO HANG
 @login_required
 def lichsu(request):
     hoadons = HoaDon.objects.filter(user=request.user).order_by('-ngay_thanh_toan')
@@ -170,7 +175,7 @@ def hosobenhan_detail(request, record_id):
         'communications': record.communications.all().order_by('timestamp'),
     }
     return render(request, 'Pages/hosobenhan_detail.html', context)
-
+#TRANG BOOKING
 def booking(request):
     if request.method == 'POST':
         form = BookingForm(request.POST, request.FILES)
@@ -182,6 +187,76 @@ def booking(request):
     else:
         form = BookingForm()
     return render(request, 'Pages/booking.html', {'form': form})
+
+#lich henj
+def lichhen(request):
+    user = request.user  # Lấy thông tin bệnh nhân đang đăng nhập
+    medical_record = get_object_or_404(MedicalRecord, patient=user)  # Lấy hồ sơ bệnh án
+    appointments = LichHen.objects.filter(medical_record=medical_record)  # Lấy lịch hẹn từ hồ sơ
+
+    return render(request, 'Users/lichhen.html', {
+        'medical_record': medical_record,
+        'appointments': appointments
+    })
+@csrf_exempt
+def update_appointment_status(request):
+    if request.method == 'POST':
+        appointment_id = request.POST.get('appointment_id')
+        status = request.POST.get('status')
+
+        try:
+            appointment = LichHen.objects.get(id=appointment_id)
+            appointment.status = status
+            appointment.save()
+            return JsonResponse({"success": True})
+        except LichHen.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Lịch hẹn không tồn tại!"})
+
+    return JsonResponse({"success": False, "error": "Yêu cầu không hợp lệ!"})
+#lichlam
+@login_required
+def lichlam(request):
+    try:
+        date_param = request.GET.get("date")
+
+        # Xử lý ngày dựa trên tham số hoặc mặc định là hôm nay
+        if date_param:
+            try:
+                today = datetime.strptime(date_param, "%Y-%m-%d")
+            except ValueError:
+                today = datetime.now()
+        else:
+            today = datetime.now()
+
+        # Xác định đầu và cuối tuần
+        start_of_week = today - timedelta(days=today.weekday())  # Thứ Hai đầu tuần
+        end_of_week = start_of_week + timedelta(days=6)  # Chủ Nhật cuối tuần
+
+        # Lấy danh sách lịch làm việc trong tuần, sắp xếp theo thứ tự từ Thứ Hai → Chủ Nhật
+        lich_lam_viec = LichLamViec.objects.filter(
+            ngay__range=[start_of_week, end_of_week]
+        ).prefetch_related("ca_lam", "bac_si").order_by("thu", "ngay")
+
+        # Danh sách ngày trong tuần
+        week_days = [start_of_week + timedelta(days=i) for i in range(7)]
+
+        context = {
+            "today": today,
+            "week_days": week_days,
+            "lich_lam_viec": lich_lam_viec,
+            "prev_week": (start_of_week - timedelta(days=7)).strftime("%Y-%m-%d"),
+            "next_week": (end_of_week + timedelta(days=7)).strftime("%Y-%m-%d"),
+        }
+
+        return render(request, "Users/lichlam.html", context)
+
+    except Exception as e:
+        messages.error(request, f"❌ Đã xảy ra lỗi: {e}")
+        return redirect("lichlam")
+
+
+
+
 
 
 def ClicnicOwner (request):
@@ -208,11 +283,11 @@ def chamcong (request):
 def nghiphep (request):
     return render(request, 'Users/nghiphep.html')
 
-def lichlam (request):
-    return render(request, 'Users/lichlam.html')
+# def lichlam (request):
+#     return render(request, 'Users/lichlam.html')
 
-def lichhen (request):
-    return render(request, 'Users/lichhen.html')
+# def lichhen (request):
+#     return render(request, 'Users/lichhen.html')
 
 # def lichsu (request):
 #     return render(request, 'Users/lichsu.html')

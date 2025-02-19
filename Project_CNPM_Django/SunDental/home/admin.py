@@ -3,12 +3,16 @@ from E_Manage.models import Services
 from E_Manage.models import CommentForm
 from E_Manage.models import CustomUser
 from E_Manage.models import Appointment 
-from E_Manage.models import Booking 
+from E_Manage.models import Booking
 from E_Manage.models import GioHang
 from django.urls import reverse
 from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe  # Thêm dòng này
-from E_Manage.models import MedicalRecord, lichhen, Communication
+from E_Manage.models import MedicalRecord, LichHen
+from E_Manage.models import CaLamViec, LichLamViec
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+
 # Register your models here.
 admin.site.register(CommentForm)
 
@@ -86,14 +90,27 @@ class MedicalRecordAdmin(admin.ModelAdmin):
     search_fields = ('patient__full_name', 'patient__username')
     list_filter = ('created_at',)
 
-@admin.register(lichhen)
+@admin.register(LichHen)
 class lichhen(admin.ModelAdmin):
     list_display = ('id', 'medical_record', 'doctor', 'appointment_date', 'appointment_time', 'status', 'created_at')
     search_fields = ('medical_record__patient__full_name', 'doctor__full_name')
     list_filter = ('appointment_date', 'status')
 
-@admin.register(Communication)
-class CommunicationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'medical_record', 'sender', 'receiver', 'timestamp')
-    search_fields = ('medical_record__patient__full_name', 'sender__full_name', 'receiver__full_name')
-    list_filter = ('timestamp',)
+
+#lịch làm
+@admin.register(CaLamViec)
+class CaLamViecAdmin(admin.ModelAdmin):
+    list_display = ['ten_ca']
+    search_fields = ['ten_ca']
+
+@admin.register(LichLamViec)
+class LichLamViecAdmin(admin.ModelAdmin):
+    list_display = ('bac_si', 'ngay', 'thu', 'get_ca_lam', 'trang_thai', 'ghi_chu')
+    list_filter = ('thu', 'trang_thai', 'ca_lam')
+    search_fields = ('bac_si__username', 'ghi_chu')
+    ordering = ['thu', 'ngay']
+
+    def get_ca_lam(self, obj):
+        return ", ".join([ca.get_ten_ca_display() for ca in obj.ca_lam.all()])
+    get_ca_lam.short_description = "Ca làm việc"
+
