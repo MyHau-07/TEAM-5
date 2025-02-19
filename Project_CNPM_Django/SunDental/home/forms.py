@@ -6,6 +6,7 @@ from E_Manage.models import Booking
 from E_Manage.models import DangKiLichNghi
 from E_Manage.models import Services
 from E_Manage.models import Dentist
+from E_Manage.models import lichhen
 #from E_Manage.models import CommentFormDentist
 from django.contrib.auth import get_user_model
 
@@ -257,4 +258,51 @@ class DentistForm(forms.ModelForm):
             'Gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
                 'class': 'form-control'
             })
-        }        
+        }     
+
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        widgets = {
+            'fullname': forms.TextInput(attrs={
+                'placeholder': 'Nhập họ tên',
+                'class': 'form-control'
+            }),
+            'phone': forms.TextInput(attrs={
+                'placeholder': 'Nhập số điện thoại',
+                'class': 'form-control'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Nhập địa chỉ email',
+                'class': 'form-control'
+            }),
+            'location': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'dich_vu': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'message': forms.Textarea(attrs={
+                'placeholder': 'Nhập tin nhắn',
+                'class': 'form-control',
+                'rows': 4
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'appointment_date': forms.DateInput(attrs={
+                'type': 'date',  # Use HTML5 date input
+                'class': 'form-control'
+            }),
+            'appointment_time': forms.Select(attrs={
+                'class': 'form-control'
+            })
+        }
+
+    def __init__(self, *args, **kwargs):
+        valid_times = kwargs.pop('valid_times', None)
+        super(BookingForm, self).__init__(*args, **kwargs)
+        if valid_times:
+            self.fields['appointment_time'].choices = [(time, time) for time in valid_times]

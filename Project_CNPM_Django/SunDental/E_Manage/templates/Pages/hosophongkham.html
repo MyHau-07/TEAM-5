@@ -13,11 +13,7 @@
 <div class="container">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-10">
-                <h1 class="mt-4 text-center" style="font-weight: bold; color: #797CFF;">
-                    Dashboard Quản Lý Phòng Khám
-                </h1>
-                
+            <div class="col-md-12">
                 <style>
                     .equal-height {
                         min-height: 60px;
@@ -40,7 +36,7 @@
                 </style>   
 
                 <!-- Metrics Overview -->
-                <div class="row mb-4">
+                <div class="row  mt-4 mb-4">
                     <div class="col-lg-3 col-md-6">
                         <div class="card bg-primary text-white mb-4 equal-height metric-card">
                             <div class="card-body">
@@ -81,7 +77,6 @@
 
                 <!-- Charts Row 1 -->
                 <div class="row mb-4">
-                    <div class="col-xl-8 col-lg-7">
                         <div class="card shadow">
                             <div class="card-header bg-transparent">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -99,95 +94,53 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="card shadow">
-                            <div class="card-header bg-transparent">
-                                <h6 class="mb-0">Phân Bố Dịch Vụ</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="servicesChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Charts Row 2 -->
-                <div class="row mb-4">
-                    <div class="col-xl-6">
-                        <div class="card shadow">
-                            <div class="card-header bg-transparent">
-                                <h6 class="mb-0">Lịch Hẹn Theo Giờ</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="appointmentsChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card shadow">
-                            <div class="card-header bg-transparent">
-                                <h6 class="mb-0">Độ Tuổi Bệnh Nhân</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="ageChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Recent Appointments Table -->
-                <div class="card shadow mb-4">
-                    <div class="card-header bg-transparent">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="mb-0">Lịch Hẹn Gần Đây</h6>
-                            <a href="#" class="btn btn-sm btn-primary">Xem Tất Cả</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Bệnh Nhân</th>
-                                        <th>Dịch Vụ</th>
-                                        <th>Thời Gian</th>
-                                        <th>Trạng Thái</th>
-                                        <th>Bác Sĩ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Nguyễn Văn A</td>
-                                        <td>Niềng Răng</td>
-                                        <td>09:00 - 10:30</td>
-                                        <td><span class="badge bg-success">Đã xác nhận</span></td>
-                                        <td>BS. Trần Thị B</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trần Thị C</td>
-                                        <td>Tẩy trắng</td>
-                                        <td>10:30 - 11:30</td>
-                                        <td><span class="badge bg-warning">Chờ xác nhận</span></td>
-                                        <td>BS. Lê Văn D</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lê Văn E</td>
-                                        <td>Nhổ răng khôn</td>
-                                        <td>13:30 - 14:30</td>
-                                        <td><span class="badge bg-info">Đã đến</span></td>
-                                        <td>BS. Phạm Văn F</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-transparent">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Lịch Hẹn Gần Đây</h6>
+                    <a href="#" class="btn btn-sm btn-primary">Xem Tất Cả</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Bệnh Nhân</th>
+                                <th>Dịch Vụ</th>
+                                <th>Thời Gian</th>
+                                <th>Trạng Thái</th>
+                                <th>Bác Sĩ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nguyễn Văn A</td>
+                                <td>Niềng Răng</td>
+                                <td>09:00 - 10:30</td>
+                                <td><span class="badge bg-success">Đã xác nhận</span></td>
+                                <td>BS. Trần Thị B</td>
+                            </tr>
+                            <tr>
+                                <td>Trần Thị C</td>
+                                <td>Tẩy trắng</td>
+                                <td>10:30 - 11:30</td>
+                                <td><span class="badge bg-warning">Chờ xác nhận</span></td>
+                                <td>BS. Lê Văn D</td>
+                            </tr>
+                            <tr>
+                                <td>Lê Văn E</td>
+                                <td>Nhổ răng khôn</td>
+                                <td>13:30 - 14:30</td>
+                                <td><span class="badge bg-info">Đã đến</span></td>
+                                <td>BS. Phạm Văn F</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ urlpatterns = [
     path('lichsu', views.lichsu, name = "lichsu"),
     path('lichhenbs', views.appointment, name = "lichhenbs"),
     
-    path('hosophongkham', views.hosophongkham, name = "hosophongkham"),
+    
     path('quanlichinhanh', views.quanlichinhanh, name = "quanlichinhanh"),
     path('quanlidichvu', views.quanlidichvu, name = "quanlidichvu"),
     path('quanlinhanvien', views.quanlinhanvien, name = "quanlinhanvien"),

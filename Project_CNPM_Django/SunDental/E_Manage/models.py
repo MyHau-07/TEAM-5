@@ -101,13 +101,31 @@ class Appointment(models.Model):
     def __str__(self):
         return f"{self.patient_name} ({self.date} {self.time})"
     
+class Services (models.Model):
+    name = models.CharField(max_length=50)
+    price = models.CharField(max_length=10)
+    image = models.ImageField(null=True)
+    info = models.TextField(null=True, blank=True)
+    time = models.CharField(max_length=255, null=True )
+    TYPE_CHOICES = [
+        ('kham', 'Khám'),
+        ('dieu_tri', 'Điều trị'),
+    ]
+    type = models.CharField(
+        max_length=10,
+        choices=TYPE_CHOICES,
+        default='kham',
+    ) 
+    is_active = models.BooleanField(default=True)
+    def __str__(self):
+        return f"{self.name}"
 
 class Booking(models.Model):
     fullname = models.CharField(max_length=100)  # Họ và tên
     phone = models.CharField(max_length=15)  # Số điện thoại
     email = models.EmailField()  # Địa chỉ email
     location = models.CharField(max_length=255)  # Địa điểm
-    service = models.CharField(max_length=100)  # Dịch vụ
+    dich_vu = models.ForeignKey(Services, on_delete=models.CASCADE)  # Dịch vụ
     message = models.TextField(blank=True, null=True)  # Thông tin bệnh (nếu có)
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)  # Tải ảnh (nếu có)
     appointment_date = models.DateField(null=True, default=date.today)  # Ngày hẹn
@@ -118,15 +136,7 @@ class Booking(models.Model):
     def __str__(self):
         return f"{self.fullname}"
 
-class Services (models.Model):
-    name = models.CharField(max_length=50)
-    price = models.CharField(max_length=10)
-    image = models.ImageField(null=True)
-    info = models.TextField(null=True, blank=True)
-    time = models.CharField(max_length=255, null=True )
-    is_active = models.BooleanField(default=True)
-    def __str__(self):
-        return f"{self.name}" 
+
     
 class GioHang(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

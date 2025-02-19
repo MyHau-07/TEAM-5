@@ -9,6 +9,7 @@ from .models import Services
 from .models import HoaDon
 from .models import Dentist
 from .models import Booking
+from django.views.decorators.csrf import csrf_exempt
 from home.forms import DentistForm
 from home.forms import DangKiLichNghiForm, ThemDichVuForm, SuaDichVuForm
 from django.contrib import messages
@@ -18,6 +19,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import MedicalRecord
 from django.utils import timezone
+from datetime import date
 from pytz import timezone as pytz_timezone
 
 @login_required
@@ -36,20 +38,21 @@ def user (request):
         form = CustomUserForm(instance=user)
     return render(request, 'Users/user.html', {'user': user, 'form': form})
 
-@login_required
+@csrf_exempt
 def them_vao_gio_hang(request, dich_vu_id):
-    dich_vu = get_object_or_404(DichVu, id=dich_vu_id)
-    
-    # Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-    gio_hang, created = GioHang.objects.get_or_create(user=request.user, dich_vu=dich_vu)
-    
-    if not created:
-        gio_hang.so_luong += 1  # Nếu đã có thì tăng số lượng
-        gio_hang.save()
-
-    messages.success(request, f'Đã thêm {dich_vu.ten_dich_vu} vào giỏ hàng!')
-
-    return redirect('xem_gio_hang')
+    if request.method == 'POST':
+        user = request.user
+        service = Services.objects.get(id=dich_vu_id)
+        
+        # Kiểm tra xem dịch vụ đã có trong giỏ hàng chưa
+        gio_hang_item, created = GioHang.objects.get_or_create(user=user, dich_vu=service)
+        
+        if not created:
+            gio_hang_item.so_luong += 1
+            gio_hang_item.save()
+        
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
 
 @login_required
 def xoa_khoi_gio_hang(request, item_id):
@@ -178,16 +181,80 @@ def hosobenhan_detail(request, record_id):
     return render(request, 'Pages/hosobenhan_detail.html', context)
 
 def booking(request):
+    selected_date = request.GET.get('appointment_date', date.today().isoformat())
+    valid_times = get_valid_times_logic(selected_date)  # Lấy danh sách thời gian hợp lệ
+
+    # Xử lý yêu cầu POST khi người dùng gửi form đặt lịch
     if request.method == 'POST':
         form = BookingForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(user=request.user)
-            messages.success(request, "Đặt lịch thành công! Thông tin đã được gửi đến quản trị viên.")
+            try:
+                time = form.cleaned_data['appointment_time']
+                dich_vu = form.cleaned_data['dich_vu']
+                # Kiểm tra nếu dịch vụ là 'dieu_tri' và có lịch 'kham' trong cùng thời gian
+                if dich_vu.type == 'dieu_tri':
+                    # Kiểm tra xem có bất kỳ lịch 'kham' nào trong khung giờ này không
+                    existing_kham = Booking.objects.filter(
+                        appointment_date=selected_date,
+                        appointment_time=time,
+                        dich_vu__type='kham'
+                    ).exists()
+                    if existing_kham:
+                        messages.error(request, "Khung giờ này đã có lịch khám, không thể đặt điều trị.")
+                        return render(request, 'Pages/booking.html', {
+                            'form': form,
+                            'serv': Services.objects.filter(is_active=True),
+                            'valid_times': valid_times,
+                            'selected_date': selected_date,
+                        })
+                # Lưu booking
+                booking = form.save(commit=False)
+                booking.save()
+                messages.success(request, "Đặt lịch thành công!")
+                return redirect('booking')
+            except Exception as e:
+                messages.error(request, f"Có lỗi xảy ra: {str(e)}")
         else:
             messages.error(request, "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin.")
     else:
         form = BookingForm()
-    return render(request, 'Pages/booking.html', {'form': form})
+
+    # Render template với form và các biến cần thiết
+    return render(request, 'Pages/booking.html', {
+        'form': form,
+        'serv': Services.objects.filter(is_active=True),
+        'valid_times': valid_times,
+        'selected_date': selected_date,
+    })
+# Hàm logic để lấy thời gian hợp lệ
+def get_valid_times_logic(selected_date):
+    all_times = [
+        "08:00", "08:45", "09:30", "10:15", "11:00", "11:45",
+        "13:15", "14:00", "14:45", "15:30", "16:15"
+    ]
+
+    # Lấy tất cả các booking trong ngày được chọn
+    booked_bookings = Booking.objects.filter(appointment_date=selected_date)
+
+    valid_times = []
+    for time in all_times:
+        # Kiểm tra xem có booking nào cho thời gian này với dịch vụ 'dieu_tri' không
+        is_dieu_tri_booked = booked_bookings.filter(
+            appointment_time=time,
+            dich_vu__type='dieu_tri'
+        ).exists()
+
+        # Đếm số lượng booking cho thời gian này với dịch vụ 'kham'
+        kham_count = booked_bookings.filter(
+            appointment_time=time,
+            dich_vu__type='kham'
+        ).count()
+
+        # Thời gian hợp lệ nếu không có 'dieu_tri' và số 'kham' < 3
+        if not is_dieu_tri_booked and kham_count < 3:
+            valid_times.append(time)
+
+    return valid_times
 
 
 
@@ -198,8 +265,6 @@ def quanlichinhanh (request):
 def quanlinhanvien (request):
     return render(request, 'Pages/quanlinhanvien.html')
 
-def hosophongkham (request):
-    return render(request, 'Pages/hosophongkham.html')
 
 def quanlidichvu (request):
     return render(request, 'Pages/quanlidichvu.html')
