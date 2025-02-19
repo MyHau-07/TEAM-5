@@ -176,8 +176,7 @@ def hosobenhan_detail(request, record_id):
         'communications': record.communications.all().order_by('timestamp'),
     }
     return render(request, 'Pages/hosobenhan_detail.html', context)
-from django.http import JsonResponse
-from .models import Booking
+
 def booking(request):
     selected_date = request.GET.get('appointment_date', date.today().isoformat())
     valid_times = get_valid_times_logic(selected_date)  # Lấy danh sách thời gian hợp lệ
@@ -187,18 +186,18 @@ def booking(request):
         form = BookingForm(request.POST, request.FILES)
         if form.is_valid():
             try:
-                appointment_time = form.cleaned_data['appointment_time']
+                time = form.cleaned_data['appointment_time']
                 dich_vu = form.cleaned_data['dich_vu']
-
                 # Kiểm tra nếu dịch vụ là 'dieu_tri' và có lịch 'kham' trong cùng thời gian
                 if dich_vu.type == 'dieu_tri':
-                    kham_count = Booking.objects.filter(
+                    # Kiểm tra xem có bất kỳ lịch 'kham' nào trong khung giờ này không
+                    existing_kham = Booking.objects.filter(
                         appointment_date=selected_date,
-                        appointment_time=appointment_time,
+                        appointment_time=time,
                         dich_vu__type='kham'
-                    ).count()
-                    if kham_count >= 3:
-                        messages.error(request, "Khung giờ này đã đủ lịch khám, vui lòng chọn giờ khác.")
+                    ).exists()
+                    if existing_kham:
+                        messages.error(request, "Khung giờ này đã có lịch khám, không thể đặt điều trị.")
                         return render(request, 'Pages/booking.html', {
                             'form': form,
                             'serv': Services.objects.filter(is_active=True),
@@ -217,8 +216,6 @@ def booking(request):
     else:
         form = BookingForm()
 
-   
-
     # Render template với form và các biến cần thiết
     return render(request, 'Pages/booking.html', {
         'form': form,
@@ -226,7 +223,6 @@ def booking(request):
         'valid_times': valid_times,
         'selected_date': selected_date,
     })
-
 # Hàm logic để lấy thời gian hợp lệ
 def get_valid_times_logic(selected_date):
     all_times = [
@@ -251,7 +247,7 @@ def get_valid_times_logic(selected_date):
             dich_vu__type='kham'
         ).count()
 
-        # Nếu thời gian hợp lệ, thêm vào danh sách
+        # Thời gian hợp lệ nếu không có 'dieu_tri' và số 'kham' < 3
         if not is_dieu_tri_booked and kham_count < 3:
             valid_times.append(time)
 
