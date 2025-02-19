@@ -89,52 +89,107 @@
                                 <th>Họ và tên</th>
                                 <th>Chức vụ</th>
                                 <th>Chi nhánh</th>
+                                <th>Số giấy phép nha khoa</th>
                                 <th>Số điện thoại</th>
                                 <th>Email</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for d in dentists %}
                             <tr>
-                                <td>NV001</td>
-                                <td>Nguyễn Văn A</td>
-                                <td>Bác sĩ</td>
-                                <td>Chi nhánh 1</td>
-                                <td>0901234567</td>
-                                <td>nguyenvana@clinic.com</td>
-                                <td><span class="badge bg-success">Đang làm việc</span></td>
+                                <td>{{ d.id }}</td>
+                                <td>{{ d.FullName }}</td>
+                                <td>{{ d.Specialization }}</td>
+                                <td>{{ d.Dental_branch }}</td>
+                                <td>{{ d.License_number }}</td>
+                                <td>{{ d.Phone_Number }}</td>
+                                <td>{{ d.Email }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editEmployeeModal{{ d.id }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'delete_dentist' d.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa nhân viên này không?');">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
+                            <div class="modal fade" id="editEmployeeModal{{ d.id }}" tabindex="-1" aria-labelledby="editEmployeeModalLabel{{ d.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Chỉnh sửa thông tin nhân viên</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="{% url 'edit_dentist' d.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{ d.id }}">
+                                            <div class="mb-3">
+                                                <label class="form-label">Họ và tên</label>
+                                                <input type="text" class="form-control" name="FullName" id="name2" value="{{ d.FullName }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Chuyên môn</label>
+                                                <select class="form-select" name="Specialization" id="Spec2" required>
+                                                    <option value="Bác sĩ" {% if d.Specialization == "Bác sĩ" %}selected{% endif %}>Bác sĩ</option>
+                                                    <option value="Y tá" {% if d.Specialization == "Y tá" %}selected{% endif %}>Y tá</option>
+                                                    <option value="Dược sĩ" {% if d.Specialization == "Dược sĩ" %}selected{% endif %}>Dược sĩ</option>
+                                                    <option value="Nhân viên hành chính" {% if d.Specialization == "Nhân viên hành chính" %}selected{% endif %}>Nhân viên hành chính</option>
+                                                </select>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Chi nhánh</label>
+                                                <select class="form-select" name="Dental_branch"  id="Dentalbranch2" required>
+                                                    <option value="Chi nhánh 1 - Bình Thạnh" {% if d.Dental_branch == "Chi nhánh 1 - Bình Thạnh" %}selected{% endif %}>Chi nhánh 1 - Bình Thạnh</option>
+                                                    <option value="Chi nhánh 2 - Quận 3" {% if d.Dental_branch == "Chi nhánh 2 - Quận 3" %}selected{% endif %}>Chi nhánh 2 - Quận 3</option>
+                                                    <option value="Chi nhánh 3 - Quận 10" {% if d.Dental_branch == "Chi nhánh 3 - Quận 10" %}selected{% endif %}>Chi nhánh 3 - Quận 10</option>
+                                                </select>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Số giấy phép</label>
+                                                <input type="text" class="form-control" name="License_number" id="Licensenumber2" value="{{ d.License_number }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Số điện thoại</label>
+                                                <input type="tel" class="form-control" name="Phone_Number" id="PhoneNumber2"value="{{ d.Phone_Number }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" name="Email" id="Email2" value="{{ d.Email }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Ngày sinh</label>
+                                                <input type="date" class="form-control" name="Birthday" id="Birthday2" value="{{ d.Birthday|date:'Y-m-d' }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Giới tính</label>
+                                                <select class="form-select" name="Gender" required>
+                                                    <option value="True" {% if d.Gender %}selected{% endif %}>Nam</option>
+                                                    <option value="False" {% if not d.Gender %}selected{% endif %}>Nữ</option>
+                                                </select>
+                                            </div>
+                        
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn btn-primary" id="Luu2">Lưu thay đổi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            {% empty %}
                             <tr>
-                                <td>NV002</td>
-                                <td>Trần Thị B</td>
-                                <td>Y tá</td>
-                                <td>Chi nhánh 2</td>
-                                <td>0907654321</td>
-                                <td>tranthib@clinic.com</td>
-                                <td><span class="badge bg-success">Đang làm việc</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
+                                <td colspan="8">Không có nhân viên nào</td>
                             </tr>
-                            <tr>
-                                <td>NV003</td>
-                                <td>Lê Văn C</td>
-                                <td>Dược sĩ</td>
-                                <td>Chi nhánh 3</td>
-                                <td>0909876543</td>
-                                <td>levanc@clinic.com</td>
-                                <td><span class="badge bg-warning">Nghỉ phép</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -157,18 +212,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm nhân viên mới</h5>
+                    <h5 class="modal-title">Thêm nhân viên mới </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST">
+                        {% csrf_token %}
                         <div class="mb-3">
                             <label class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="FullName" id="name1">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Chức vụ</label>
-                            <select class="form-select">
+                            <select class="form-select" name="Specialization" id="Spec1">
                                 <option>Bác sĩ</option>
                                 <option>Y tá</option>
                                 <option>Dược sĩ</option>
@@ -176,8 +232,12 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Số giấy phép hành nghề nha khoa</label>
+                            <input type="text" class="form-control" name="License_number" id="Licensenumber1" >
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Chi nhánh</label>
-                            <select class="form-select">
+                            <select class="form-select"  name="Dental_branch" id="Dentalbranch1" >
                                 <option>Chi nhánh 1 - Bình Thạnh</option>
                                 <option>Chi nhánh 2 - Quận 3</option>
                                 <option>Chi nhánh 3 - Quận 10</option>
@@ -185,17 +245,27 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control">
+                            <input type="tel" class="form-control" name="Phone_Number" id="PhoneNumber1">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control">
+                            <input type="email" class="form-control" name="Email" id="Email1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="defaultSelect" class="form-label">Ngày sinh</label>
+                            <input type="date" class="form-control" name="Birthday" id="Birthday1">
+                        </div>
+                        <select id="defaultSelect" class="form-select" name="Gender123" >
+                            <option value="">Chọn Giới tính</option>
+                            <option value="True">Nam</option>
+                            <option value="False">Nữ</option>
+                        </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary" id="Luu1">Lưu</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </div>

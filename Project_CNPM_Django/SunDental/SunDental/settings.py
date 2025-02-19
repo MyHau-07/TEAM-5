@@ -77,34 +77,47 @@ WSGI_APPLICATION = 'SunDental.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# settings.py
+#settings.py
 DATABASES = {
-     "default": {
-         "ENGINE": "mssql",
-         "NAME": "db11",
-         "USER": "sa",
-         "PASSWORD": "LeThanh@123",
-         "HOST": "localhost",
-         "PORT": "1433",
-         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
-         },
-     },
- }
-
-
-
-
+      "default": {
+          "ENGINE": "mssql",
+          "NAME": "db11",
+          "USER": "sa",
+          "PASSWORD": "LeThanh@123",
+          "HOST": "localhost",
+          "PORT": "1433",
+          "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+          },
+      },
+  }
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
+#         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'DjangoDB',
-#         'USER': 'myuser',
-#         'PASSWORD': 'Nhom5CNPM',
-#         'HOST':'db',
-#         'PORT':'5432',
+#         'USER': 'root',
+#         'PASSWORD': 'Anhhuy1711@',
+#         'HOST':'localhost',
+#         'PORT':'3306',
 #     }
 # }
+
+
+
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'Djangodb',
+#        'USER': 'myuser',
+#        'PASSWORD': 'khoivan@K2005',
+#        'HOST':'localhost',
+#        'PORT':'5432',
+#        'OPTIONS': {
+#            'options': '-c search_path=public',
+#        },
+#    }
+#}
 
 
 
@@ -159,3 +172,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Cấu hình múi giờ
+TIME_ZONE = 'Asia/Ho_Chi_Minh'  # Múi giờ Việt Nam
+USE_TZ = True  # Sử dụng timezone

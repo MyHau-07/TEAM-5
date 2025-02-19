@@ -3,6 +3,11 @@ from django.forms import ModelForm
 from E_Manage.models import CommentForm
 from E_Manage.models import CustomUser
 from E_Manage.models import Booking
+from E_Manage.models import DangKiLichNghi
+from E_Manage.models import Services
+from E_Manage.models import Dentist
+from E_Manage.models import lichhen, CaLamViec, LichLamViec
+#from E_Manage.models import CommentFormDentist
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -44,7 +49,22 @@ class Comment_Form (forms.ModelForm):
                 'rows': 4
             })
         }
-        
+
+# class Comment_Form_Dentist (forms.ModelForm):
+#     class Meta:
+#         model = CommentFormDentist
+#         fields = '__all__'
+#         widgets = {
+#             'message': forms.Textarea(attrs={
+#                 'class': 'form-control',
+#                 'id': 'basic-icon-default-message',
+#                 'placeholder': 'Nhập nội dung cần tư vấn',
+#                 'aria-label': 'Nhập nội dung cần tư vấn',
+#                 'aria-describedby': 'basic-icon-default-message2',
+#                 'rows': 4
+#             })
+#         }
+
 
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(
@@ -88,8 +108,17 @@ class SignUpForm(forms.ModelForm):
         password = cleaned_data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
 
+        # Kiểm tra nếu mật khẩu không được nhập
+        if not password:
+            raise forms.ValidationError("Mật khẩu là bắt buộc.")
+
+        # Kiểm tra nếu mật khẩu xác nhận không được nhập
+        if not password_confirm:
+            raise forms.ValidationError("Mật khẩu xác nhận là bắt buộc.")
+
+        # Kiểm tra nếu mật khẩu và mật khẩu xác nhận không khớp
         if password and password_confirm and password != password_confirm:
-            raise forms.ValidationError("Mật khẩu không khớp")
+            raise forms.ValidationError("Mật khẩu không khớp.")
 
         return cleaned_data
     
@@ -114,53 +143,195 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = '__all__'
         widgets = {
-            'location': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'service': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'appointment-date': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
-            'appointment-time': forms.Select(attrs={
-                'class': 'bookly-form-group',
-                
-            }),
             'fullname': forms.TextInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'Nguyen Van A',
-                'aria-label': 'John Doe',
-                'aria-describedby': 'basic-icon-default-fullname2'
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'nguyenvana@gmail.com',
-                'aria-label': 'nguyenvana@gmail.com',
-                'aria-describedby': 'basic-icon-default-email2'
+                'placeholder': 'Nhập họ tên',
+                'class': 'form-control'
             }),
             'phone': forms.TextInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': '+84 386699723',
-                'aria-label': '+84 386699723',
-                'aria-describedby': 'basic-icon-default-phone2'
+                'placeholder': 'Nhập số điện thoại',
+                'class': 'form-control'
             }),
-            'illness': forms.Textarea(attrs={
-                'class': 'bookly-form-group',
-                
-                'placeholder': 'Nhập nội dung cần tư vấn',
-                'aria-label': 'Nhập nội dung cần tư vấn',
-                'aria-describedby': 'basic-icon-default-message2',
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Nhập địa chỉ email',
+                'class': 'form-control'
+            }),
+            'location': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'service': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'message': forms.TextInput(attrs={
+                'placeholder': 'Nhập tin nhắn',
+                'class': 'form-control',
                 'rows': 4
             }),
-            'photo': forms.ClearableFileInput(attrs={
-                'class': 'bookly-form-group',
-                'placeholder': 'Nhập nội dung cần tư vấn',
-                'aria-label': 'Nhập nội dung cần tư vấn',
-                'aria-describedby': 'basic-icon-default-message2',
-                'rows': 4
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'appointment_date': forms.DateInput(attrs={
+                'type': 'date',  # Use HTML5 date input
+                'class': 'form-control'
+            }),
+            'appointment_time': forms.TextInput(attrs={
+                'class': 'form-control'
             })
         }
+    def save(self, commit=True, user=None):
+        booking = super().save(commit=False)
+        if user:
+            booking.patient = user  # Gán patient là người dùng hiện tại
+        if commit:
+            booking.save()
+        return booking
+
+
+class DangKiLichNghiForm(forms.ModelForm):
+    class Meta:
+        model = DangKiLichNghi
+        fields = ['full_name','ngay_nghi', 'ca_nghi', 'ly_do_nghi', 'mo_ta']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập họ và tên'}),
+            'ngay_nghi': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'ca_nghi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập ca nghỉ'}),
+            'ly_do_nghi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nhập lý do nghỉ'}),
+            'mo_ta': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô tả chi tiết', 'rows': 3}),
+        }
+
+class ThemDichVuForm(forms.ModelForm):
+    class Meta:
+        model=Services
+        fields=['name','price', 'info', 'image', 'time']
+        widgets = {
+            'name': forms.TextInput(),
+            'price': forms.TextInput(),
+            'info': forms.Textarea(),
+            'image': forms.FileInput(),
+            'time': forms.TextInput(),
+        }
+
+class SuaDichVuForm(forms.ModelForm):
+    class Meta:
+        model=Services
+        fields=['name','price', 'info', 'image', 'time']
+        widgets = {
+            'name': forms.TextInput(),
+            'price': forms.TextInput(),
+            'info': forms.Textarea(),
+            'image': forms.FileInput(),
+            'time': forms.TextInput(),
+        }
+
+class DentistForm(forms.ModelForm):
+    class Meta:
+        model = Dentist
+        fields = '__all__'
+        widgets = {
+            'FullName': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nguyen Van A'
+            }),
+            'Specialization': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'placeholder': 'Chuyên môn nha khoa'
+            }),
+            'License_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Số giấy phép hành nghề'
+            }),
+            'Dental_branch': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Chi nhánh nha khoa'
+            }),
+            'Phone_Number': forms.TextInput(attrs={
+                'class': 'form-control phone-mask',
+                'placeholder': '+84 386699723'
+            }),
+            'Email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'nguyenvana@gmail.com'
+            }),
+            'Birthday': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
+            'Gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
+                'class': 'form-control'
+            })
+        }     
+
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        widgets = {
+            'fullname': forms.TextInput(attrs={
+                'placeholder': 'Nhập họ tên',
+                'class': 'form-control'
+            }),
+            'phone': forms.TextInput(attrs={
+                'placeholder': 'Nhập số điện thoại',
+                'class': 'form-control'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Nhập địa chỉ email',
+                'class': 'form-control'
+            }),
+            'location': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'dich_vu': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'message': forms.Textarea(attrs={
+                'placeholder': 'Nhập tin nhắn',
+                'class': 'form-control',
+                'rows': 4
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'appointment_date': forms.DateInput(attrs={
+                'type': 'date',  # Use HTML5 date input
+                'class': 'form-control'
+            }),
+            'appointment_time': forms.Select(attrs={
+                'class': 'form-control'
+            })
+        }
+
+    def __init__(self, *args, **kwargs):
+        valid_times = kwargs.pop('valid_times', None)
+        super(BookingForm, self).__init__(*args, **kwargs)
+        if valid_times:
+            self.fields['appointment_time'].choices = [(time, time) for time in valid_times]
+
+
+#lich lam đentist
+class LichLamViecForm(forms.ModelForm):
+    ca_lam = forms.ModelMultipleChoiceField(
+        queryset=CaLamViec.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        label="Chọn ca làm"
+    )
+
+    class Meta:
+        model = LichLamViec
+        fields = ['ngay', 'thu', 'ca_lam', 'trang_thai']
+        widgets = {
+            'ngay': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        ngay = cleaned_data.get("ngay")
+        thu = cleaned_data.get("thu")
+
+        if ngay and thu is not None:
+            # Kiểm tra ngày có khớp với thứ hay không
+            if ngay.weekday() != thu:
+                raise forms.ValidationError("⚠ Ngày và thứ trong tuần không khớp! Vui lòng kiểm tra lại.")
+        
+        return cleaned_data

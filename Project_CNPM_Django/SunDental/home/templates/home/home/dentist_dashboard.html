@@ -1,6 +1,4 @@
-{% extends "home/master.html" %}
-{% load static %}
-{% block navbar %} 
+{% extends "home/master.html" %} {% load static %} {% block navbar %}
 <nav
   class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
   id="layout-navbar"
@@ -14,19 +12,18 @@
   </div>
 
   <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
     <ul class="navbar-nav flex-row align-items-center ms-auto">
       <!-- Place this tag where you want the button to render. -->
       {% if user.is_authenticated %}
-        <!-- Nếu người dùng đã đăng nhập, không hiển thị nút Đăng nhập và Đăng ký -->
-    {% else %}
-        <li class="nav-item lh-1 me-4" id="login-button">
-            <a class="btn btn-primary" href="{% url 'login_view' %}">Đăng nhập</a>
-        </li>
-        <li class="nav-item lh-1 me-4" id="register-button">
-            <a class="btn btn-secondary" href="{% url 'register' %}">Đăng ký</a>
-        </li>
-    {% endif %}
+      <!-- Nếu người dùng đã đăng nhập, không hiển thị nút Đăng nhập và Đăng ký -->
+      {% else %}
+      <li class="nav-item lh-1 me-4" id="login-button">
+        <a class="btn btn-primary" href="{% url 'login_view' %}">Đăng nhập</a>
+      </li>
+      <li class="nav-item lh-1 me-4" id="register-button">
+        <a class="btn btn-secondary" href="{% url 'register' %}">Đăng ký</a>
+      </li>
+      {% endif %}
 
       <!-- User -->
       <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -88,168 +85,296 @@
   </div>
 </nav>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      // Kiểm tra xem người dùng đã đăng nhập hay chưa
-      var isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
+  document.addEventListener("DOMContentLoaded", function () {
+    // Kiểm tra xem người dùng đã đăng nhập hay chưa
+    var isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
 
-      if (isAuthenticated === "true") {
-          // Ẩn các nút Đăng nhập và Đăng ký
-          var loginButton = document.getElementById("login-button");
-          var registerButton = document.getElementById("register-button");
+    if (isAuthenticated === "true") {
+      // Ẩn các nút Đăng nhập và Đăng ký
+      var loginButton = document.getElementById("login-button");
+      var registerButton = document.getElementById("register-button");
 
-          if (loginButton) {
-              loginButton.style.display = "none";
-          }
-          if (registerButton) {
-              registerButton.style.display = "none";
-          }
+      if (loginButton) {
+        loginButton.style.display = "none";
       }
+      if (registerButton) {
+        registerButton.style.display = "none";
+      }
+    }
   });
 </script>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <style>
-.bg-custom{
-    background-color:rgb(90, 215, 215);
-}
-
+  .bg-custom {
+    background-color: rgb(90, 215, 215);
+  }
 </style>
 <body>
   <div class="container-fluid">
     <div class="row" id="content">
-        <div class="col-md-7">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-custom">
-                    <h5 class="mb-0 col-6 " lang="db-thongtinbacsi">Thông tin bác sĩ</h5>
-                </div>
-                <div class="card-body mt-3">
-                    <div class="row">
-                        <div class="col-sm-3 text-center">
-                            <img src="{{ user.image.url }}" class="img-fluid rounded-circle" alt="Avatar">
-                            <a href="{% url 'user'%}" class="d-block mt-2 " lang="db-chitiet-button">Xem chi tiết</a>
-                        </div>
-                        <div class="col-sm-9">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3 fs-5"><strong>ID:</strong>  {{ user.id }}</div>
-                                    <div class="col-md-6 mb-3 fs-5"><strong>Chi nhánh:</strong> {{ user.chi_nhanh }}</div>
-                                    <div class="col-md-6 mb-3 fs-5"><strong>Họ tên:</strong> {{ user.full_name }}</div>
-                                    <div class="col-md-6 mb-3 fs-5"><strong>Giới tính:</strong> {{ user.get_gender_display }}</div>
-                                    <div class="col-md-6 mb-3 fs-5"><strong>Ngày sinh:</strong> {{ user.birth_date }}</div>
-                                    <div class="col-md-6 mb-3 fs-5"><strong>Địa chỉ:</strong> {{ user.address }}</div>
-                                    <div class="col-12 mb-3 fs-5"><strong>Chuyên ngành:</strong> {{ user.chuyen_nganh }}</div>
-                                </div>
-                            </form>
-                        </div>                       
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <div class="alert alert-warning d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0" lang="db-nhacnho">Nhắc nhở mới, chưa xem</h6>
-                            <p class="mb-0">1000000</p>
-                        </div>
-                        <i class="fa fa-bell text-warning"></i>
-                    </div>
-                    <a href="{% url 'lichhenbs' %}" class="btn text-primary p-0 " lang="db-chitiet-button">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row text-center mt-4  ">
-        <div class="col-4">
-            <a href="/lichlam" class="d-block p-3 border rounded bg-custom text-dark">
-                <i class="fa fa-calendar-alt fa-2x text-dark"></i>
-                <p class="mb-0" lang="menusinhvien-25-vt">Lịch làm việc</p>
-            </a>
-        </div>
-        <div class="col-4">
-            <a href="#" id="showRegisterForm" class="d-block p-3 border rounded bg-custom text-dark">
-                <i class="fa fa-edit fa-2x text-dark"></i>
-                <p class="mb-0" lang="menusinhvien-15-vt">Đăng ký lịch nghỉ</p>
-            </a>
-        </div>
-
-        <div class="col-4">
-            <a href="/lichlam" class="d-block p-3 border rounded bg-custom text-dark">
-                <i class="fa fa-search-dollar fa-2x text-dark"></i>
-                <p class="mb-0" lang="menusinhvien-20-vt">Tra cứu công</p>
-            </a>
-        </div>
-    </div>
-    <div id="registerLeaveForm" class="container-xxl container-p-y" style="display: none;">
-      <div class="row justify-content-center">
-          <div class="col-md-6">
-              <div class="card mx-auto shadow-lg p-4 custom-bg" style="max-width: 500px;"> 
-                  <div class="card-body text-center">
-                      <h5 class="card-title mb-3 animated-title">ĐĂNG KÍ LỊCH NGHỈ</h5>
-                      <p class="card-text text-muted">Vui lòng điền đầy đủ thông tin bên dưới</p>
-                  </div>
-                  <form>
-                      <div class="row g-3">
-                          <div class="col-12">
-                              <label for="inputPatientName" class="form-label">Họ và Tên</label>
-                              <input type="text" class="form-control" id="inputPatientName" placeholder="Nguyễn Văn A">
-                          </div>
-                          <div class="col-12">
-                              <label for="inputID" class="form-label">MÃ ID</label>
-                              <input type="number" class="form-control" id="inputID" placeholder="MDXX">
-                          </div>
-                          <div class="col-12">
-                              <label for="inputDate" class="form-label">Ngày Nghỉ</label>
-                              <input type="date" class="form-control" id="inputDate">
-                          </div>
-                          <div class="col-12">
-                              <label for="inputDoctorName" class="form-label">Ca Nghỉ</label>
-                              <select class="form-select" id="inputDoctorName">
-                                  <option selected>Chọn...</option>
-                                  <option value="1">Ca sáng</option>
-                                  <option value="2">Ca chiều</option>
-                                  <option value="3">Cả ngày</option>
-                              </select>
-                          </div>
-                          <div class="col-12">
-                              <label for="inputDepartmentName" class="form-label">Lý Do Nghỉ</label>
-                              <select class="form-select" id="inputDepartmentName">
-                                  <option selected>Chọn...</option>
-                                  <option value="1">Lý do sức khỏe</option>
-                                  <option value="2">Lý do cá nhân & gia đình</option>
-                                  <option value="3">Lý do công việc & chuyên môn</option>
-                                  <option value="4">Lý do pháp lý & hành chính</option>
-                                  <option value="5">Lý do khác</option>
-                              </select>
-                          </div>
-                          <div class="col-12">
-                              <label for="inputSymptoms" class="form-label">Mô tả cụ thể - Lý do khác</label>
-                              <input type="text" class="form-control" id="inputSymptoms" placeholder="">
-                          </div>
-                      </div>
-                      <div class="text-center mt-4">
-                          <button type="submit" class="btn px-4 bg-custom text dark">Đăng kí</button>
-                      </div>
-                  </form>
+      <div class="col-md-7">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-custom">
+            <h5 class="mb-0 col-6" lang="db-thongtinbacsi">Thông tin bác sĩ</h5>
+          </div>
+          <div class="card-body mt-3">
+            <div class="row">
+              <div class="col-sm-3 text-center">
+                <img
+                  src="{{ user.image.url }}"
+                  class="img-fluid rounded-circle"
+                  alt="Avatar"
+                />
+                <a
+                  href="{% url 'user'%}"
+                  class="d-block mt-2"
+                  lang="db-chitiet-button"
+                  >Xem chi tiết</a
+                >
               </div>
+              <div class="col-sm-9">
+                <form>
+                  <div class="row">
+                    <div class="col-md-6 mb-3 fs-5">
+                      <strong>ID:</strong> {{ user.id }}
+                    </div>
+                    <div class="col-md-6 mb-3 fs-5">
+                      <strong>Chi nhánh:</strong> {{ user.chi_nhanh }}
+                    </div>
+                    <div class="col-md-6 mb-3 fs-5">
+                      <strong>Họ tên:</strong> {{ user.full_name }}
+                    </div>
+                    <div class="col-md-6 mb-3 fs-5">
+                      <strong>Giới tính:</strong> {{ user.get_gender_display }}
+                    </div>
+                    <div class="col-md-6 mb-3 fs-5">
+                      <strong>Ngày sinh:</strong> {{ user.birth_date }}
+                    </div>
+                    <div class="col-md-6 mb-3 fs-5">
+                      <strong>Địa chỉ:</strong> {{ user.address }}
+                    </div>
+                    <div class="col-12 mb-3 fs-5">
+                      <strong>Chuyên ngành:</strong> {{ user.chuyen_nganh }}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+          <div class="card shadow-sm mb-4">
+            <div class="card-body">
+            <div class="alert alert-warning d-flex align-items-center">
+              <div class="flex-grow-1">
+                <h6 class="mb-0" lang="db-nhacnho">Nhắc nhở mới, chưa xem</h6>
+                <p class="mb-0">0</p>
+              </div>
+              <i class="fa fa-bell text-warning"></i>
+            </div>
+          
+            <a
+              href="{% url 'lichhenbs' %}"
+              class="btn text-primary p-0"
+              lang="db-chitiet-button"
+              >Xem chi tiết</a
+            >
+          </div>
+          </div>
+          <div class="card shadow-sm mb-4">
+          <div class="card-body">
+                <h6 class=" h5 mb-0 text-center mb-4" >Hồ Sơ Bệnh Nhân</h6>
+              <a
+              href="{% url 'quanlithongtinbenhnhan' %}"
+              class="btn text-primary p-0"  
+              >Xem chi tiết</a
+            >
+          </div>
           </div>
       </div>
-  </div>
+    </div>
+    <div class="row text-center mt-4">
+      <div class="col-4">
+        <a
+          href="{% url 'lichlam' %}"
+          class="d-block p-3 border rounded bg-custom text-dark"
+        >
+          <i class="fa fa-calendar-alt fa-2x text-dark"></i>
+          <p class="mb-0" lang="menusinhvien-25-vt">Lịch làm việc</p>
+        </a>
+      </div>
+      <div class="col-4">
+        <a
+          href="#"
+          id="showRegisterForm"
+          class="d-block p-3 border rounded bg-custom text-dark"
+        >
+          <i class="fa fa-edit fa-2x text-dark"></i>
+          <p class="mb-0" lang="menusinhvien-15-vt">Đăng ký lịch nghỉ</p>
+        </a>
+      </div>
+
+      <div class="col-4">
+        <a
+          href="/lichlam"
+          class="d-block p-3 border rounded bg-custom text-dark"
+        >
+          <i class="fa fa-search-dollar fa-2x text-dark"></i>
+          <p class="mb-0" lang="menusinhvien-20-vt">Tra cứu công</p>
+        </a>
+      </div>
+    </div>
+    <div
+      id="registerLeaveForm"
+      class="container-xxl container-p-y"
+      style="display: none"
+    >
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div
+            class="card mx-auto shadow-lg p-4 custom-bg"
+            style="max-width: 500px"
+          >
+            <div class="card-body text-center">
+              <h5 class="card-title mb-3 animated-title">ĐĂNG KÍ LỊCH NGHỈ</h5>
+              <p class="card-text text-muted">
+                Vui lòng điền đầy đủ thông tin bên dưới
+              </p>
+            </div>
+            <form action="{% url 'submit_dklichnghi' %}" method="POST">
+              {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="inputPatientName" class="form-label"
+                    >Họ và Tên</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputPatientName"
+                    name="full_name"
+                    placeholder="Nguyễn Văn A"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="inputDate" class="form-label">Ngày Nghỉ</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="inputDate"
+                    name="ngay_nghi"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="inputDoctorName" class="form-label"
+                    >Ca Nghỉ</label
+                  >
+                  <select
+                    class="form-select"
+                    id="inputDoctorName"
+                    name="ca_nghi"
+                    required
+                  >
+                    <option selected>Chọn...</option>
+                    <option value="Ca sáng">Ca sáng</option>
+                    <option value="Ca chiều">Ca chiều</option>
+                    <option value="Cả ngày">Cả ngày</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label for="inputDepartmentName" class="form-label"
+                    >Lý Do Nghỉ</label
+                  >
+                  <select
+                    class="form-select"
+                    id="inputDepartmentName"
+                    name="ly_do_nghi"
+                    required
+                  >
+                    <option selected>Chọn...</option>
+                    <option value="Lý do sức khỏe">Lý do sức khỏe</option>
+                    <option value="Lý do cá nhân & gia đình">
+                      Lý do cá nhân & gia đình
+                    </option>
+                    <option value="Lý do công việc & chuyên môn">
+                      Lý do công việc & chuyên môn
+                    </option>
+                    <option value="Lý do pháp lý & hành chính">
+                      Lý do pháp lý & hành chính
+                    </option>
+                    <option value="Lý do khác">Lý do khác</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label for="inputSymptoms" class="form-label"
+                    >Mô tả cụ thể - Lý do khác</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputSymptoms"
+                    name="mo_ta"
+                    placeholder=""
+                  />
+                </div>
+              </div>
+              <div class="text-center mt-4">
+                <button type="submit" id="dkbtn" class="btn px-4 bg-custom text dark">
+                  Đăng kí
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
-    document.getElementById("showRegisterForm").addEventListener("click", function(event) {
-      event.preventDefault(); // Ngăn chặn chuyển trang
-      let form = document.getElementById("registerLeaveForm");
-      if (form.style.display === "none") {
+    document
+      .getElementById("showRegisterForm")
+      .addEventListener("click", function (event) {
+        event.preventDefault(); // Ngăn chặn chuyển trang
+        let form = document.getElementById("registerLeaveForm");
+        if (form.style.display === "none") {
           form.style.display = "block";
-      } else {
+        } else {
           form.style.display = "none";
-      }
-  });
+        }
+      });
   </script>
-  
+  <!-- Import SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Chạy khi trang load
+    document.addEventListener("DOMContentLoaded", function() {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.has("success")) {
+            Swal.fire({
+                icon: "success",
+                title: "Thành công!",
+                text: "Đăng ký lịch nghỉ thành công!",
+                confirmButtonColor: "#3085d6",
+            }).then(() => {
+                window.location.href = window.location.pathname; // Xóa tham số URL
+            });
+        } else if (params.has("error")) {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi!",
+                text: "Có lỗi xảy ra, vui lòng kiểm tra lại!",
+                confirmButtonColor: "#d33",
+            }).then(() => {
+                window.location.href = window.location.pathname; // Xóa tham số URL
+            });
+        }
+    });
+</script>
+
 </body>
 {% endblock %}
-
