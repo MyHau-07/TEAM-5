@@ -7,6 +7,7 @@ from E_Manage.models import Booking
 from E_Manage.models import DangKiLichNghi
 from E_Manage.models import GioHang
 from E_Manage.models import Dentist
+from E_Manage.models import CaLamViec, LichLamViec
 from django.urls import reverse
 from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe  # Thêm dòng này
@@ -108,3 +109,21 @@ class DentistAdmin(admin.ModelAdmin):
     ordering = ('FullName',)
 
 admin.site.register(Dentist, DentistAdmin)
+
+
+#lịch làm
+@admin.register(CaLamViec)
+class CaLamViecAdmin(admin.ModelAdmin):
+    list_display = ['ten_ca']
+    search_fields = ['ten_ca']
+
+@admin.register(LichLamViec)
+class LichLamViecAdmin(admin.ModelAdmin):
+    list_display = ('bac_si', 'ngay', 'thu', 'get_ca_lam', 'trang_thai', 'ghi_chu')
+    list_filter = ('thu', 'trang_thai', 'ca_lam')
+    search_fields = ('bac_si__username', 'ghi_chu')
+    ordering = ['thu', 'ngay']
+
+    def get_ca_lam(self, obj):
+        return ", ".join([ca.get_ten_ca_display() for ca in obj.ca_lam.all()])
+    get_ca_lam.short_description = "Ca làm việc"

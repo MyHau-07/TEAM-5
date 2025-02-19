@@ -9,6 +9,7 @@ from .models import Services
 from .models import HoaDon
 from .models import Dentist
 from .models import Booking
+from .models import LichLamViec
 from django.views.decorators.csrf import csrf_exempt
 from home.forms import DentistForm
 from home.forms import DangKiLichNghiForm, ThemDichVuForm, SuaDichVuForm
@@ -20,6 +21,7 @@ from django.db.models import Q
 from .models import MedicalRecord
 from django.utils import timezone
 from datetime import date
+from datetime import datetime, timedelta
 from pytz import timezone as pytz_timezone
 
 @login_required
@@ -277,8 +279,6 @@ def chamcong (request):
 def nghiphep (request):
     return render(request, 'Users/nghiphep.html')
 
-def lichlam (request):
-    return render(request, 'Users/lichlam.html')
 
 @login_required
 def lichhen(request):
@@ -324,10 +324,11 @@ def submit_dklichnghi(request):
     if request.method == 'POST':
         form = DangKiLichNghiForm(request.POST)
         if form.is_valid():
-            form.save()  # Lưu dữ liệu form vào cơ sở dữ liệu
-            return redirect('dentist')  # Chuyển hướng đến trang thành công hoặc view khác
+            form.save()  
+            return redirect('/dentist_dashboard?success=1') 
     else:
         form = DangKiLichNghiForm()
+        return redirect('/dentist_dashboard?error=1')
     
     return render(request, 'home/home/dentist_dashboard.html', {'form': form})
 
@@ -441,3 +442,45 @@ def edit_dentist(request, dentist_id):
         return redirect('quanlinhanvien')  # Quay về trang danh sách nhân viên
 
     return render(request, 'quanlinhanvien.html', {'dentist': dentist})
+
+
+#lichlam
+@login_required
+def lichlam(request):
+    try:
+        date_param = request.GET.get("date")
+
+        # Xử lý ngày dựa trên tham số hoặc mặc định là hôm nay
+        if date_param:
+            try:
+                today = datetime.strptime(date_param, "%Y-%m-%d")
+            except ValueError:
+                today = datetime.now()
+        else:
+            today = datetime.now()
+
+        # Xác định đầu và cuối tuần
+        start_of_week = today - timedelta(days=today.weekday())  # Thứ Hai đầu tuần
+        end_of_week = start_of_week + timedelta(days=6)  # Chủ Nhật cuối tuần
+
+        # Lấy danh sách lịch làm việc trong tuần, sắp xếp theo thứ tự từ Thứ Hai → Chủ Nhật
+        lich_lam_viec = LichLamViec.objects.filter(
+            ngay__range=[start_of_week, end_of_week]
+        ).prefetch_related("ca_lam", "bac_si").order_by("thu", "ngay")
+
+        # Danh sách ngày trong tuần
+        week_days = [start_of_week + timedelta(days=i) for i in range(7)]
+
+        context = {
+            "today": today,
+            "week_days": week_days,
+            "lich_lam_viec": lich_lam_viec,
+            "prev_week": (start_of_week - timedelta(days=7)).strftime("%Y-%m-%d"),
+            "next_week": (end_of_week + timedelta(days=7)).strftime("%Y-%m-%d"),
+        }
+
+        return render(request, "Users/lichlam.html", context)
+
+    except Exception as e:
+        messages.error(request, f"❌ Đã xảy ra lỗi: {e}")
+        return redirect("lichlam")

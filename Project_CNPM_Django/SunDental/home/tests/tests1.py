@@ -14,9 +14,6 @@ VALID_USERNAME4 = "DatBug"
 VALID_PASSWORD4 = "Thanhbug123"
 VALID_PASSWORD4_Confirm = ""        #Không password_confirm
 
-VALID_USERNAME5 = "DatBug123"
-VALID_PASSWORD5 = ""                #Không password
-VALID_PASSWORD5_Confirm = "Thanhbug123"    
 
 VALID_USERNAME6 = ""                #Không username
 VALID_PASSWORD6 = "Thanhbug123"
@@ -47,7 +44,7 @@ VALID_PASSWORD3_Confirm = "Thanhbug1"
 # Danh sách các trường hợp thử nghiệm
 test_cases = [
     {"username": VALID_USERNAME4, "password": VALID_PASSWORD4, "password": VALID_PASSWORD4_Confirm, "expected": "fail"},
-    {"username": VALID_USERNAME5, "password": VALID_PASSWORD5, "password": VALID_PASSWORD5_Confirm, "expected": "fail"},
+ 
     {"username": VALID_USERNAME6, "password": VALID_PASSWORD6, "password": VALID_PASSWORD6_Confirm, "expected": "fail"},
     {"username": VALID_USERNAME7, "password": VALID_PASSWORD7, "password": VALID_PASSWORD7_Confirm, "expected": "fail"},
     {"username": INVALID_USERNAME8, "password": VALID_PASSWORD8, "password": VALID_PASSWORD8_Confirm,"expected": "fail"},

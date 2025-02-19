@@ -198,7 +198,7 @@
     <div class="row text-center mt-4">
       <div class="col-4">
         <a
-          href="/lichlam"
+          href="{% url 'lichlam' %}"
           class="d-block p-3 border rounded bg-custom text-dark"
         >
           <i class="fa fa-calendar-alt fa-2x text-dark"></i>
@@ -323,7 +323,7 @@
                 </div>
               </div>
               <div class="text-center mt-4">
-                <button type="submit" class="btn px-4 bg-custom text dark">
+                <button type="submit" id="dkbtn" class="btn px-4 bg-custom text dark">
                   Đăng kí
                 </button>
               </div>
@@ -346,5 +346,35 @@
         }
       });
   </script>
+  <!-- Import SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Chạy khi trang load
+    document.addEventListener("DOMContentLoaded", function() {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.has("success")) {
+            Swal.fire({
+                icon: "success",
+                title: "Thành công!",
+                text: "Đăng ký lịch nghỉ thành công!",
+                confirmButtonColor: "#3085d6",
+            }).then(() => {
+                window.location.href = window.location.pathname; // Xóa tham số URL
+            });
+        } else if (params.has("error")) {
+            Swal.fire({
+                icon: "error",
+                title: "Lỗi!",
+                text: "Có lỗi xảy ra, vui lòng kiểm tra lại!",
+                confirmButtonColor: "#d33",
+            }).then(() => {
+                window.location.href = window.location.pathname; // Xóa tham số URL
+            });
+        }
+    });
+</script>
+
 </body>
 {% endblock %}

@@ -71,7 +71,7 @@ def login_test(username, password):
 def access_test():
     """Kiểm tra quyền truy cập vào các trang quan trọng sau khi đăng nhập."""
     pages = {
-        "Lịch làm": "http://127.0.0.1:8000/lichlam",
+        "Lịch làm": "http://127.0.0.1:8000/lichlam/",
         "Sự kiện": "http://127.0.0.1:8000/sukien",
         "Kiến thức": "http://127.0.0.1:8000/kienthuc",
         "Liên hệ": "http://127.0.0.1:8000/contact/"

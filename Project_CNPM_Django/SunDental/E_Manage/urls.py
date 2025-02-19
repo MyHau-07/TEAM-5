@@ -12,7 +12,7 @@ urlpatterns = [
     path('dichvu', views.dichvu, name = "dichvu"),
     path('chamcong', views.chamcong, name = "chamcong"),
     path('nghiphep', views.nghiphep, name = "nghiphep"),
-    path('lichlam', views.lichlam, name = "lichlam"),
+    path('lichlam/', views.lichlam, name = "lichlam"),
     path('lichhen', views.lichhen, name = "lichhen"),
     path('lichsu', views.lichsu, name = "lichsu"),
     path('lichhenbs', views.appointment, name = "lichhenbs"),
@@ -26,7 +26,7 @@ urlpatterns = [
     path('hosobenhan/<int:record_id>/', views.hosobenhan_detail, name='hosobenhan_detail'),
 
     path('GioHang', views.Gio_Hang, name = "GioHang"),
-    path('them/<int:dich_vu_id>/', views.them_vao_gio_hang, name='them_vao_gio_hang'),
+    path('them_vao_gio_hang/<int:dich_vu_id>/', views.them_vao_gio_hang, name='them_vao_gio_hang'),
     path('xoa_khoi_gio_hang/<int:item_id>/', views.xoa_khoi_gio_hang, name='xoa_khoi_gio_hang'),
     # path('sua/<int:gio_hang_id>/', views.sua_so_luong, name='sua_so_luong'),
     path('sua_so_luong/<int:gio_hang_id>/', views.sua_so_luong, name='sua_so_luong'),

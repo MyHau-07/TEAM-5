@@ -126,12 +126,12 @@
                                             <input type="hidden" name="id" value="{{ d.id }}">
                                             <div class="mb-3">
                                                 <label class="form-label">Họ và tên</label>
-                                                <input type="text" class="form-control" name="FullName" value="{{ d.FullName }}" required>
+                                                <input type="text" class="form-control" name="FullName" id="name2" value="{{ d.FullName }}" required>
                                             </div>
                         
                                             <div class="mb-3">
                                                 <label class="form-label">Chuyên môn</label>
-                                                <select class="form-select" name="Specialization" required>
+                                                <select class="form-select" name="Specialization" id="Spec2" required>
                                                     <option value="Bác sĩ" {% if d.Specialization == "Bác sĩ" %}selected{% endif %}>Bác sĩ</option>
                                                     <option value="Y tá" {% if d.Specialization == "Y tá" %}selected{% endif %}>Y tá</option>
                                                     <option value="Dược sĩ" {% if d.Specialization == "Dược sĩ" %}selected{% endif %}>Dược sĩ</option>
@@ -141,7 +141,7 @@
                         
                                             <div class="mb-3">
                                                 <label class="form-label">Chi nhánh</label>
-                                                <select class="form-select" name="Dental_branch" required>
+                                                <select class="form-select" name="Dental_branch"  id="Dentalbranch2" required>
                                                     <option value="Chi nhánh 1 - Bình Thạnh" {% if d.Dental_branch == "Chi nhánh 1 - Bình Thạnh" %}selected{% endif %}>Chi nhánh 1 - Bình Thạnh</option>
                                                     <option value="Chi nhánh 2 - Quận 3" {% if d.Dental_branch == "Chi nhánh 2 - Quận 3" %}selected{% endif %}>Chi nhánh 2 - Quận 3</option>
                                                     <option value="Chi nhánh 3 - Quận 10" {% if d.Dental_branch == "Chi nhánh 3 - Quận 10" %}selected{% endif %}>Chi nhánh 3 - Quận 10</option>
@@ -150,22 +150,22 @@
                         
                                             <div class="mb-3">
                                                 <label class="form-label">Số giấy phép</label>
-                                                <input type="text" class="form-control" name="License_number" value="{{ d.License_number }}" required>
+                                                <input type="text" class="form-control" name="License_number" id="Licensenumber2" value="{{ d.License_number }}" required>
                                             </div>
                         
                                             <div class="mb-3">
                                                 <label class="form-label">Số điện thoại</label>
-                                                <input type="tel" class="form-control" name="Phone_Number" value="{{ d.Phone_Number }}" required>
+                                                <input type="tel" class="form-control" name="Phone_Number" id="PhoneNumber2"value="{{ d.Phone_Number }}" required>
                                             </div>
                         
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" name="Email" value="{{ d.Email }}" required>
+                                                <input type="email" class="form-control" name="Email" id="Email2" value="{{ d.Email }}" required>
                                             </div>
                         
                                             <div class="mb-3">
                                                 <label class="form-label">Ngày sinh</label>
-                                                <input type="date" class="form-control" name="Birthday" value="{{ d.Birthday|date:'Y-m-d' }}" required>
+                                                <input type="date" class="form-control" name="Birthday" id="Birthday2" value="{{ d.Birthday|date:'Y-m-d' }}" required>
                                             </div>
                         
                                             <div class="mb-3">
@@ -178,7 +178,7 @@
                         
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                                <button type="submit" class="btn btn-primary" id="Luu2">Lưu thay đổi</button>
                                             </div>
                                         </form>
                                     </div>
