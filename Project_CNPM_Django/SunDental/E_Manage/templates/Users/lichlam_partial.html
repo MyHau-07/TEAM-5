@@ -1,0 +1,35 @@
+<!-- Đây là file lichlam_partial.html chỉ chứa phần nội dung cần cập nhật thông qua Ajax -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center">Bác sĩ</th>
+            {% for day in week_days %}
+            <th class="text-center week-day" {% if day.date == today.date %}style="background-color: #e3f2fd;"{% endif %}>
+                {{ day|date:"l"|title }}<br>
+                <span class="day-date">{{ day|date:"d/m/Y" }}</span>
+            </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% regroup lich_lam_viec by bac_si as doctor_schedules %}
+        {% for doctor in doctor_schedules %}
+        <tr>
+            <td class="text-center fw-bold">{{ doctor.grouper.get_full_name }}</td>
+            {% for day in week_days %}
+            <td class="text-center p-2" {% if day.date == today.date %}style="background-color: #e3f2fd;"{% endif %}>
+                {% for lich in doctor.list %}
+                    {% if lich.ngay|date:"Y-m-d" == day|date:"Y-m-d" %}
+                        {% for ca in lich.ca_lam.all %}
+                        <div class="p-1 my-1 rounded {% if lich.trang_thai %}bg-success{% else %}bg-warning{% endif %} text-white">
+                            {{ ca.get_ten_ca_display }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
