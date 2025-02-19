@@ -58,26 +58,25 @@
                     <input class="form-control" type="file" id="formFile" name="photo" />
                 </div>
                 <div class="mb-4">
-                    <label for="appointment-date" class="form-label">Chọn ngày hẹn</label>
-                    <input type="date" id="appointment-date" class="form-control" name="appointment_date" required >
+                    <label for="id_appointment_date" class="form-label">Chọn ngày hẹn</label>
+                    <input type="date" id="id_appointment_date" name="appointment_date" class="form-control" value="{{ selected_date }}">
                 </div>
-
                 <div class="mb-4">
-                    <label for "appointment-time-select" class "form-label">Chọn giờ hẹn</label>
-                    <select id "appointment-time-select" class "form-select" name "appointment_time">
+                    <label for="appointment-time-select" class="form-label">Chọn giờ hẹn</label>
+                    <select id="appointment-time-select" class="form-select" name="appointment_time">
                         <option value="">Chọn giờ hẹn</option>
                         {% for time in valid_times %}
                             <option value="{{ time }}">{{ time }}</option>
                         {% endfor %}
                     </select>
+                    <div id="availability-message" style="color: red;"></div> <!-- Thông báo về tình trạng giờ hẹn -->
                 </div>
-
-            </div>
-            <div class "col-md-12 text-center mb-5">
-                <button id "complete-btn" type "submit"class "btn btn-primary btn-lg">
-                    Hoàn tất
-                </button>
-            </div>
+            
+                <div class="col-md-12 text-center mb-5">
+                    <button id="complete-btn" type="submit" class="btn btn-primary btn-lg">
+                        Hoàn tất
+                    </button>
+                </div>
             </form>
 
         </div> <!-- End of card body -->
@@ -86,7 +85,70 @@
 </div> <!-- End of container -->
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('appointment-date');
+        const timeInput = document.getElementById('appointment-time-select');
+        const timeSelectionDiv = document.getElementById('time-selection');
+        const messageDiv = document.getElementById('availability-message');
+    
+        dateInput.addEventListener('change', function() {
+            if (this.value) {
+                timeSelectionDiv.style.display = 'block';
+    
+                // Lấy loại dịch vụ đã chọn
+                const selectedServiceType = document.querySelector('input[name="service_type"]:checked').value;
+    
+                // Gọi get_valid_times với cả ngày và loại dịch vụ
+                fetch(`/get-valid-times?date=${this.value}&service_type=${selectedServiceType}`)
+                .then(response => response.json())
+                .then(data => {
+                    const timeSelect = document.getElementById('appointment-time-select');
+                    timeSelect.innerHTML = '<option value="">Chọn giờ hẹn</option>';
+    
+                    data.valid_times.forEach(time => {
+                        const option = document.createElement('option');
+                        option.value = time;
+                        option.textContent = time;
+                        timeSelect.appendChild(option);
+                    });
+    
+                    // Xóa thông báo cũ (nếu có)
+                    messageDiv.textContent = '';
+                });
+            } else {
+                timeSelectionDiv.style.display = 'none';
+            }
+        });
+    });
+    document.getElementById('id_appointment_date').addEventListener('change', function() {
+        const selectedDate = this.value; // Lấy giá trị ngày được chọn
 
+        // Gửi yêu cầu AJAX đến server
+        fetch(`/get_valid_times/?appointment_date=${selectedDate}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest' // Đánh dấu yêu cầu là AJAX
+            }
+        })
+        .then(response => response.json()) // Chuyển đổi phản hồi thành JSON
+        .then(data => {
+            const timeSelect = document.getElementById('id_appointment_time');
+            timeSelect.innerHTML = ''; // Xóa các option cũ
+
+            // Thêm các option mới từ dữ liệu trả về
+            data.valid_times.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.textContent = time;
+                timeSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Lỗi khi tải thời gian hợp lệ:', error);
+        });
+    });
+</script>
 {% if messages %}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -99,6 +161,7 @@
                 });
             {% endfor %}
         });
+
     </script>
 {% endif %}
 

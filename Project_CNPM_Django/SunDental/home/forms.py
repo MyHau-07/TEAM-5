@@ -132,10 +132,10 @@ class BookingForm(forms.ModelForm):
             'location': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
-            'service': forms.TextInput(attrs={
+            'dich_vu': forms.Select(attrs={
                 'class': 'form-control'
             }),
-            'message': forms.TextInput(attrs={
+            'message': forms.Textarea(attrs={
                 'placeholder': 'Nhập tin nhắn',
                 'class': 'form-control',
                 'rows': 4
@@ -147,12 +147,16 @@ class BookingForm(forms.ModelForm):
                 'type': 'date',  # Use HTML5 date input
                 'class': 'form-control'
             }),
-            'appointment_time': forms.TextInput(attrs={
+            'appointment_time': forms.Select(attrs={
                 'class': 'form-control'
             })
         }
 
-
+    def __init__(self, *args, **kwargs):
+        valid_times = kwargs.pop('valid_times', None)
+        super(BookingForm, self).__init__(*args, **kwargs)
+        if valid_times:
+            self.fields['appointment_time'].choices = [(time, time) for time in valid_times]
 class DangKiLichNghiForm(forms.ModelForm):
     class Meta:
         model = DangKiLichNghi

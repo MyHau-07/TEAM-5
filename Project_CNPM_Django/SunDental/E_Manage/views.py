@@ -176,56 +176,86 @@ def hosobenhan_detail(request, record_id):
         'communications': record.communications.all().order_by('timestamp'),
     }
     return render(request, 'Pages/hosobenhan_detail.html', context)
+from django.http import JsonResponse
+from .models import Booking
+def booking(request):
+    selected_date = request.GET.get('appointment_date', date.today().isoformat())
+    valid_times = get_valid_times_logic(selected_date)  # Lấy danh sách thời gian hợp lệ
 
-def booking(request):       
-    services = Services.objects.filter(is_active=True)
-    
+    # Xử lý yêu cầu POST khi người dùng gửi form đặt lịch
     if request.method == 'POST':
         form = BookingForm(request.POST, request.FILES)
         if form.is_valid():
-            appointment_date = request.POST.get('appointment_date')  # Get appointment_date from POST
-            form.save()
-            messages.success(request, "Đặt lịch thành công! Thông tin đã được gửi đến quản trị viên.")
+            try:
+                appointment_time = form.cleaned_data['appointment_time']
+                dich_vu = form.cleaned_data['dich_vu']
+
+                # Kiểm tra nếu dịch vụ là 'dieu_tri' và có lịch 'kham' trong cùng thời gian
+                if dich_vu.type == 'dieu_tri':
+                    kham_count = Booking.objects.filter(
+                        appointment_date=selected_date,
+                        appointment_time=appointment_time,
+                        dich_vu__type='kham'
+                    ).count()
+                    if kham_count >= 3:
+                        messages.error(request, "Khung giờ này đã đủ lịch khám, vui lòng chọn giờ khác.")
+                        return render(request, 'Pages/booking.html', {
+                            'form': form,
+                            'serv': Services.objects.filter(is_active=True),
+                            'valid_times': valid_times,
+                            'selected_date': selected_date,
+                        })
+                # Lưu booking
+                booking = form.save(commit=False)
+                booking.save()
+                messages.success(request, "Đặt lịch thành công!")
+                return redirect('booking')
+            except Exception as e:
+                messages.error(request, f"Có lỗi xảy ra: {str(e)}")
         else:
             messages.error(request, "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin.")
-        selected_date = request.POST.get('appointment_date', date.today().isoformat())
     else:
         form = BookingForm()
-        selected_date = request.GET.get('appointment_date', date.today().isoformat())
-        
-    # If appointment_date is in POST, use it; otherwise, check GET
 
+   
+
+    # Render template với form và các biến cần thiết
+    return render(request, 'Pages/booking.html', {
+        'form': form,
+        'serv': Services.objects.filter(is_active=True),
+        'valid_times': valid_times,
+        'selected_date': selected_date,
+    })
+
+# Hàm logic để lấy thời gian hợp lệ
+def get_valid_times_logic(selected_date):
     all_times = [
         "08:00", "08:45", "09:30", "10:15", "11:00", "11:45",
         "13:15", "14:00", "14:45", "15:30", "16:15"
     ]
 
-    # Fetch all bookings for the selected date at once
+    # Lấy tất cả các booking trong ngày được chọn
     booked_bookings = Booking.objects.filter(appointment_date=selected_date)
 
     valid_times = []
     for time in all_times:
-        # Check if any booking exists for this time with service type 'dieu_tri'
+        # Kiểm tra xem có booking nào cho thời gian này với dịch vụ 'dieu_tri' không
         is_dieu_tri_booked = booked_bookings.filter(
             appointment_time=time,
-            dich_vu__type='dieu_tri'  # Accessing type through the ForeignKey relationship
+            dich_vu__type='dieu_tri'
         ).exists()
 
-        # Count how many bookings exist for this time with service type 'kham'
+        # Đếm số lượng booking cho thời gian này với dịch vụ 'kham'
         kham_count = booked_bookings.filter(
             appointment_time=time,
-            dich_vu__type='kham'  # Accessing type through the ForeignKey relationship
+            dich_vu__type='kham'
         ).count()
 
+        # Nếu thời gian hợp lệ, thêm vào danh sách
         if not is_dieu_tri_booked and kham_count < 3:
             valid_times.append(time)
 
-    return render(request, 'Pages/booking.html', {
-        'form': form,
-        'serv': services,
-        'valid_times': valid_times,
-        'selected_date': selected_date,
-    })
+    return valid_times
 def ClicnicOwner (request):
     return render(request, 'Pages/ClicnicOwner.html')
 
