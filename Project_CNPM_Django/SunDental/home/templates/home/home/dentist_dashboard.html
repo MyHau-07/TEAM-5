@@ -164,8 +164,9 @@
         </div>
       </div>
       <div class="col-md-5">
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
+        <div class="row">
+          <div class="card shadow-sm mb-4">
+            <div class="card-body">
             <div class="alert alert-warning d-flex align-items-center">
               <div class="flex-grow-1">
                 <h6 class="mb-0" lang="db-nhacnho">Nhắc nhở mới, chưa xem</h6>
@@ -173,14 +174,25 @@
               </div>
               <i class="fa fa-bell text-warning"></i>
             </div>
+          
             <a
-              href="/ghi-chu-nhac-nho-sinh-vien.html"
+              href="{% url 'lichhenbs' %}"
               class="btn text-primary p-0"
               lang="db-chitiet-button"
               >Xem chi tiết</a
             >
           </div>
-        </div>
+          </div>
+          <div class="card shadow-sm mb-4">
+          <div class="card-body">
+                <h6 class=" h5 mb-0 text-center mb-4" >Hồ Sơ Bệnh Nhân</h6>
+              <a
+              href="{% url 'quanlithongtinbenhnhan' %}"
+              class="btn text-primary p-0"  
+              >Xem chi tiết</a
+            >
+          </div>
+          </div>
       </div>
     </div>
     <div class="row text-center mt-4">

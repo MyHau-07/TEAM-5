@@ -6,6 +6,7 @@ from E_Manage.models import Booking
 from E_Manage.models import DangKiLichNghi
 from E_Manage.models import Services
 from E_Manage.models import Dentist
+#from E_Manage.models import CommentFormDentist
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -47,7 +48,22 @@ class Comment_Form (forms.ModelForm):
                 'rows': 4
             })
         }
-        
+
+# class Comment_Form_Dentist (forms.ModelForm):
+#     class Meta:
+#         model = CommentFormDentist
+#         fields = '__all__'
+#         widgets = {
+#             'message': forms.Textarea(attrs={
+#                 'class': 'form-control',
+#                 'id': 'basic-icon-default-message',
+#                 'placeholder': 'Nhập nội dung cần tư vấn',
+#                 'aria-label': 'Nhập nội dung cần tư vấn',
+#                 'aria-describedby': 'basic-icon-default-message2',
+#                 'rows': 4
+#             })
+#         }
+
 
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(
@@ -238,7 +254,7 @@ class DentistForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'date'
             }),
-            'Gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
+            'gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
                 'class': 'form-control'
             })
         }        

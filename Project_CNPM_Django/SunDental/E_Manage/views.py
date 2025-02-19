@@ -190,8 +190,7 @@ def booking(request):
     return render(request, 'Pages/booking.html', {'form': form})
 
 
-def ClicnicOwner (request):
-    return render(request, 'Pages/ClicnicOwner.html')
+
 
 def quanlichinhanh (request):
     return render(request, 'Pages/quanlichinhanh.html')
@@ -205,8 +204,7 @@ def hosophongkham (request):
 def quanlidichvu (request):
     return render(request, 'Pages/quanlidichvu.html')
 
-def dentist (request):
-    return render(request, 'Users/Dentist.html')
+
 
 def chamcong (request):
     return render(request, 'Users/chamcong.html')
@@ -365,7 +363,7 @@ def edit_dentist(request, dentist_id):
         dentist.License_number = request.POST.get("License_number", dentist.License_number)
         dentist.Phone_Number = request.POST.get("Phone_Number", dentist.Phone_Number)
         dentist.Email = request.POST.get("Email", dentist.Email)
-        dentist.Birthday = request.POST.get("Birthday", dentist.Birthday)
+        dentist.birth_date = request.POST.get("Birthday", dentist.birth_date)
         
         # Chuyển đổi Gender từ chuỗi sang Boolean
         gender_value = request.POST.get("Gender", "").lower()

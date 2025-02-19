@@ -220,11 +220,11 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" name="FullName">
+                            <input type="text" class="form-control" name="FullName" id="name1">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Chức vụ</label>
-                            <select class="form-select" name="Specialization">
+                            <select class="form-select" name="Specialization" id="Spec1">
                                 <option>Bác sĩ</option>
                                 <option>Y tá</option>
                                 <option>Dược sĩ</option>
@@ -233,11 +233,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Số giấy phép hành nghề nha khoa</label>
-                            <input type="text" class="form-control" name="License_number" >
+                            <input type="text" class="form-control" name="License_number" id="Licensenumber1" >
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Chi nhánh</label>
-                            <select class="form-select"  name="Dental_branch" >
+                            <select class="form-select"  name="Dental_branch" id="Dentalbranch1" >
                                 <option>Chi nhánh 1 - Bình Thạnh</option>
                                 <option>Chi nhánh 2 - Quận 3</option>
                                 <option>Chi nhánh 3 - Quận 10</option>
@@ -245,17 +245,17 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" name="Phone_Number">
+                            <input type="tel" class="form-control" name="Phone_Number" id="PhoneNumber1">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="Email">
+                            <input type="email" class="form-control" name="Email" id="Email1">
                         </div>
                         <div class="mb-3">
                             <label for="defaultSelect" class="form-label">Ngày sinh</label>
-                            <input type="date" class="form-control" name="Birthday">
+                            <input type="date" class="form-control" name="Birthday" id="Birthday1">
                         </div>
-                        <select id="defaultSelect" class="form-select" name="Gender">
+                        <select id="defaultSelect" class="form-select" name="gender" >
                             <option value="">Chọn Giới tính</option>
                             <option value="True">Nam</option>
                             <option value="False">Nữ</option>
@@ -263,7 +263,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <button type="submit" class="btn btn-primary" id="Luu1">Lưu</button>
                         </div>
                     </form>
                 </div>

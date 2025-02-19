@@ -65,6 +65,11 @@ class CommentForm (models.Model):
     def __str__(self):
         return f"{self.name}"
     
+# class CommentFormDentist (models.Model):
+#     message = models.TextField()
+#     def __str__(self):
+#         return f"{self.name}"
+    
 class Dentist(models.Model):
     id = models.AutoField(primary_key=True)
     FullName = models.CharField(max_length=50)
@@ -78,7 +83,7 @@ class Dentist(models.Model):
         ('M', 'Nam'),
         ('F', 'Nữ'),
     ]
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
+    ggender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
     
     def __str__(self):
         return f"{self.FullName}"
