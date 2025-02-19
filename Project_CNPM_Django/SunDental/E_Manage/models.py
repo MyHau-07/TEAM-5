@@ -83,7 +83,7 @@ class Dentist(models.Model):
         ('M', 'Nam'),
         ('F', 'Nữ'),
     ]
-    ggender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
     
     def __str__(self):
         return f"{self.FullName}"

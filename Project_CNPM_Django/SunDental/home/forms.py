@@ -254,7 +254,7 @@ class DentistForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'date'
             }),
-            'gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
+            'Gender': forms.Select(choices=[(True, 'Male'), (False, 'Female')], attrs={
                 'class': 'form-control'
             })
         }        

@@ -130,7 +130,7 @@ def register_test():
         time.sleep(2)  # Đợi 1 giây
 
         # Chọn giới tính
-        gender_select = Select(driver.find_element(By.NAME, "gender"))
+        gender_select = Select(driver.find_element(By.NAME, "Gender123"))
         gender_select.select_by_visible_text("Nam")  # Chọn giới tính
         time.sleep(2)  # Đợi 1 giây
 
