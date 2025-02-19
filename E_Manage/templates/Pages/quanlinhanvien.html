@@ -1,0 +1,273 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% comment %} {% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %} {% endcomment %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu_co.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <!-- Thống kê nhân viên -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5>Tổng nhân viên</h5>
+                        <h2>45</h2>
+                        <p>Tất cả chi nhánh</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5>Chi nhánh 1</h5>
+                        <h2>18</h2>
+                        <p>Bình Thạnh</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5>Chi nhánh 2</h5>
+                        <h2>15</h2>
+                        <p>Quận 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5>Chi nhánh 3</h5>
+                        <h2>12</h2>
+                        <p>Quận 10</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Công cụ quản lý -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-success w-100 mb-2" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                                    <i class="fas fa-plus"></i> Thêm nhân viên mới
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select mb-2">
+                                    <option>Tất cả chi nhánh</option>
+                                    <option>Chi nhánh 1 - Bình Thạnh</option>
+                                    <option>Chi nhánh 2 - Quận 3</option>
+                                    <option>Chi nhánh 3 - Quận 10</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control mb-2" placeholder="Tìm kiếm nhân viên...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng nhân viên -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ và tên</th>
+                                <th>Chức vụ</th>
+                                <th>Chi nhánh</th>
+                                <th>Số giấy phép nha khoa</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in dentists %}
+                            <tr>
+                                <td>{{ d.id }}</td>
+                                <td>{{ d.FullName }}</td>
+                                <td>{{ d.Specialization }}</td>
+                                <td>{{ d.Dental_branch }}</td>
+                                <td>{{ d.License_number }}</td>
+                                <td>{{ d.Phone_Number }}</td>
+                                <td>{{ d.Email }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editEmployeeModal{{ d.id }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'delete_dentist' d.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa nhân viên này không?');">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="editEmployeeModal{{ d.id }}" tabindex="-1" aria-labelledby="editEmployeeModalLabel{{ d.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Chỉnh sửa thông tin nhân viên</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="{% url 'edit_dentist' d.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{ d.id }}">
+                                            <div class="mb-3">
+                                                <label class="form-label">Họ và tên</label>
+                                                <input type="text" class="form-control" name="FullName" value="{{ d.FullName }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Chuyên môn</label>
+                                                <select class="form-select" name="Specialization" required>
+                                                    <option value="Bác sĩ" {% if d.Specialization == "Bác sĩ" %}selected{% endif %}>Bác sĩ</option>
+                                                    <option value="Y tá" {% if d.Specialization == "Y tá" %}selected{% endif %}>Y tá</option>
+                                                    <option value="Dược sĩ" {% if d.Specialization == "Dược sĩ" %}selected{% endif %}>Dược sĩ</option>
+                                                    <option value="Nhân viên hành chính" {% if d.Specialization == "Nhân viên hành chính" %}selected{% endif %}>Nhân viên hành chính</option>
+                                                </select>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Chi nhánh</label>
+                                                <select class="form-select" name="Dental_branch" required>
+                                                    <option value="Chi nhánh 1 - Bình Thạnh" {% if d.Dental_branch == "Chi nhánh 1 - Bình Thạnh" %}selected{% endif %}>Chi nhánh 1 - Bình Thạnh</option>
+                                                    <option value="Chi nhánh 2 - Quận 3" {% if d.Dental_branch == "Chi nhánh 2 - Quận 3" %}selected{% endif %}>Chi nhánh 2 - Quận 3</option>
+                                                    <option value="Chi nhánh 3 - Quận 10" {% if d.Dental_branch == "Chi nhánh 3 - Quận 10" %}selected{% endif %}>Chi nhánh 3 - Quận 10</option>
+                                                </select>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Số giấy phép</label>
+                                                <input type="text" class="form-control" name="License_number" value="{{ d.License_number }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Số điện thoại</label>
+                                                <input type="tel" class="form-control" name="Phone_Number" value="{{ d.Phone_Number }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" name="Email" value="{{ d.Email }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Ngày sinh</label>
+                                                <input type="date" class="form-control" name="Birthday" value="{{ d.Birthday|date:'Y-m-d' }}" required>
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label class="form-label">Giới tính</label>
+                                                <select class="form-select" name="Gender" required>
+                                                    <option value="True" {% if d.Gender %}selected{% endif %}>Nam</option>
+                                                    <option value="False" {% if not d.Gender %}selected{% endif %}>Nữ</option>
+                                                </select>
+                                            </div>
+                        
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">Không có nhân viên nào</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Phân trang -->
+                <nav>
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Thêm nhân viên -->
+    <div class="modal fade" id="addEmployeeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm nhân viên mới </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" name="FullName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Chức vụ</label>
+                            <select class="form-select" name="Specialization">
+                                <option>Bác sĩ</option>
+                                <option>Y tá</option>
+                                <option>Dược sĩ</option>
+                                <option>Nhân viên hành chính</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số giấy phép hành nghề nha khoa</label>
+                            <input type="text" class="form-control" name="License_number" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Chi nhánh</label>
+                            <select class="form-select"  name="Dental_branch" >
+                                <option>Chi nhánh 1 - Bình Thạnh</option>
+                                <option>Chi nhánh 2 - Quận 3</option>
+                                <option>Chi nhánh 3 - Quận 10</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" name="Phone_Number">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="defaultSelect" class="form-label">Ngày sinh</label>
+                            <input type="date" class="form-control" name="Birthday">
+                        </div>
+                        <select id="defaultSelect" class="form-select" name="Gender">
+                            <option value="">Chọn Giới tính</option>
+                            <option value="True">Nam</option>
+                            <option value="False">Nữ</option>
+                        </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

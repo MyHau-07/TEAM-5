@@ -1,0 +1,75 @@
+# version: "3.4"
+
+# services:
+#   cnpm:
+#     build:
+#       context: .
+#       dockerfile: ./Dockerfile
+#     image: cnpm
+#     command: python manage.py runserver 0.0.0.0:9000
+#     ports:
+#       - "9000:9000"
+#     volumes:
+#       - .:/app
+#     depends_on:
+#       - db
+
+#   db:
+#     image: postgres:14
+#     environment:
+#       POSTGRES_USER: myuser
+#       POSTGRES_PASSWORD: Nhom5CNPM
+#       POSTGRES_DB: DjangoDB
+#     volumes:
+#       - db_data:/var/lib/postgresql/data
+#     ports:
+#       - "5432:5432"
+
+# volumes:
+#   db_data:
+#     external: true
+
+
+
+services:
+  cnpm:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: cnpm
+    command: python manage.py runserver 0.0.0.0:9000
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: Nhom5CNPM
+      POSTGRES_DB: DjangoDB
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backup:
+    image: postgres:14
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: Nhom5CNPM
+      POSTGRES_DB: DjangoDB
+    command: >
+      bash -c "PGPASSWORD=Nhom5CNPM pg_dump -h db -U myuser -d DjangoDB -F c -b -v -f /backup/DjangoDB_backup.dump"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backup:/backup
+    depends_on:
+      - db
+
+volumes:
+  db_data: {}

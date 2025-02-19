@@ -1,0 +1,120 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+{% block navbar %}
+    {% include 'home/includes/Navbar.html' %}
+{% endblock %}
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu.html' %}
+{% endblock %}
+
+{% block content %}
+<form class="needs-validation" name="frmthanhtoan" method="post" action="{% url 'thanh_toan' %}">
+  {% csrf_token %}
+  <div class="row">
+      <!-- Phần hiển thị dịch vụ trong giỏ hàng -->
+      <div class="col-md-8">
+          <h4 class="mb-3" style="color: black">Dịch vụ</h4>
+          <ul class="list-group mb-3">
+              {% for item in gio_hang_items %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <!-- Checkbox để chọn dịch vụ -->
+                    <input type="checkbox" class="service-checkbox" 
+                           data-price="{{ item.dich_vu.price }}" 
+                           data-quantity="{{ item.so_luong }}" 
+                           checked>
+                    <strong>{{ item.dich_vu.name }}</strong>
+                    <span>({{ item.so_luong }} x {{ item.dich_vu.price|floatformat:0 }} VND)</span>
+                  </div>
+                  
+                  <div>
+                      <!-- Nút giảm số lượng -->
+                      <button type="button" class="btn btn-sm btn-outline-primary me-2 quantity-btn" 
+                              data-action="decrease" data-item-id="{{ item.id }}">-</button>
+                      <span class="quantity">{{ item.so_luong }}</span>
+                      <!-- Nút tăng số lượng -->
+                      <button type="button" class="btn btn-sm btn-outline-primary ms-2 quantity-btn" 
+                              data-action="increase" data-item-id="{{ item.id }}">+</button>
+                      <!-- Nút xóa dịch vụ khỏi giỏ hàng -->
+                      <a href="{% url 'xoa_khoi_gio_hang' item.id %}" class="btn btn-danger btn-sm ms-3">Xóa</a>
+                  </div>
+              </li>
+              {% empty %}
+              <!-- Thông báo nếu giỏ hàng trống -->
+              <li class="list-group-item">Giỏ hàng trống!</li>
+              {% endfor %}
+          </ul>
+      </div>
+
+      <!-- Phần tổng thanh toán -->
+      <div class="col-md-4">
+          <h4 class="mb-3" style="color: black">Tổng thanh toán</h4>
+          <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span>Tổng cộng</span>
+                  <strong id="totalAmount">{{ total_price|floatformat:0 }} VND</strong>
+              </li>
+          </ul>
+          <!-- Nút thanh toán -->
+          <div class="checkout-section">
+            {% comment %} <a href="javascript:void(0);" id="checkout-btn" class="btn btn-primary">Thanh toán</a> {% endcomment %}
+            <button type="submit" id="checkout-btn" class="btn btn-primary">Thanh toán</button>
+
+        </div>
+      </div>
+  </div>
+
+  <!-- Phần "Thêm Dịch Vụ" nằm cuối -->
+  <div class="add-service-section text-end mt-3" style="position: relative; margin-top: 20px;">
+      <a href="{% url 'dichvu' %}" class="btn btn-success">Thêm Dịch Vụ</a>
+  </div>
+</form>
+
+<!-- Script để xử lý cập nhật số lượng và tổng tiền -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  // Hàm cập nhật tổng tiền
+  function updateTotal() {
+      let total = 0;
+      $('.service-checkbox:checked').each(function() {
+          const price = parseFloat($(this).data('price'));
+          const quantity = parseInt($(this).data('quantity'));
+          total += price * quantity;
+      });
+      $('#totalAmount').text(total.toLocaleString() + ' VND');
+  }
+
+  // Sự kiện khi checkbox thay đổi
+  $('.service-checkbox').change(updateTotal);
+
+  // Sự kiện khi nhấn nút tăng/giảm số lượng
+  $('.quantity-btn').click(function() {
+      const itemId = $(this).data('item-id');
+      const action = $(this).data('action');
+      
+      $.ajax({
+        url: `/sua_so_luong/${itemId}/`,  // Đảm bảo đúng đường dẫn
+        type: 'POST',
+        data: {
+            'action': action,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+            location.reload();
+        },
+        error: function(xhr) {
+            alert('Có lỗi xảy ra, vui lòng thử lại!');
+        }
+      });
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block footer %}
+    {% include "home/includes/footer.html" %}
+{% endblock %}

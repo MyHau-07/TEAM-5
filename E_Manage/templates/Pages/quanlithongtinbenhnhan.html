@@ -1,0 +1,54 @@
+{% extends "home/master.html" %}
+{% load static %}
+
+
+
+{% block menu-inner %}
+    {% include 'home/includes/left_menu_co.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 50px;" >
+    <h2 style="text-align: center; color: #696CFF; font-weight: bold;">Quản Lý Hồ Sơ Bệnh Án</h2>
+
+    <!-- Form Tìm Kiếm -->
+    <form method="get" action="" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Nhập tên hoặc mã định danh" value="{{ query }}">
+            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="font-weight: bold;">ID Hồ Sơ</th>
+                <th style="font-weight: bold;">Họ và tên</th>
+                <th style="font-weight: bold;">Chẩn đoán</th>
+                <th style="font-weight: bold;">Kế hoạch điều trị</th>
+                <th style="font-weight: bold;">Ngày tạo</th>
+                <th style="font-weight: bold;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.patient.full_name }}</td>
+                <td>{{ record.diagnosis|default:"Chưa cập nhật" }}</td>
+                <td>{{ record.treatment_plan|default:"Chưa cập nhật" }}</td>
+                <td>{{ record.created_at|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'hosobenhan_detail' record.id %}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Không có hồ sơ bệnh án nào.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
